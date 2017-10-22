@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: rgb(208, 214, 224);
 }
 
 .App-logo {
@@ -12,6 +13,7 @@
   /* height: 220px; */
   padding: 20px;
   color: white;
+  display: flex;
 }
 
 .App-title {
@@ -27,6 +29,20 @@
   to { transform: rotate(360deg); }
 }
 
+.header-child {
+  flex: 1;
+}
+
+#header-right {
+  text-align: right;
+}
+
+#sign-in-button {
+  color: ivory;
+  background-color: #222;
+  border: 1px solid ivory;  
+}
+
 #app-content {
   margin: 0 50px;
 }
@@ -40,14 +56,14 @@
 .custom-card {
   margin: 0 60px 20px 60px;
   width: 300px;
-  border-radius: 10px;
 }
 
 .custom-title {
-  background-color: slategray;
+  background-color: #222;
   color: ivory;
   font-size: 20px;
   padding: 5px 0;
+  border-radius: 15px 15px 0 0;
 }
 
 .custom-list {
@@ -56,14 +72,35 @@
 
 .custom-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 7px;
   margin-bottom: 1px;
   border: 0.3px solid gainsboro;
+  background-color: white;
+}
+
+.custom-item-link {
+  flex: 3;
+  display: flex;
+  align-items: center;
+}
+
+.custom-item-dropdown {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .url-logo {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
+  margin-right: 50px;
+}
+
+#google-search {
+  background-color: white;
+}
+
+#google-label {
+  padding-left: 10px;
 }

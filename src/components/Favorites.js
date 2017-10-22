@@ -67,9 +67,11 @@ export default class Favorites extends React.Component {
                 // domain = domain.substring(0, domain.lastIndexOf('.')).toUpperCase();
                 return (
                     <li className='custom-item'>
-                        <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} />
-                        <span>{page.name}</span>
-                        <a className='dropdown-button' href='#' data-activates={page.order}><i className="material-icons">arrow_drop_down</i></a>
+                        <a href={page.url} target='_blank' className='custom-item-link'>
+                            <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} />
+                            <span>{page.name}</span>
+                        </a>
+                        <a className='dropdown-button custom-item-dropdown' href='#' data-activates={page.order}><i className="material-icons">arrow_drop_down</i></a>
                         <ul id={page.order} className='dropdown-content'>
                             <li><a href="#!"><i className="material-icons">edit</i>Edit</a></li>
                             <li><a href="#!"><i className="material-icons">delete</i>Remove</a></li>

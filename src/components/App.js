@@ -13,7 +13,6 @@ class App extends Component {
         <div id="app-content">
           <br />
           <Google />
-          <br />
           <Favorites />
         </div>
       </div>
