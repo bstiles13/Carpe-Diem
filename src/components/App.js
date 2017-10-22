@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
 import './App.css';
+// import Placeholder from './Placeholder';
+import Navbar from './Navbar';
 import Google from './Google';
+import Favorites from './Favorites';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to Carpe Diem</h1>
-        </header>
-        <br />
-        <Google />
+        <Navbar />
+        <div id="app-content">
+          <br />
+          <Google />
+          <br />
+          <Favorites />
+        </div>
       </div>
     );
   }

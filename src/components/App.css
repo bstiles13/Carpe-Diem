@@ -9,7 +9,7 @@
 
 .App-header {
   background-color: #222;
-  height: 200px;
+  /* height: 220px; */
   padding: 20px;
   color: white;
 }
@@ -25,4 +25,18 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+#app-content {
+  margin: 0 50px;
+}
+
+#card-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.custom-card {
+  margin: 0 60px 20px 60px;
 }
