@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../logo.svg';
+import ModalLogin from './ModalLogin';
 
 export default class Navbar extends React.Component {
     render() {
@@ -12,8 +13,9 @@ export default class Navbar extends React.Component {
                     <span>Homepage. Planner. <b>You.</b></span>
                 </div>
                 <div id="header-right" className="header-child">
-                    <button id="sign-in-button">Sign In</button>
+                    <button data-target="modal2" id="login-modal" className="btn-flat modal-trigger button-spacer">Sign In</button>
                 </div>
+                <ModalLogin />
             </header>
         )
     }

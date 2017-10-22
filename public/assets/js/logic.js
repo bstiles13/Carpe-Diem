@@ -1,4 +1,4 @@
-$(document).ready(function() {
-    console.log('app running');
-    $(".button-collapse").sideNav();    
-})
+$(document).ready(function () {
+    // console.log('jquery loaded');
+    $('.modal').modal();
+});

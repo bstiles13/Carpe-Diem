@@ -37,7 +37,7 @@
   text-align: right;
 }
 
-#sign-in-button {
+#login-modal {
   color: ivory;
   background-color: #222;
   border: 1px solid ivory;  
@@ -103,4 +103,40 @@
 
 #google-label {
   padding-left: 10px;
+}
+
+#modal2 {
+  color: black;
+}
+
+#modal-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login-container {
+  display: flex;
+  align-items: stretch;
+}
+
+.login-child {
+  flex: 1;
+}
+
+#button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.button-spacer {
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.login-warning {
+  color: red;
 }
