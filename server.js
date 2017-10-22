@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 // Server congfiguration and middleware
 const app = express();
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 

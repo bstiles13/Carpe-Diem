@@ -15,7 +15,7 @@ export default class Navbar extends React.Component {
                 <div id="header-right" className="header-child">
                     <button data-target="modal2" id="login-modal" className="btn-flat modal-trigger button-spacer">Sign In</button>
                 </div>
-                <ModalLogin />
+                <ModalLogin setUser={this.props.setUser} />
             </header>
         )
     }

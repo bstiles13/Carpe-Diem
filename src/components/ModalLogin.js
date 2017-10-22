@@ -6,7 +6,6 @@ export default class ModalLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: null,
             userForm: {
                 existingUsername: '',
                 existingPassword: '',
@@ -62,7 +61,7 @@ export default class ModalLogin extends React.Component {
                     localStorage.setItem('carpeToken', user.newUsername);
                     let modal = document.getElementById('modal2');
                     modal.modal('close');
-                    this.setState({ user: user.newUsername });
+                    this.props.setUser(user.newUsername);
                 } else {
                     this.triggerWarning('invalidName');
                 }
@@ -83,7 +82,7 @@ export default class ModalLogin extends React.Component {
                     localStorage.setItem('carpeToken', user.newUsername);
                     let modal = document.getElementById('modal2');
                     modal.modal('close');
-                    this.setState({ user: user.newUsername });
+                    this.props.setUser(user.newUsername);                    
                 } else {
                     this.triggerWarning('invalidUser');
                 }
@@ -103,6 +102,12 @@ export default class ModalLogin extends React.Component {
         if (this.state.warnings[type]) {
             return (<div className='login-warning'>{this.state.warnings.warning[type]}</div>)
         }
+    }
+
+    sendTest() {
+        axios.get('http://localhost:3001/test').then(data => {
+            console.log(data);
+        })
     }
 
     clearWarnings() {
@@ -182,6 +187,7 @@ export default class ModalLogin extends React.Component {
                     <div id="button-container">
                         <button className="waves-effect waves-light btn light-blue darken-1" onClick={this.startExistingLogin.bind(this)}>Sign In</button>
                         <button className="waves-effect waves-light btn deep-orange darken-2" onClick={this.startNewLogin.bind(this)}>Register</button>
+                        <button onClick={this.sendTest}>Test</button>
                     </div>
                 </div>
             </div>
