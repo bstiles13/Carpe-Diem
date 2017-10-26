@@ -28,7 +28,11 @@ export default class ModalLogin extends React.Component {
         }
     }
 
-    onChange(event) {
+    componentDidUpdate() {
+        console.log(this.state.userForm);
+    }
+
+    handleChange(event) {
         let user = this.state.userForm;
         user[event.target.name] = event.target.value;
         this.setState({
@@ -144,14 +148,14 @@ export default class ModalLogin extends React.Component {
                                 <div className="row">
                                     <div className="input-field col s12">
                                         <i className="material-icons prefix">account_circle</i>
-                                        <input id="username" type="text" className="validate" name="existingUsername" onChange={this.onChange} />
+                                        <input id="username" type="text" className="validate" name="existingUsername" onChange={this.handleChange.bind(this)} />
                                         <label htmlFor="username">Username</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12">
                                         <i className="material-icons prefix">enhanced_encryption</i>
-                                        <input id="password" type="password" className="validate" name="existingPassword" onChange={this.onChange} />
+                                        <input id="password" type="password" className="validate" name="existingPassword" onChange={this.handleChange.bind(this)} />
                                         <label htmlFor="password">Password</label>
                                     </div>
                                 </div>
@@ -163,21 +167,21 @@ export default class ModalLogin extends React.Component {
                                 <div className="row">
                                     <div className="input-field col s12">
                                         <i className="material-icons prefix">account_circle</i>
-                                        <input id="username" type="text" className="validate" name="newUsername" onChange={this.onChange} />
+                                        <input id="username" type="text" className="validate" name="newUsername" onChange={this.handleChange.bind(this)} />
                                         <label htmlFor="username">Username</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12">
                                         <i className="material-icons prefix">enhanced_encryption</i>
-                                        <input id="password1" type="password" className="validate" name="newPassword1" onChange={this.onChange} />
+                                        <input id="password1" type="password" className="validate" name="newPassword1" onChange={this.handleChange.bind(this)} />
                                         <label htmlFor="password1">Password</label>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12">
                                         <i className="material-icons prefix">enhanced_encryption</i>
-                                        <input id="password2" type="password" className="validate" name="newPassword2" onChange={this.onChange} />
+                                        <input id="password2" type="password" className="validate" name="newPassword2" onChange={this.handleChange.bind(this)} />
                                         <label htmlFor="password2">Re-enter password</label>
                                     </div>
                                 </div>

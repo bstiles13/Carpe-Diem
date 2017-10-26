@@ -1,5 +1,6 @@
 import React from 'react';
 import placeholder from '../placeholder.png';
+import CategoryMaker from './CategoryMaker';
 
 export default class Favorites extends React.Component {
 
@@ -82,7 +83,9 @@ export default class Favorites extends React.Component {
             return (
                 <div className='custom-card'>
                     <div className='custom-title'>{favorite.category}</div>
-                    <ul className='custom-list'>{pages}</ul>
+                    <ul className='custom-list'>
+                        {pages}
+                    </ul>
                 </div>
             )
         })
@@ -92,6 +95,7 @@ export default class Favorites extends React.Component {
         return (
             <div id='card-container'>
                 {this.showFavorites()}
+                <CategoryMaker />
             </div>
         )
     }

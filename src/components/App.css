@@ -1,6 +1,7 @@
 .App {
   text-align: center;
-  background-color: rgb(208, 214, 224);
+  /* background-color: rgb(208, 214, 224); */
+  background-color: #26292E;
 }
 
 .App-logo {
@@ -10,10 +11,12 @@
 
 .App-header {
   background-color: #222;
+  /* background-color: #1353B7; */
   /* height: 220px; */
   padding: 20px;
   color: white;
   display: flex;
+  border-bottom: 10px solid #1353B7;
 }
 
 .App-title {
@@ -59,11 +62,12 @@
 }
 
 .custom-title {
-  background-color: #222;
+  /* background-color: #222; */
+  background-color: #1353B7;
   color: ivory;
   font-size: 20px;
   padding: 5px 0;
-  border-radius: 15px 15px 0 0;
+  border-radius: 8px 8px 0 0;
 }
 
 .custom-list {
@@ -75,8 +79,10 @@
   align-items: center;
   padding: 7px;
   margin-bottom: 1px;
-  border: 0.3px solid gainsboro;
-  background-color: white;
+  border-top: 0.3px solid gainsboro;
+  border-bottom: 0.3px solid gainsboro;  
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  background-color: #222;
 }
 
 .custom-item-link {
@@ -97,8 +103,23 @@
   margin-right: 50px;
 }
 
+#new-card {
+  height: 200px;
+  background-color: whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 50px;
+}
+
+#add {
+  font-size: 50px;
+}
+
 #google-search {
   background-color: white;
+  border: 5px solid #1353B7;
 }
 
 #google-label {
