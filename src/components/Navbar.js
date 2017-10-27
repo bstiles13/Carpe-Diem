@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '../logo.svg';
 import ModalLogin from './ModalLogin';
 
 export default class Navbar extends React.Component {

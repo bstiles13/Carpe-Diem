@@ -161,3 +161,75 @@
 .login-warning {
   color: red;
 }
+
+#events {
+  color: ivory;
+}
+
+#weather {
+  text-align: left;
+}
+
+#forecast {
+  display: flex;
+  flex-direction: column;
+}
+
+#today {
+  display: flex;
+  align-items: center;
+  background-color: #1353B7;
+  max-width: 280px;
+  padding: 5px;
+  border: 1px solid ivory;
+}
+
+.today-child {
+  margin: 0 10px;
+  text-align: left;
+}
+
+.daily {
+  border: 2px solid #1353B7;
+  padding: 10px;
+}
+
+#zip-chips {
+  display: flex;
+  justify-content: center;
+}
+
+.zip {
+  display: flex;
+  width: 80px;
+  background-color: #1353B7;
+  border-radius: 10%;
+  padding: 5px;
+  margin: 5px;
+}
+
+#divider {
+  display: flex;
+}
+
+#weather {
+  flex: 1;
+}
+
+#activities {
+  flex: 7;
+}
+
+#activity-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 500px;
+  margin: 20px 100px;
+}
+
+.card-content {
+  color: darkslategray;
+}

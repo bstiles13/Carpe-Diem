@@ -32,8 +32,10 @@ class App extends Component {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/today">Today's Events</Link></li>
           </ul>
-          <Route exact path="/" component={Home} />
-          <Route path="/today" component={Events} />
+          <div id="app-content">
+            <Route exact path="/" component={Home} />
+            <Route path="/today" component={Events} />
+          </div>
         </div>
       </BrowserRouter>
     );

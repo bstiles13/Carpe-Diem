@@ -5,7 +5,7 @@ import Favorites from './Favorites';
 export default class Home extends React.Component {
     render() {
         return (
-            <div id="app-content">
+            <div id="home">
                 <br />
                 <Google />
                 <Favorites />
