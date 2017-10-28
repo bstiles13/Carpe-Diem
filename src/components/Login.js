@@ -69,8 +69,8 @@ class Login extends React.Component {
                 let result = data.data;
                 if (result == true) {
                     localStorage.setItem('carpeToken', user.newUsername);
+                    this.props.checkUser();
                     this.props.history.push('/');
-                    this.props.setUser(user.newUsername);
                 } else {
                     this.triggerWarning('invalidName');
                 }
@@ -88,9 +88,9 @@ class Login extends React.Component {
                 // Read the result field from the JSON response.
                 let result = data.data;
                 if (result == true) {
-                    localStorage.setItem('carpeToken', user.newUsername);
+                    localStorage.setItem('carpeToken', user.existingUsername);
+                    this.props.checkUser();                    
                     this.props.history.push('/');
-                    this.props.setUser(user.newUsername);
                 } else {
                     this.triggerWarning('invalidUser');
                 }

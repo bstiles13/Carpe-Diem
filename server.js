@@ -24,10 +24,6 @@ mongoose.connect(db, function (err) {
     }
 });
 
-app.get('/test', (req, res) => {
-    console.log('test works');
-})
-
 // Start Express Server
 app.listen(PORT, function () {
     console.log("Server connected on port " + PORT);

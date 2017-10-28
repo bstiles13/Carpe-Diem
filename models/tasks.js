@@ -98,8 +98,11 @@ module.exports = {
 
     // POST request to retrieve user favorites after login
     findFavorites: function (req, res) {
+        console.log('received');
         let user = req.body.user;
+        console.log('user', user);
         Favorite.find({ user: user }).then(data => {
+            console.log(data);
             res.json(data);
         })
     }

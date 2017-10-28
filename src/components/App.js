@@ -18,6 +18,7 @@ class App extends Component {
     this.state = {
       user: null
     }
+    this.checkUser = this.checkUser.bind(this);
     this.setUser = this.setUser.bind(this);
     this.logout = this.logout.bind(this);
   }
@@ -29,6 +30,7 @@ class App extends Component {
   checkUser() {
     let userHistory = localStorage.getItem('carpeToken');
     if (userHistory != null && userHistory != 'null' && userHistory != undefined) {
+      console.log('setting user');
       this.setUser(userHistory);
     } else {
       this.setUser(null);
@@ -54,9 +56,9 @@ class App extends Component {
             <li><Link to="/today">Today's Events</Link></li>
           </ul>
           <div id="app-content">
-            <Route exact path="/" render={props => <Home user={this.user}/>} />
+            <Route exact path="/" render={props => <Home user={this.state.user} />} />
             <Route path="/today" component={Events} />
-            <Route path="/login" render={props => <Login setUser={this.setUser} />} />
+            <Route path="/login" render={props => <Login checkUser={this.checkUser} />} />
           </div>
         </div>
       </BrowserRouter>
