@@ -64,8 +64,6 @@ export default class Favorites extends React.Component {
         var favorites = this.state.favorites;
         return favorites.map(favorite => {
             let pages = favorite['pages'].map(page => {
-                // let domain = url.indexOf('//www') === -1 ? url.split('//')[1].split('/')[0] : url.split('//www.')[1].split('/')[0];
-                // domain = domain.substring(0, domain.lastIndexOf('.')).toUpperCase();
                 return (
                     <li className='custom-item'>
                         <a href={page.url} target='_blank' className='custom-item-link'>

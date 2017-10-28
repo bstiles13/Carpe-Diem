@@ -1,4 +1,4 @@
 $(document).ready(function () {
-    // console.log('jquery loaded');
+    console.log('jquery loaded');
     $('.modal').modal();
 });

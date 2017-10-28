@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalLogin from './ModalLogin';
+import { Link } from 'react-router-dom'
 
 export default class Navbar extends React.Component {
     render() {
@@ -12,9 +12,11 @@ export default class Navbar extends React.Component {
                     <span>Homepage. Planner. <b>You.</b></span>
                 </div>
                 <div id="header-right" className="header-child">
-                    <button data-target="modal2" id="login-modal" className="btn-flat modal-trigger button-spacer">Sign In</button>
+                    {this.props.user != null
+                    ? <button id="logout-button" className="btn-flat button-spacer" onClick={this.props.logout}>Sign Out</button>
+                    : <Link to="/login">Sign In</Link>
+                    }
                 </div>
-                <ModalLogin setUser={this.props.setUser} />
             </header>
         )
     }

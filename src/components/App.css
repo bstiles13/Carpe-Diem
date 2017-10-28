@@ -40,12 +40,6 @@
   text-align: right;
 }
 
-#login-modal {
-  color: ivory;
-  background-color: #222;
-  border: 1px solid ivory;  
-}
-
 #app-content {
   margin: 0 50px;
 }
@@ -101,6 +95,20 @@
   width: 45px;
   height: 45px;
   margin-right: 50px;
+}
+
+.new-item {
+  display: flex;
+  align-items: center;
+  padding: 0 7px;
+  margin-bottom: 1px;
+  border-top: 0.3px solid gainsboro;
+  border-bottom: 0.3px solid gainsboro;  
+  background-color: #222;
+}
+
+.new-item-input {
+  background-color: white;  
 }
 
 #new-card {
@@ -223,11 +231,12 @@
 #activity-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;  
 }
 
 .card {
   width: 500px;
-  margin: 20px 100px;
+  margin: 20px 30px;
 }
 
 .card-content {

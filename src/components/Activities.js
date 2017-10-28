@@ -12,7 +12,7 @@ export default class Activities extends React.Component {
     }
 
     componentDidMount() {
-        this.setActivities('Family', 'family_fun_kids');
+        this.setActivities('Family Activities', 'family_fun_kids');
         this.setActivities('Music', 'music');
         this.setActivities('Sports', 'sports');
         this.setActivities('Comedy', 'comedy');
