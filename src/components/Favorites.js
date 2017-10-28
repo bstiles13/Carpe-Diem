@@ -8,9 +8,12 @@ export default class Favorites extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            favorites: defaultFavorites
+            favorites: defaultFavorites,
+            newFavorite: ''
         }
         this.createFavoriteToggle = this.createFavoriteToggle.bind(this);
+        this.handleNewFavorite = this.handleNewFavorite.bind(this);
+        this.saveFavorite = this.saveFavorite.bind(this);
     }
 
     componentDidMount() {
@@ -80,16 +83,28 @@ export default class Favorites extends React.Component {
                         { favorite.createToggle
                         ? <li className="new-item">
                             <div className="input-field new-item-input">
-                                <input placeholder="http://www.placeholder.com/" id="first_name" type="text" className="validate" />
-                                <label htmlFor="first_name">URL</label>
+                                <input placeholder="http://www.placeholder.com/" id="first_name" type="text" className="validate" onChange={this.handleNewFavorite} />
+                                <label htmlFor="first_name" className="active">URL</label>
                             </div>
-                            <i className="material-icons new-item-icon">add_circle</i>
+                            <i className="material-icons new-item-icon" onClick={this.saveFavorite}>add_circle</i>
                         </li>
                         : false
                         }
                     </ul>
                 </div>
             )
+        })
+    }
+
+    handleNewFavorite(e) {
+        this.setState({
+            newFavorite: e.target.value
+        })
+    }
+
+    saveFavorite() {
+        axios.post('http://localhost:3001/savefavorite', {url: this.state.newFavorite}).then(data => {
+            console.log('favorite added:', data);
         })
     }
 

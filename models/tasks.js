@@ -98,13 +98,23 @@ module.exports = {
 
     // POST request to retrieve user favorites after login
     findFavorites: function (req, res) {
-        console.log('received');
         let user = req.body.user;
-        console.log('user', user);
         Favorite.find({ user: user }).then(data => {
-            console.log(data);
             res.json(data);
         })
+    },
+
+    saveFavorite: function (req, res) {
+        let url = req.body.url;
+        arr = url.split('www2.');
+        arr = arr.length < 2 ? arr[0].split('www.') : arr[1].split('www.');
+        arr = arr.length < 2 ? arr[0].split('https://') : arr[1].split('https://');
+        arr = arr.length < 2 ? arr[0].split('http://') : arr[1].split('http://');
+        arr = arr.length < 2 ? arr[0].split('/') : arr[1].split('/');
+        url = arr[0];
+        console.log(url);     
+        
+
     }
 
 }

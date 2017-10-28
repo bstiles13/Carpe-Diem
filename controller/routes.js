@@ -15,4 +15,6 @@ router.post('/favorite', tasks.favorite);
 // POST request to retrieve user favorites after successful login
 router.post('/findfavorites', tasks.findFavorites);
 
+router.post('/savefavorite', tasks.saveFavorite);
+
 module.exports = router;
