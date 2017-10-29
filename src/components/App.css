@@ -98,11 +98,9 @@
   align-items: center;
 }
 
-.custom-item-dropdown {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-}
+ .favorite-text {
+  color: white;
+ }
 
 .url-logo {
   width: 45px;
@@ -269,4 +267,13 @@
   background-color: black;
   padding: 5px 10px;
   border-radius: 5px;
+}
+
+.edit-icon {
+  color: white;
+}
+
+.success-icon {
+  color: greenyellow;
+  font-weight: bolder;
 }

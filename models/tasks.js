@@ -104,26 +104,15 @@ module.exports = {
         })
     },
 
-    saveFavorite: function (req, res) {
-        let url = req.body.url;
-        arr = url.split('www2.');
-        arr = arr.length < 2 ? arr[0].split('www.') : arr[1].split('www.');
-        arr = arr.length < 2 ? arr[0].split('https://') : arr[1].split('https://');
-        arr = arr.length < 2 ? arr[0].split('http://') : arr[1].split('http://');
-        arr = arr.length < 2 ? arr[0].split('/') : arr[1].split('/');
-        let domain = arr[0];
-        console.log(domain);
-        let update = "favorites." + req.body.index + ".pages";
+    updateFavorites: function (req, res) {
         Favorite.update(
             { user: req.body.user },
-            { $push: { [update]: { order: 0, name: domain, url: url } } }, function (err, data) {
+            { favorites: req.body.favorites }, function (err, data) {
                 if (err) {
                     console.log(err);
                 } else {
                     // After adding, return updated favorites to browser
-                    Favorite.find({ user: req.body.user }).then(data => {
-                        res.send(true);
-                    })
+                    res.send(true);
                 }
             });
 

@@ -9,30 +9,38 @@ export default class Favorites extends React.Component {
         super(props);
         this.state = {
             favorites: defaultFavorites,
-            newFavorite: ''
+            newFavorite: '',
+            editFavorite: '',
+            toggledCategory: null,
+            toggledFavorite: {
+                index: null,
+                editing: false
+            }
         }
-        this.createFavoriteToggle = this.createFavoriteToggle.bind(this);
         this.handleNewFavorite = this.handleNewFavorite.bind(this);
         this.saveFavorite = this.saveFavorite.bind(this);
-    }
-
-    componentDidMount() {
-        this.getFavorites();
+        this.removeFavorite = this.removeFavorite.bind(this);
+        this.handleNameEdit = this.handleNameEdit.bind(this);
+        this.saveNameEdit = this.saveNameEdit.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps != this.props) {
-            this.getFavorites();                    
+            this.getFavorites();
         }
+        console.log('favorites updated', this.state.favorites);
     }
 
-    createFavoriteToggle(category) {
-        let favorites = this.state.favorites;
-        let foundIndex = favorites.findIndex(x => x.category == category);
-        favorites[foundIndex].createToggle = !favorites[foundIndex].createToggle;
-        this.setState({
-            favorites: favorites
-        })
+    toggleCategory(index) {
+        if (index != this.state.toggledCategory) {
+            this.setState({
+                toggledCategory: index
+            })
+        } else {
+            this.setState({
+                toggledCategory: null
+            })
+        }
     }
 
     getFavorites() {
@@ -51,21 +59,73 @@ export default class Favorites extends React.Component {
         }
     }
 
+    openFavorite(url) {
+        console.log('parent clicked');
+        window.open(url)
+    }
+
+    stopPropagation(e) {
+        console.log('child clicked');
+        e.stopPropagation();
+    }
+
+    handleNameEdit(e) {
+        this.setState({
+            editFavorite: e.target.value
+        })
+    }
+
+    saveNameEdit() {
+        let favorites = this.state.favorites;
+        let categoryIndex = this.state.toggledCategory;
+        let urlIndex = this.state.toggledFavorite.index;
+        let edit = this.state.editFavorite
+        console.log('cat', categoryIndex, 'url', urlIndex, 'newname', edit);
+        favorites[categoryIndex].pages[urlIndex].name = edit;
+        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
+            let result = data.data;
+            if (result == true) {
+                console.log('save successful');
+                this.setState({
+                    toggledFavorite: {
+                        index: null,
+                        editing: false
+                    }
+                })
+                this.getFavorites();
+            }
+        })
+    }
+
     renderFavorites() {
         var favorites = this.state.favorites;
-        return favorites.map(favorite => {
-            let pages = favorite['pages'].map(page => {
+        return favorites.map((favorite, categoryIndex) => {
+            let pages = favorite['pages'].map((page, urlIndex) => {
                 return (
                     <li className='custom-item'>
-                        <a href={page.url} target='_blank' className='custom-item-link'>
-                            <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} />
-                            <span>{page.name}</span>
-                        </a>
-                        <a className='dropdown-button custom-item-dropdown' href='#' data-activates={page.order}><i className="material-icons">arrow_drop_down</i></a>
-                        <ul id={page.order} className='dropdown-content'>
-                            <li><a href="#!"><i className="material-icons">edit</i>Edit</a></li>
-                            <li><a href="#!"><i className="material-icons">delete</i>Remove</a></li>
-                        </ul>
+                        <div className='custom-item-link favorite-text' onClick={() => this.openFavorite(page.url)}>
+                            <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} onError={(event) => event.target.setAttribute("src", placeholder)} />
+                            {
+                                this.state.toggledCategory == categoryIndex && this.state.toggledFavorite.index == urlIndex
+                                    ? <div className="input-field edit-input" onClick={this.stopPropagation}>
+                                        <input defaultValue={page.name} id="favorite-name" type="text" className="validate favorite-text" onChange={this.handleNameEdit} />
+                                        <label htmlFor="favorite-name" className="active">EDIT NAME</label>
+                                    </div>
+                                    : <span>{page.name}</span>
+                            }
+                        </div>
+                        {
+                            this.state.toggledCategory == categoryIndex
+                                ? <div>
+                                    {
+                                        this.state.toggledFavorite.index == urlIndex && this.state.toggledFavorite.editing == true
+                                        ? <i className="material-icons success-icon" onClick={this.saveNameEdit}>check</i>
+                                        : <i className="material-icons edit-icon" onClick={() => this.toggleFavorite(urlIndex, true)}>edit</i>
+                                    }
+                                    <i className="material-icons edit-icon" onClick={() => this.removeFavorite(categoryIndex, urlIndex)}>delete</i>
+                                </div>
+                                : false
+                        }
                     </li>
                 )
             })
@@ -75,20 +135,21 @@ export default class Favorites extends React.Component {
                         <div className='custom-header-child'></div>
                         <div className='custom-header-child'>{favorite.category}</div>
                         <div className='custom-header-child' id='custom-toggle'>
-                            { this.props.user !== null ? <i className="material-icons custom-toggle-icon" onClick={() => this.createFavoriteToggle(favorite.category)}>create</i> : false }
+                            {this.props.user !== null ? <i className="material-icons custom-toggle-icon" onClick={() => this.toggleCategory(categoryIndex)}>create</i> : false}
                         </div>
                     </div>
                     <ul className='custom-list'>
                         {pages}
-                        { favorite.createToggle
-                        ? <li className="new-item">
-                            <div className="input-field new-item-input">
-                                <input placeholder="http://www.placeholder.com/" id="first_name" type="text" className="validate" onChange={this.handleNewFavorite} />
-                                <label htmlFor="first_name" className="active">URL</label>
-                            </div>
-                            <i className="material-icons new-item-icon" onClick={() => this.saveFavorite(favorite.category)}>add_circle</i>
-                        </li>
-                        : false
+                        {
+                            this.state.toggledCategory == categoryIndex
+                                ? <li className="new-item">
+                                    <div className="input-field new-item-input">
+                                        <input placeholder="http://www.placeholder.com/" id="first_name" type="text" className="validate" onChange={this.handleNewFavorite} />
+                                        <label htmlFor="first_name" className="active">ADD FAVORITE</label>
+                                    </div>
+                                    <i className="material-icons new-item-icon" onClick={() => this.saveFavorite(categoryIndex)}>add_circle</i>
+                                </li>
+                                : false
                         }
                     </ul>
                 </div>
@@ -102,17 +163,58 @@ export default class Favorites extends React.Component {
         })
     }
 
-    saveFavorite(category) {
-        let favorites = this.state.favorites;        
-        let foundIndex = favorites.findIndex(x => x.category == category);
-        axios.post('http://localhost:3001/savefavorite', {url: this.state.newFavorite, index: foundIndex, user: this.props.user}).then(data => {
+    saveFavorite(index) {
+        let favorites = this.state.favorites;
+        let url = this.state.newFavorite
+        let domain = '';
+        let arr = url.split('www2.');
+        arr = arr.length < 2 ? arr[0].split('www.') : arr[1].split('www.');
+        arr = arr.length < 2 ? arr[0].split('https://') : arr[1].split('https://');
+        arr = arr.length < 2 ? arr[0].split('http://') : arr[1].split('http://');
+        arr = arr.length < 2 ? arr[0].split('/') : arr[1].split('/');
+        domain = arr[0];
+        this.setState({ toggledCategory: null })
+        favorites[index].pages.push({ name: domain, url: url });
+        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
             if (result == true) {
                 console.log('save successful');
                 this.getFavorites();
-                this.createFavoriteToggle(category);
             }
         })
+    }
+
+    removeFavorite(categoryIndex, urlIndex) {
+        let favorites = this.state.favorites;
+        console.log(categoryIndex);
+        console.log(urlIndex);
+        this.setState({ toggledCategory: null })
+        favorites[categoryIndex].pages.splice(urlIndex, 1);
+        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
+            let result = data.data;
+            if (result == true) {
+                console.log('save successful');
+                this.getFavorites();
+            }
+        })
+    }
+
+    toggleFavorite(index, editing) {
+        if (index != this.state.toggledFavorite.index || editing == true) {
+            this.setState({
+                toggledFavorite: {
+                    index: index,
+                    editing: editing
+                }
+            })
+        } else {
+            this.setState({
+                toggledFavorite: {
+                    index: null,
+                    editing: false
+                }
+            })
+        }
     }
 
     render() {
@@ -129,54 +231,54 @@ let defaultFavorites = [
     {
         category: 'Social',
         pages: [
-            { order: 0, name: 'Facebook', url: 'https://www.facebook.com/' },
-            { order: 1, name: 'Twitter', url: 'https://twitter.com/' },
-            { order: 2, name: 'LinkedIn', url: 'https://www.linkedin.com/' }
+            { name: 'Facebook', url: 'https://www.facebook.com/', editToggle: false },
+            { name: 'Twitter', url: 'https://twitter.com/', editToggle: false },
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/', editToggle: false }
         ],
         createToggle: false
     },
     {
         category: 'News',
         pages: [
-            { order: 3, name: 'Yahoo', url: 'https://www.yahoo.com/' },
-            { order: 4, name: 'CNN', url: 'http://www.cnn.com/' },
-            { order: 5, name: 'Huffington Post', url: 'https://www.huffingtonpost.com/' }
+            { name: 'Yahoo', url: 'https://www.yahoo.com/', editToggle: false },
+            { name: 'CNN', url: 'http://www.cnn.com/', editToggle: false },
+            { name: 'Huffington Post', url: 'https://www.huffingtonpost.com/', editToggle: false }
         ],
         createToggle: false
     },
     {
         category: 'Email',
         pages: [
-            { order: 6, name: 'Google Mail', url: 'https://mail.google.com/' },
-            { order: 7, name: 'Yahoo Mail', url: 'https://mail.yahoo.com/' },
-            { order: 8, name: 'Outlook', url: 'https://outlook.live.com/' }
+            { name: 'Google Mail', url: 'https://mail.google.com/', editToggle: false },
+            { name: 'Yahoo Mail', url: 'https://mail.yahoo.com/', editToggle: false },
+            { name: 'Outlook', url: 'https://outlook.live.com/', editToggle: false }
         ],
         createToggle: false
     },
     {
         category: 'Finance',
         pages: [
-            { order: 9, name: 'Chase', url: 'https://www.chase.com/' },
-            { order: 10, name: 'Bank of America', url: 'https://www.bankofamerica.com/' },
-            { order: 11, name: 'Wells Fargo', url: 'https://www.wellsfargo.com/' }
+            { name: 'Chase', url: 'https://www.chase.com/', editToggle: false },
+            { name: 'Bank of America', url: 'https://www.bankofamerica.com/', editToggle: false },
+            { name: 'Wells Fargo', url: 'https://www.wellsfargo.com/', editToggle: false }
         ],
         createToggle: false
     },
     {
         category: 'Shop',
         pages: [
-            { order: 12, name: 'Amazon', url: 'https://www.amazon.com/' },
-            { order: 13, name: 'Walmart', url: 'https://www.walmart.com/' },
-            { order: 14, name: 'eBay', url: 'https://www.ebay.com/' }
+            { name: 'Amazon', url: 'https://www.amazon.com/', editToggle: false },
+            { name: 'Walmart', url: 'https://www.walmart.com/', editToggle: false },
+            { name: 'eBay', url: 'https://www.ebay.com/', editToggle: false }
         ],
         createToggle: false
     },
     {
         category: 'Watch',
         pages: [
-            { order: 15, name: 'Netflix', url: 'https://www.netflix.com/' },
-            { order: 16, name: 'Hulu', url: 'https://www.hulu.com/' },
-            { order: 17, name: 'Amazon Video', url: 'https://www.primevideo.com/' }
+            { name: 'Netflix', url: 'https://www.netflix.com/', editToggle: false },
+            { name: 'Hulu', url: 'https://www.hulu.com/', editToggle: false },
+            { name: 'Amazon Video', url: 'https://www.primevideo.com/', editToggle: false }
         ],
         createToggle: false
     }
