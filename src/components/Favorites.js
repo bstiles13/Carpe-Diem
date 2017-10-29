@@ -86,7 +86,7 @@ export default class Favorites extends React.Component {
                                 <input placeholder="http://www.placeholder.com/" id="first_name" type="text" className="validate" onChange={this.handleNewFavorite} />
                                 <label htmlFor="first_name" className="active">URL</label>
                             </div>
-                            <i className="material-icons new-item-icon" onClick={this.saveFavorite}>add_circle</i>
+                            <i className="material-icons new-item-icon" onClick={() => this.saveFavorite(favorite.category)}>add_circle</i>
                         </li>
                         : false
                         }
@@ -102,9 +102,16 @@ export default class Favorites extends React.Component {
         })
     }
 
-    saveFavorite() {
-        axios.post('http://localhost:3001/savefavorite', {url: this.state.newFavorite}).then(data => {
-            console.log('favorite added:', data);
+    saveFavorite(category) {
+        let favorites = this.state.favorites;        
+        let foundIndex = favorites.findIndex(x => x.category == category);
+        axios.post('http://localhost:3001/savefavorite', {url: this.state.newFavorite, index: foundIndex, user: this.props.user}).then(data => {
+            let result = data.data;
+            if (result == true) {
+                console.log('save successful');
+                this.getFavorites();
+                this.createFavoriteToggle(category);
+            }
         })
     }
 

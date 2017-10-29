@@ -31,7 +31,7 @@ module.exports = {
             if (err) {
                 console.log(err);
                 res.send(false);
-            // If username does not exist, encrypt and add new user account to database
+                // If username does not exist, encrypt and add new user account to database
             } else if (user == null) {
                 bcrypt.genSalt(10, function (err, salt) {
                     bcrypt.hash(req.body.newPassword1, salt, function (err, hash) {
@@ -111,9 +111,22 @@ module.exports = {
         arr = arr.length < 2 ? arr[0].split('https://') : arr[1].split('https://');
         arr = arr.length < 2 ? arr[0].split('http://') : arr[1].split('http://');
         arr = arr.length < 2 ? arr[0].split('/') : arr[1].split('/');
-        url = arr[0];
-        console.log(url);     
-        
+        let domain = arr[0];
+        console.log(domain);
+        let update = "favorites." + req.body.index + ".pages";
+        Favorite.update(
+            { user: req.body.user },
+            { $push: { [update]: { order: 0, name: domain, url: url } } }, function (err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    // After adding, return updated favorites to browser
+                    Favorite.find({ user: req.body.user }).then(data => {
+                        res.send(true);
+                    })
+                }
+            });
+
 
     }
 
