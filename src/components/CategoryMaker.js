@@ -23,7 +23,7 @@ export default class CategoryMaker extends React.Component {
 
     render() {
         return (
-            <div id='new-card' onClick={() => this.setState({ toggle: true })}>
+            <div id='category-maker' onClick={() => this.setState({ toggle: true })}>
                 {
                     this.state.toggle
                         ? <div>
