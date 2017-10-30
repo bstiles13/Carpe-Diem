@@ -96,6 +96,7 @@
   border-bottom: 0.3px solid gainsboro;  
   /* background-color: rgba(255, 255, 255, 0.8); */
   background-color: #222;
+  cursor: pointer;
 }
 
 .custom-item-link {
@@ -126,6 +127,10 @@
 
 .new-item-input {
   flex: 6;
+}
+
+.url-input {
+  color: white;
 }
 
 .new-item-icon {
@@ -242,6 +247,7 @@
   border-radius: 10%;
   padding: 5px;
   margin: 5px;
+  cursor: pointer;
 }
 
 #divider {
@@ -304,6 +310,7 @@
 
 #template-input {
   width: 150px;
+  color: white;
 }
 
 .activity-card {

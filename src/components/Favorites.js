@@ -152,8 +152,8 @@ export default class Favorites extends React.Component {
                             this.state.toggledCategory == categoryIndex
                                 ? <li className="new-item">
                                     <div className="input-field new-item-input">
-                                        <input placeholder="http://www.placeholder.com/" id="first_name" type="text" className="validate" onChange={this.handleNewFavorite} />
-                                        <label htmlFor="first_name" className="active">ADD FAVORITE</label>
+                                        <input placeholder="http://www.placeholder.com/" id="url-input" type="text" className="validate url-input" onChange={this.handleNewFavorite} />
+                                        <label htmlFor="url-input" className="active">ADD FAVORITE</label>
                                     </div>
                                     <i className="material-icons new-item-icon" onClick={() => this.saveFavorite(categoryIndex)}>add_circle</i>
                                 </li>
