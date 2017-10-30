@@ -23,6 +23,7 @@ export default class Favorites extends React.Component {
         this.handleNameEdit = this.handleNameEdit.bind(this);
         this.saveNameEdit = this.saveNameEdit.bind(this);
         this.addCategory = this.addCategory.bind(this);
+        this.removeCategory = this.removeCategory.bind(this);
     }
 
     componentDidMount() {
@@ -137,7 +138,9 @@ export default class Favorites extends React.Component {
             return (
                 <div className='custom-card'>
                     <div className='custom-header'>
-                        <div className='custom-header-child'></div>
+                        <div className='custom-header-child custom-delete'>
+                            { this.state.toggledCategory == categoryIndex ? <i className="material-icons delete-icon" onClick={() => this.removeCategory(categoryIndex)}>delete</i> : false }
+                        </div>
                         <div className='custom-header-child'>{favorite.category}</div>
                         <div className='custom-header-child' id='custom-toggle'>
                             {this.props.user !== null ? <i className="material-icons custom-toggle-icon" onClick={() => this.toggleCategory(categoryIndex)}>create</i> : false}
@@ -215,6 +218,19 @@ export default class Favorites extends React.Component {
                 console.log('save successful');
                 this.getFavorites();
                 this.toggleCategory(index);
+            }
+        })
+    }
+
+    removeCategory(index) {
+        let favorites = this.state.favorites;
+        this.setState({ toggledCategory: null })
+        favorites.splice(index, 1);
+        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
+            let result = data.data;
+            if (result == true) {
+                console.log('save successful');
+                this.getFavorites();
             }
         })
     }
