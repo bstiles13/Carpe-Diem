@@ -13,8 +13,8 @@ export default class Navbar extends React.Component {
                 </div>
                 <div id="header-right" className="header-child">
                     {this.props.user != null
-                    ? <div><span>Hi {this.props.user}</span><br/><button id="logout-button" onClick={this.props.logout}>Sign Out</button></div>
-                    : <Link to="/login"><button id="login-button">Sign In</button></Link>
+                    ? <div><span>Hi {this.props.user}</span><br/><button className="custom-button" onClick={this.props.logout}>Sign Out</button></div>
+                    : <Link to="/login"><button className="custom-button">Sign In</button></Link>
                     }
                 </div>
             </header>

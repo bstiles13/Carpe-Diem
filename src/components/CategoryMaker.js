@@ -23,17 +23,17 @@ export default class CategoryMaker extends React.Component {
 
     render() {
         return (
-            <div id='category-maker' onClick={() => this.setState({ toggle: true })}>
+            <div id='category-maker'>
                 {
                     this.state.toggle
                         ? <div>
                             <input id='template-input' placeholder='Category Name' onChange={this.handleChange}/>
                             <br />
-                            <button className="btn waves-effect waves-light light-blue darken-1" name="action" onClick={() => this.props.addCategory(this.state.categoryName)}>Create<i className="material-icons left">add</i></button>
+                            <button className="custom-button" onClick={() => this.props.addCategory(this.state.categoryName)}>Create<i className="material-icons left">add</i></button>
                             <br />
-                            <button className="btn waves-effect waves-light red darken-3" name="action">Close<i className="material-icons left">close</i></button>
+                            <button className="custom-button" onClick={() => this.setState({ toggle: false, categoryName: '' })}>Close<i className="material-icons left">close</i></button>
                         </div>
-                        : <i id='add' className="material-icons">add</i>
+                        : <i id='add' className="material-icons apply-pointer" onClick={() => this.setState({ toggle: true })}>add</i>
                 }
             </div>
         )

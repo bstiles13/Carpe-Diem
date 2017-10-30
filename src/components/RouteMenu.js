@@ -17,7 +17,7 @@ class RouteMenu extends React.Component {
             <div >
                 <ul id="route-menu" className="tabs tabs-transparent">
                     <li className="tab" onClick={() => this.routeClick('/')}><a href="#">Home</a></li>
-                    <li className="tab" onClick={() => this.routeClick('/today')}><a href="#">Your Week</a></li>
+                    <li className="tab" onClick={() => this.routeClick('/today')}><a href="#">My City</a></li>
                 </ul>
             </div>
         )

@@ -115,14 +115,14 @@ export default class Events extends React.Component {
                                 <div className="input-field inline">
                                     <input placeholder="Enter zip code..." type="text" className="validate" onChange={this.handleChange} />
                                 </div>
-                                <i className="material-icons success-icon" onClick={this.saveLocation}>send</i>
+                                <i className="material-icons success-icon apply-pointer" onClick={this.saveLocation}>send</i>
                                 {
                                     this.state.warningToggle
                                         ? <div className='login-warning'>{this.state.warningText}</div>
                                         : false
                                 }
                             </div>
-                            : <i className="material-icons" onClick={() => this.setState({ editing: true })}>add</i>
+                            : <i className="material-icons apply-pointer" onClick={() => this.setState({ editing: true })}>add</i>
                     }
                 </div>
                 <br />

@@ -98,7 +98,7 @@ export default class Weather extends React.Component {
         return (
             <div id='weather-container' className="event-card">
                 <div className='event-card-title grey darken-4'>
-                    <h5>WEATHER</h5>
+                    <h5 className='event-header'>WEATHER</h5>
                     {this.state.weather != null ? <div>{this.state.weather.query.results.channel.location.city + ', ' + this.state.weather.query.results.channel.location.region}</div> : false}
                 </div>
                 <div className='event-card-content'>

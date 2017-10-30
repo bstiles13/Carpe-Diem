@@ -123,7 +123,7 @@ export default class Activities extends React.Component {
         return (
             <div id='activity-container' className="event-card">
                 <div className='event-card-title grey darken-4'>
-                    <h5>HAPPENING NEARBY</h5>
+                    <h5 className='event-header'>HAPPENING NEARBY</h5>
                 </div>
                 <div className='event-card-content'>
                     <div className="row">
