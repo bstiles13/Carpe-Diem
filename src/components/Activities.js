@@ -19,6 +19,7 @@ export default class Activities extends React.Component {
         this.setActivities = this.setActivities.bind(this);
         this.getActivities = this.getActivities.bind(this);
         this.toggleCategory = this.toggleCategory.bind(this);
+        this.renderImage = this.renderImage.bind(this);
     }
 
     componentDidMount() {
@@ -61,6 +62,26 @@ export default class Activities extends React.Component {
         })
     }
 
+    renderImage(category) {
+        switch (category) {
+            case 'Family Activities':
+                return 'http://youthvoices.net/sites/default/files/image/124947/sep/header-family.jpg'
+                break;
+            case 'Music':
+                return 'https://motechdevelopment.com/wp-content/uploads/2014/12/modern-colour-music-header-1c.jpg'
+                break;
+            case 'Sports':
+                return 'http://pumpandtap.com/wp-content/uploads/2016/03/pumpandtap-sportsheader-e1457827819293.png'
+                break;
+            case 'Comedy':
+                return 'https://www.singingsuccess.com/wp-content/uploads/2016/12/mic-header.jpg'
+                break;
+            case 'Outdoors':
+                return 'https://blog.homeexchange.com/wp-content/uploads/2016/11/comm609_nightsky_header.jpg'
+                break;
+        }
+    }
+
     renderTabs() {
         let activities = this.state.activities;
         return Object.keys(activities).map((key, index) => {
@@ -84,8 +105,7 @@ export default class Activities extends React.Component {
         })
         return (
             <div className="card activity-card">
-                <div className="card-image">
-                    <img src="https://c1.staticflickr.com/9/8661/16541122548_2428167c86_z.jpg" />
+                <div className="card-image" style={ {'backgroundImage': 'url(' + this.renderImage(this.state.toggledCategory) + ')', 'backgroundPosition': 'left center', 'backgroundSize': 'cover'} }>
                     <span className="card-title">{this.state.toggledCategory}</span>
                 </div>
                 <div className="card-content">
