@@ -13,7 +13,8 @@ export default class Activities extends React.Component {
                 'Comedy': [],
                 'Outdoors': []
             },
-            toggledCategory: 'Family Activities'
+            toggledCategory: 'Family Activities',
+            toggledTab: 0
         }
         this.setActivities = this.setActivities.bind(this);
         this.getActivities = this.getActivities.bind(this);
@@ -49,17 +50,20 @@ export default class Activities extends React.Component {
         })
     }
 
-    toggleCategory(category) {
+    toggleCategory(category, index) {
         console.log(category);
         this.setState({
             toggledCategory: category
+        })
+        this.setState({
+            toggledTab: index
         })
     }
 
     renderTabs() {
         let activities = this.state.activities;
-        return Object.keys(activities).map(key => {
-            return <li className="tab col s3" onClick={() => this.toggleCategory(key)}><a href="#">{key}</a></li>
+        return Object.keys(activities).map((key, index) => {
+            return <li className="tab col s3" onClick={() => this.toggleCategory(key, index)}><a className={this.state.toggledTab == index ? "active" : ""} href="#">{key}</a></li>
         })
     }
 
@@ -69,7 +73,7 @@ export default class Activities extends React.Component {
             return <li className="collection-item">{index.title}</li>
         })
         return (
-            <div className="card">
+            <div className="card activity-card">
                 <div className="card-image">
                     <img src="https://c1.staticflickr.com/9/8661/16541122548_2428167c86_z.jpg" />
                     <span className="card-title">{this.state.toggledCategory}</span>

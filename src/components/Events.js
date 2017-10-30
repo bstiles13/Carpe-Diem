@@ -106,8 +106,6 @@ export default class Events extends React.Component {
     render() {
         return (
             <div id='events'>
-                <h5>Today's Events</h5>
-                <hr />
                 <div id='zip-container'>
                     {/* <span>My Location(s):</span> */}
                     {this.renderLocations()}

@@ -214,7 +214,8 @@
 
 #zip-container {
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  align-items: center;
 }
 
 .zip {
@@ -229,6 +230,7 @@
 #divider {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 }
 
 #weather-container {
@@ -285,4 +287,15 @@
 
 #template-input {
   width: 150px;
+}
+
+.activity-card {
+  width: 100%;
+  margin: 0 10px;
+}
+
+#route-menu {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
 }
