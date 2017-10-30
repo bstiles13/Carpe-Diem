@@ -103,6 +103,37 @@ export default class Favorites extends React.Component {
         })
     }
 
+    moveFavorite(categoryIndex, urlIndex, direction) {
+        let favorites = this.state.favorites;
+        let lastIndex = favorites[categoryIndex].pages.length - 1;
+        console.log(lastIndex);
+        let purgatory = {}
+        if (urlIndex == 0 && direction == 1) {
+            purgatory = favorites[categoryIndex].pages[lastIndex];
+            favorites[categoryIndex].pages[lastIndex] = favorites[categoryIndex].pages[urlIndex];
+            favorites[categoryIndex].pages[urlIndex] = purgatory;
+        } else if (urlIndex == lastIndex && direction == -1) {
+            purgatory = favorites[categoryIndex].pages[0];
+            favorites[categoryIndex].pages[0] = favorites[categoryIndex].pages[urlIndex];
+            favorites[categoryIndex].pages[urlIndex] = purgatory;
+        } else if (direction == 1) {
+            purgatory = favorites[categoryIndex].pages[urlIndex - 1];
+            favorites[categoryIndex].pages[urlIndex - 1] = favorites[categoryIndex].pages[urlIndex];
+            favorites[categoryIndex].pages[urlIndex] = purgatory;
+        } else {
+            purgatory = favorites[categoryIndex].pages[urlIndex + 1];
+            favorites[categoryIndex].pages[urlIndex + 1] = favorites[categoryIndex].pages[urlIndex];
+            favorites[categoryIndex].pages[urlIndex] = purgatory;
+        }
+        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
+            let result = data.data;
+            if (result == true) {
+                console.log('save successful');
+                this.getFavorites();
+            }
+        })
+    }
+
     renderFavorites() {
         var favorites = this.state.favorites;
         return favorites.map((favorite, categoryIndex) => {
@@ -123,6 +154,8 @@ export default class Favorites extends React.Component {
                         {
                             this.state.toggledCategory == categoryIndex
                                 ? <div>
+                                <i className="material-icons edit-icon" onClick={() => this.moveFavorite(categoryIndex, urlIndex, 1)}>arrow_upward</i>
+                                <i className="material-icons edit-icon" onClick={() => this.moveFavorite(categoryIndex, urlIndex, -1)}>arrow_downward</i>
                                     {
                                         this.state.toggledFavorite.index == urlIndex && this.state.toggledFavorite.editing == true
                                             ? <i className="material-icons success-icon" onClick={this.saveNameEdit}>check</i>
