@@ -130,8 +130,9 @@
 }
 
 #new-card {
-  height: 200px;
-  background-color: whitesmoke;
+  min-height: 100px;
+  min-width: 100px;
+  background-color: #1b1b1c;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -141,6 +142,7 @@
 
 #add {
   font-size: 50px;
+  color: gainsboro;
 }
 
 #google-search {
@@ -152,15 +154,6 @@
   padding-left: 10px;
 }
 
-#modal2 {
-  color: black;
-}
-
-#modal-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 #login-container {
   display: flex;
@@ -276,4 +269,8 @@
 .success-icon {
   color: greenyellow;
   font-weight: bolder;
+}
+
+#template-input {
+  width: 150px;
 }

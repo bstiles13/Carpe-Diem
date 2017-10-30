@@ -22,6 +22,7 @@ export default class Favorites extends React.Component {
         this.removeFavorite = this.removeFavorite.bind(this);
         this.handleNameEdit = this.handleNameEdit.bind(this);
         this.saveNameEdit = this.saveNameEdit.bind(this);
+        this.addCategory = this.addCategory.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -119,8 +120,8 @@ export default class Favorites extends React.Component {
                                 ? <div>
                                     {
                                         this.state.toggledFavorite.index == urlIndex && this.state.toggledFavorite.editing == true
-                                        ? <i className="material-icons success-icon" onClick={this.saveNameEdit}>check</i>
-                                        : <i className="material-icons edit-icon" onClick={() => this.toggleFavorite(urlIndex, true)}>edit</i>
+                                            ? <i className="material-icons success-icon" onClick={this.saveNameEdit}>check</i>
+                                            : <i className="material-icons edit-icon" onClick={() => this.toggleFavorite(urlIndex, true)}>edit</i>
                                     }
                                     <i className="material-icons edit-icon" onClick={() => this.removeFavorite(categoryIndex, urlIndex)}>delete</i>
                                 </div>
@@ -199,6 +200,21 @@ export default class Favorites extends React.Component {
         })
     }
 
+    addCategory(category) {
+        console.log('category', category);
+        let favorites = this.state.favorites;
+        favorites.push({ category: category, pages: [] })
+        let index = favorites.length - 1;
+        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
+            let result = data.data;
+            if (result == true) {
+                console.log('save successful');
+                this.getFavorites();
+                this.toggleCategory(index);
+            }
+        })
+    }
+
     toggleFavorite(index, editing) {
         if (index != this.state.toggledFavorite.index || editing == true) {
             this.setState({
@@ -221,7 +237,11 @@ export default class Favorites extends React.Component {
         return (
             <div id='card-container'>
                 {this.renderFavorites()}
-                <CategoryMaker />
+                {
+                    this.props.user != null
+                        ? <CategoryMaker addCategory={this.addCategory} />
+                        : false
+                }
             </div>
         )
     }
