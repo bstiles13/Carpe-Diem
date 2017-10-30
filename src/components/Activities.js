@@ -16,24 +16,30 @@ export default class Activities extends React.Component {
             toggledCategory: 'Family Activities'
         }
         this.setActivities = this.setActivities.bind(this);
+        this.getActivities = this.getActivities.bind(this);
         this.toggleCategory = this.toggleCategory.bind(this);
     }
 
     componentDidMount() {
+        this.getActivities();      
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps != this.props) {
+            this.getActivities();
+        }
+    }
+
+    getActivities() {
         this.setActivities('Family Activities', 'family_fun_kids');
         this.setActivities('Music', 'music');
         this.setActivities('Sports', 'sports');
         this.setActivities('Comedy', 'comedy');
         this.setActivities('Outdoors', 'outdoors_recreation');
-        // this.setActivities('animals');        
-    }
-
-    componentDidUpdate() {
-        console.log(this.state)
     }
 
     setActivities(category, id) {
-        let url = 'http://api.eventful.com/json/events/search?...&location=' + this.props.locations[0] + '&within=100&&date=Future&t=This+Week&category=' + id + '&app_key=KJbX3nZkSCDVrQCJ'
+        let url = 'http://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + id + '&app_key=KJbX3nZkSCDVrQCJ'
         axios.get(url).then(data => {
             let activities = this.state.activities;
             activities[category] = data.data.events.event;

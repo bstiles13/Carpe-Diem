@@ -10,6 +10,7 @@ export default class Events extends React.Component {
         this.state = {
             locationInput: '',
             locations: defaultLocation,
+            locationIndex: 0,
             editing: false,
             warningToggle: false,
             warningText: 'Please enter valid zip code'
@@ -17,6 +18,7 @@ export default class Events extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.getLocations = this.getLocations.bind(this);
         this.saveLocation = this.saveLocation.bind(this);
+        this.changeZip = this.changeZip.bind(this);
     }
 
     componentDidMount() {
@@ -77,8 +79,15 @@ export default class Events extends React.Component {
             let result = data.data;
             if (result == true) {
                 console.log('save successful');
+                this.setState({ locationIndex: 0 })
                 this.getLocations();
             }
+        })
+    }
+
+    changeZip(index) {
+        this.setState({
+            locationIndex: index
         })
     }
 
@@ -87,7 +96,7 @@ export default class Events extends React.Component {
         return locations.map((zip, index) => {
             return (
                 <span className="zip">
-                    <span>{zip}</span>
+                    <span onClick={() => this.changeZip(index)}>{zip}</span>
                     <i className="material-icons" onClick={() => this.removeLocation(index)}>close</i>
                 </span>
             )
@@ -121,8 +130,8 @@ export default class Events extends React.Component {
                 <br />
 
                 <div id='divider'>
-                    <Weather locations={this.state.locations} />
-                    <Activites locations={this.state.locations} />
+                    <Weather locations={this.state.locations} locationIndex={this.state.locationIndex}/>
+                    <Activites locations={this.state.locations} locationIndex={this.state.locationIndex} />
                 </div>
             </div>
         )

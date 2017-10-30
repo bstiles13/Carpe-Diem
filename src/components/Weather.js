@@ -14,8 +14,14 @@ export default class Weather extends React.Component {
         this.getWeather();
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps != this.props) {
+            this.getWeather();
+        }
+    }
+
     getWeather() {
-        let url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22w=" + this.props.locations[0] + "%22)&format=json"
+        let url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22w=" + this.props.locations[this.props.locationIndex] + "%22)&format=json"
         axios.get(url).then(data => {
             this.setState({
                 weather: data.data
