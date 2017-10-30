@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Weather from './Weather';
 import Activites from './Activities';
 
@@ -8,16 +9,65 @@ export default class Events extends React.Component {
         super(props);
         this.state = {
             locationInput: '',
-            locations: ['80138', '90028'],
-            editing: false
+            locations: defaultLocation,
+            editing: false,
+            warningToggle: false,
+            warningText: 'Please enter valid zip code'
         }
         this.handleChange = this.handleChange.bind(this);
+        this.getLocations = this.getLocations.bind(this);
+        this.saveLocation = this.saveLocation.bind(this);
+    }
+
+    componentDidMount() {
+        this.getLocations();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps != this.props) {
+            this.getLocations();
+        }
+        console.log('favorites updated', this.state.locations);
+    }
+
+    getLocations() {
+        if (this.props.user != null) {
+            console.log('user:', this.props.user);
+            axios.post('http://localhost:3001/findlocations', { user: this.props.user }).then(data => {
+                console.log('got locations', data);
+                this.setState({
+                    locations: data.data[0].zip
+                })
+            })
+        } else {
+            this.setState({
+                locations: defaultLocation
+            })
+        }
     }
 
     handleChange(e) {
         this.setState({
             locationInput: e.target.value
         })
+    }
+
+    saveLocation() {
+        let locations = this.state.locations;
+        if (isNaN(this.state.locationInput) || parseInt(this.state.locationInput) < 501 || parseInt(this.state.locationInput) > 99950) {
+            this.setState({ warningToggle: true })
+        } else {
+            locations.unshift(this.state.locationInput);
+            axios.post('http://localhost:3001/updatelocations', { locations: locations, user: this.props.user }).then(data => {
+                let result = data.data;
+                if (result == true) {
+                    console.log('save successful');
+                    this.setState({ editing: false })
+                    this.setState({ warningTogggle: false })
+                    this.getLocations();
+                }
+            })
+        }
     }
 
     renderLocations() {
@@ -46,7 +96,12 @@ export default class Events extends React.Component {
                                 <div className="input-field inline">
                                     <input placeholder="Zip code..." type="text" className="validate" onChange={this.handleChange} />
                                 </div>
-                                <i className="material-icons success-icon">send</i>
+                                <i className="material-icons success-icon" onClick={this.saveLocation}>send</i>
+                                {
+                                    this.state.warningToggle
+                                    ? <div className='login-warning'>{this.state.warningText}</div>
+                                    : false
+                                }
                             </div>
                             : <i className="material-icons" onClick={() => this.setState({ editing: !this.state.editing })}>add</i>
                     }
@@ -61,3 +116,5 @@ export default class Events extends React.Component {
         )
     }
 }
+
+let defaultLocation = ['10012']

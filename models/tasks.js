@@ -115,8 +115,28 @@ module.exports = {
                     res.send(true);
                 }
             });
+    },
 
+    findLocations: function (req, res) {
+        let user = req.body.user;
+        User.find({ username: user }).then(data => {
+            res.json(data);
+        })
+    },
 
+    updateLocations: function (req, res) {
+        console.log(req.body.locations);
+        console.log('received update');
+        User.update(
+            { username: req.body.user },
+            { zip: req.body.locations }, function (err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    // After adding, return updated favorites to browser
+                    res.send(true);
+                }
+            });
     }
 
 }

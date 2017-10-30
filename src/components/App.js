@@ -57,7 +57,7 @@ class App extends Component {
           </ul>
           <div id="app-content">
             <Route exact path="/" render={props => <Home user={this.state.user} />} />
-            <Route path="/today" component={Events} />
+            <Route path="/today" render={props => <Events user={this.state.user} />} />
             <Route path="/login" render={props => <Login checkUser={this.checkUser} />} />
           </div>
         </div>

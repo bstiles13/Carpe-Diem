@@ -17,4 +17,9 @@ router.post('/findfavorites', tasks.findFavorites);
 
 router.post('/updatefavorites', tasks.updateFavorites);
 
+router.post('/findlocations', tasks.findLocations);
+
+router.post('/updatelocations', tasks.updateLocations);
+
+
 module.exports = router;
