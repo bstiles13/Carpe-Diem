@@ -188,7 +188,17 @@
   color: ivory;
 }
 
-#weather {
+#today {
+  display: flex;
+  align-items: center;
+  background-color: #1353B7;
+  padding: 5px;
+  border: 1px solid ivory;
+  margin-bottom: 10px;
+}
+
+.today-child {
+  margin: 0 10px;
   text-align: left;
 }
 
@@ -197,26 +207,12 @@
   flex-direction: column;
 }
 
-#today {
-  display: flex;
-  align-items: center;
-  background-color: #1353B7;
-  max-width: 280px;
-  padding: 5px;
-  border: 1px solid ivory;
-}
-
-.today-child {
-  margin: 0 10px;
-  text-align: left;
-}
-
 .daily {
   border: 2px solid #1353B7;
   padding: 10px;
 }
 
-#zip-chips {
+#zip-container {
   display: flex;
   justify-content: center;
 }
@@ -232,25 +228,38 @@
 
 #divider {
   display: flex;
+  justify-content: space-between;
 }
 
-#weather {
+#weather-container {
   flex: 1;
 }
 
-#activities {
-  flex: 7;
+#activity-container {
+  flex: 3;
+}
+
+.event-card {
+  border: 1px solid gray;    
+}
+
+.event-card-title {
+  padding: 10px;
+}
+
+.event-content-header {
+  background-color: white;
+  color: #1353B7;
+}
+
+.tabs {
+  display: flex;
 }
 
 #activity-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;  
-}
-
-.card {
-  width: 500px;
-  margin: 20px 30px;
 }
 
 .card-content {
@@ -276,8 +285,4 @@
 
 #template-input {
   width: 150px;
-}
-
-.tabs {
-  display: flex;
 }

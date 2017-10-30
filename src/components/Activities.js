@@ -82,19 +82,23 @@ export default class Activities extends React.Component {
 
     render() {
         return (
-            <did id='activities'>
-                <h5>Happening Near You:</h5>
-                <div className="row">
-                    <div className="col s12">
-                        <ul className="tabs grey darken-4">
-                            {this.renderTabs()}
-                        </ul>
+            <div id='activity-container' className="event-card">
+                <div className='event-card-title grey darken-4'>
+                    <h5>HAPPENING NEARBY</h5>
+                </div>
+                <div className='event-card-content'>
+                    <div className="row">
+                        <div className="col s12">
+                            <ul className="tabs grey darken-4">
+                                {this.renderTabs()}
+                            </ul>
+                        </div>
+                    </div>
+                    <div id='activity-list'>
+                        {this.renderActivities()}
                     </div>
                 </div>
-                <div id='activity-list'>
-                    {this.renderActivities()}
-                </div>
-            </did>
+            </div>
         )
     }
 }
