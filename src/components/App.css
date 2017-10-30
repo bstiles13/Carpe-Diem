@@ -1,7 +1,9 @@
 .App {
   text-align: center;
   /* background-color: rgb(208, 214, 224); */
-  background-color: #26292E;
+  /* background-color: #26292E; */
+  background: linear-gradient(-45deg, #2d4160, #26292E);
+  min-height: 100%;
 }
 
 .App-logo {
@@ -16,7 +18,7 @@
   padding: 20px;
   color: white;
   display: flex;
-  border-bottom: 10px solid #1353B7;
+  border-bottom: 8px solid #1353B7;
 }
 
 .App-title {
@@ -53,6 +55,7 @@
 .custom-card {
   margin: 0 60px 40px 60px;
   width: 300px;
+  box-shadow: 5px 8px 5px #26292E;  
 }
 
 .custom-header {
@@ -162,20 +165,40 @@
 #google-search {
   background-color: white;
   border: 5px solid #1353B7;
+  padding-left: 10px;
+}
+
+#google-search::placeholder {
+  color: slategray;
 }
 
 #google-label {
   padding-left: 10px;
 }
 
+#login {
+  color: white;
+  margin-top: 50px;
+}
 
 #login-container {
   display: flex;
   align-items: stretch;
+  /* color: ivory; */
 }
 
 .login-child {
   flex: 1;
+  /* color: ivory;   */
+}
+
+.login-icon {
+  /* color: ivory; */
+}
+
+.login-header {
+  color: #37BDFF;
+  font-weight: bold;
 }
 
 #button-container {

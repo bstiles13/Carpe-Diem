@@ -31,7 +31,7 @@ export default class CategoryMaker extends React.Component {
                             <br />
                             <button className="btn waves-effect waves-light light-blue darken-1" name="action" onClick={() => this.props.addCategory(this.state.categoryName)}>Create<i className="material-icons left">add</i></button>
                             <br />
-                            <button className="btn waves-effect waves-light red darken-3" name="action">Cancel<i className="material-icons left">close</i></button>
+                            <button className="btn waves-effect waves-light red darken-3" name="action">Close<i className="material-icons left">close</i></button>
                         </div>
                         : <i id='add' className="material-icons">add</i>
                 }

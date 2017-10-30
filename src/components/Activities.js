@@ -53,7 +53,6 @@ export default class Activities extends React.Component {
     }
 
     toggleCategory(category, index) {
-        console.log(category);
         this.setState({
             toggledCategory: category
         })

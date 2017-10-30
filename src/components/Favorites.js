@@ -134,70 +134,6 @@ export default class Favorites extends React.Component {
         })
     }
 
-    renderFavorites() {
-        var favorites = this.state.favorites;
-        return favorites.map((favorite, categoryIndex) => {
-            let pages = favorite['pages'].map((page, urlIndex) => {
-                return (
-                    <li className='custom-item'>
-                        <div className='custom-item-link favorite-text' onClick={() => this.openFavorite(page.url)}>
-                            <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} onError={(event) => event.target.setAttribute("src", placeholder)} />
-                            {
-                                this.state.toggledCategory == categoryIndex && this.state.toggledFavorite.index == urlIndex
-                                    ? <div className="input-field edit-input" onClick={this.stopPropagation}>
-                                        <input defaultValue={page.name} id="favorite-name" type="text" className="validate favorite-text" onChange={this.handleNameEdit} />
-                                        <label htmlFor="favorite-name" className="active">EDIT NAME</label>
-                                    </div>
-                                    : <span>{page.name}</span>
-                            }
-                        </div>
-                        {
-                            this.state.toggledCategory == categoryIndex
-                                ? <div>
-                                <i className="material-icons edit-icon" onClick={() => this.moveFavorite(categoryIndex, urlIndex, 1)}>arrow_upward</i>
-                                <i className="material-icons edit-icon" onClick={() => this.moveFavorite(categoryIndex, urlIndex, -1)}>arrow_downward</i>
-                                    {
-                                        this.state.toggledFavorite.index == urlIndex && this.state.toggledFavorite.editing == true
-                                            ? <i className="material-icons success-icon" onClick={this.saveNameEdit}>check</i>
-                                            : <i className="material-icons edit-icon" onClick={() => this.toggleFavorite(urlIndex, true)}>edit</i>
-                                    }
-                                    <i className="material-icons edit-icon" onClick={() => this.removeFavorite(categoryIndex, urlIndex)}>delete</i>
-                                </div>
-                                : false
-                        }
-                    </li>
-                )
-            })
-            return (
-                <div className='custom-card'>
-                    <div className='custom-header'>
-                        <div className='custom-header-child custom-delete'>
-                            { this.state.toggledCategory == categoryIndex ? <i className="material-icons delete-icon" onClick={() => this.removeCategory(categoryIndex)}>delete</i> : false }
-                        </div>
-                        <div className='custom-header-child'>{favorite.category}</div>
-                        <div className='custom-header-child' id='custom-toggle'>
-                            {this.props.user !== null ? <i className="material-icons custom-toggle-icon" onClick={() => this.toggleCategory(categoryIndex)}>create</i> : false}
-                        </div>
-                    </div>
-                    <ul className='custom-list'>
-                        {pages}
-                        {
-                            this.state.toggledCategory == categoryIndex
-                                ? <li className="new-item">
-                                    <div className="input-field new-item-input">
-                                        <input placeholder="http://www.placeholder.com/" id="url-input" type="text" className="validate url-input" onChange={this.handleNewFavorite} />
-                                        <label htmlFor="url-input" className="active">ADD FAVORITE</label>
-                                    </div>
-                                    <i className="material-icons new-item-icon" onClick={() => this.saveFavorite(categoryIndex)}>add_circle</i>
-                                </li>
-                                : false
-                        }
-                    </ul>
-                </div>
-            )
-        })
-    }
-
     handleNewFavorite(e) {
         this.setState({
             newFavorite: e.target.value
@@ -284,6 +220,70 @@ export default class Favorites extends React.Component {
                 }
             })
         }
+    }
+
+    renderFavorites() {
+        var favorites = this.state.favorites;
+        return favorites.map((favorite, categoryIndex) => {
+            let pages = favorite['pages'].map((page, urlIndex) => {
+                return (
+                    <li className='custom-item'>
+                        <div className='custom-item-link favorite-text' onClick={() => this.openFavorite(page.url)}>
+                            <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} onError={(event) => event.target.setAttribute("src", placeholder)} />
+                            {
+                                this.state.toggledCategory == categoryIndex && this.state.toggledFavorite.index == urlIndex
+                                    ? <div className="input-field edit-input" onClick={this.stopPropagation}>
+                                        <input defaultValue={page.name} id="favorite-name" type="text" className="validate favorite-text" onChange={this.handleNameEdit} />
+                                        <label htmlFor="favorite-name" className="active">EDIT NAME</label>
+                                    </div>
+                                    : <span>{page.name}</span>
+                            }
+                        </div>
+                        {
+                            this.state.toggledCategory == categoryIndex
+                                ? <div>
+                                <i className="material-icons edit-icon" onClick={() => this.moveFavorite(categoryIndex, urlIndex, 1)}>arrow_upward</i>
+                                <i className="material-icons edit-icon" onClick={() => this.moveFavorite(categoryIndex, urlIndex, -1)}>arrow_downward</i>
+                                    {
+                                        this.state.toggledFavorite.index == urlIndex && this.state.toggledFavorite.editing == true
+                                            ? <i className="material-icons success-icon" onClick={this.saveNameEdit}>check</i>
+                                            : <i className="material-icons edit-icon" onClick={() => this.toggleFavorite(urlIndex, true)}>edit</i>
+                                    }
+                                    <i className="material-icons edit-icon" onClick={() => this.removeFavorite(categoryIndex, urlIndex)}>delete</i>
+                                </div>
+                                : false
+                        }
+                    </li>
+                )
+            })
+            return (
+                <div className='custom-card'>
+                    <div className='custom-header'>
+                        <div className='custom-header-child custom-delete'>
+                            { this.state.toggledCategory == categoryIndex ? <i className="material-icons delete-icon" onClick={() => this.removeCategory(categoryIndex)}>delete</i> : false }
+                        </div>
+                        <div className='custom-header-child'>{favorite.category}</div>
+                        <div className='custom-header-child' id='custom-toggle'>
+                            {this.props.user !== null ? <i className="material-icons custom-toggle-icon" onClick={() => this.toggleCategory(categoryIndex)}>create</i> : false}
+                        </div>
+                    </div>
+                    <ul className='custom-list'>
+                        {pages}
+                        {
+                            this.state.toggledCategory == categoryIndex
+                                ? <li className="new-item">
+                                    <div className="input-field new-item-input">
+                                        <input placeholder="http://www.placeholder.com/" id="url-input" type="text" className="validate url-input" onChange={this.handleNewFavorite} />
+                                        <label htmlFor="url-input" className="active">ADD FAVORITE</label>
+                                    </div>
+                                    <i className="material-icons new-item-icon" onClick={() => this.saveFavorite(categoryIndex)}>add_circle</i>
+                                </li>
+                                : false
+                        }
+                    </ul>
+                </div>
+            )
+        })
     }
 
     render() {
