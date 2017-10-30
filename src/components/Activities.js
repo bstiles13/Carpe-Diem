@@ -22,13 +22,14 @@ export default class Activities extends React.Component {
     }
 
     componentDidMount() {
-        this.getActivities();      
+        this.getActivities();
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps != this.props) {
             this.getActivities();
         }
+        console.log(this.state.activities);
     }
 
     getActivities() {
@@ -70,7 +71,16 @@ export default class Activities extends React.Component {
     renderActivities() {
         let activities = this.state.activities[this.state.toggledCategory];
         let list = activities.map(index => {
-            return <li className="collection-item">{index.title}</li>
+            return (
+                <li className="collection-item avatar">
+                    <i className="material-icons circle">location_on</i>
+                    <span className="title">{index.title}</span>
+                    <p>{index.venue_address} <br />
+                        {index.start_time}
+                    </p>
+                    <a href={index.url} target="_blank" className="secondary-content"><i className="material-icons">info_outline</i></a>
+                </li>
+            )
         })
         return (
             <div className="card activity-card">
