@@ -9,7 +9,7 @@ export default class Events extends React.Component {
         super(props);
         this.state = {
             locationInput: '',
-            locations: defaultLocation,
+            locations: [defaultLocation],
             locationIndex: 0,
             editing: false,
             warningToggle: false,
@@ -107,13 +107,13 @@ export default class Events extends React.Component {
         return (
             <div id='events'>
                 <div id='zip-container'>
-                    {/* <span>My Location(s):</span> */}
+                    <span>Choose Location</span>
                     {this.renderLocations()}
                     {
-                        this.state.editing
+                        this.state.editing || this.state.locations.length == 0
                             ? <div>
                                 <div className="input-field inline">
-                                    <input placeholder="Zip code..." type="text" className="validate" onChange={this.handleChange} />
+                                    <input placeholder="Enter zip code..." type="text" className="validate" onChange={this.handleChange} />
                                 </div>
                                 <i className="material-icons success-icon" onClick={this.saveLocation}>send</i>
                                 {
@@ -122,15 +122,21 @@ export default class Events extends React.Component {
                                         : false
                                 }
                             </div>
-                            : <i className="material-icons" onClick={() => this.setState({ editing: !this.state.editing })}>add</i>
+                            : <i className="material-icons" onClick={() => this.setState({ editing: true })}>add</i>
                     }
                 </div>
                 <br />
+                {
+                    this.state.locations.length > 0
+                        ? (
+                            <div id='divider'>
+                                <Weather locations={this.state.locations} locationIndex={this.state.locationIndex} />
+                                <Activites locations={this.state.locations} locationIndex={this.state.locationIndex} />
+                            </div>
+                        )
+                        : false
+                    }
 
-                <div id='divider'>
-                    <Weather locations={this.state.locations} locationIndex={this.state.locationIndex}/>
-                    <Activites locations={this.state.locations} locationIndex={this.state.locationIndex} />
-                </div>
             </div>
         )
     }

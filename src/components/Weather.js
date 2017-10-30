@@ -12,12 +12,14 @@ export default class Weather extends React.Component {
 
     componentDidMount() {
         this.getWeather();
+        console.log('weather', this.state.weather);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps != this.props) {
             this.getWeather();
         }
+        console.log('weather', this.state.weather);
     }
 
     getWeather() {
@@ -31,7 +33,8 @@ export default class Weather extends React.Component {
 
     renderToday() {
         if (this.state.weather != null) {
-            let img = this.state.weather.query.results.channel.item.description;
+            let weather = this.state.weather.query.results.channel;
+            let img = weather.item.description;
             img = img.split('"')[1];
             return (
                 <div>
@@ -74,9 +77,11 @@ export default class Weather extends React.Component {
                     <div className='daily'>
                         <h5>{day.day}</h5>
                         <div>{day.date}</div>
-                        <hr />
-                        <div>{day.text}</div>
-                        <div>High: {day.high} Low: {day.low}</div>
+                        <div className='daily-details'>
+                            <div className='daily-child'>{day.text.toUpperCase()}</div>
+                            <div className='daily-child'>HIGH: {day.high.toUpperCase()}</div>
+                            <div className='daily-child'>LOW: {day.low.toUpperCase()}</div>
+                        </div>
                     </div>
                 )
             })
@@ -94,6 +99,7 @@ export default class Weather extends React.Component {
             <div id='weather-container' className="event-card">
                 <div className='event-card-title grey darken-4'>
                     <h5>WEATHER</h5>
+                    {this.state.weather != null ? <div>{this.state.weather.query.results.channel.location.city + ', ' + this.state.weather.query.results.channel.location.region}</div> : false}
                 </div>
                 <div className='event-card-content'>
                     {this.renderToday()}

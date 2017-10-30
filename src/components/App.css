@@ -209,7 +209,18 @@
 
 .daily {
   border: 2px solid #1353B7;
-  padding: 10px;
+}
+
+.daily-details {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  padding: 5px 0;
+  background-color: #1353B7;  
+}
+
+.daily-child {
+  flex: 1;
 }
 
 #zip-container {
@@ -297,5 +308,4 @@
 #route-menu {
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
 }
