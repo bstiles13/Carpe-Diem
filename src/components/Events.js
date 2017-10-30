@@ -70,13 +70,25 @@ export default class Events extends React.Component {
         }
     }
 
+    removeLocation(index) {
+        let locations = this.state.locations;
+        locations.splice(index, 1);
+        axios.post('http://localhost:3001/updatelocations', { locations: locations, user: this.props.user }).then(data => {
+            let result = data.data;
+            if (result == true) {
+                console.log('save successful');
+                this.getLocations();
+            }
+        })
+    }
+
     renderLocations() {
         let locations = this.state.locations;
-        return locations.map(zip => {
+        return locations.map((zip, index) => {
             return (
                 <span className="zip">
                     <span>{zip}</span>
-                    <i className="material-icons">close</i>
+                    <i className="material-icons" onClick={() => this.removeLocation(index)}>close</i>
                 </span>
             )
         })
@@ -99,8 +111,8 @@ export default class Events extends React.Component {
                                 <i className="material-icons success-icon" onClick={this.saveLocation}>send</i>
                                 {
                                     this.state.warningToggle
-                                    ? <div className='login-warning'>{this.state.warningText}</div>
-                                    : false
+                                        ? <div className='login-warning'>{this.state.warningText}</div>
+                                        : false
                                 }
                             </div>
                             : <i className="material-icons" onClick={() => this.setState({ editing: !this.state.editing })}>add</i>
