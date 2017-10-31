@@ -48,23 +48,23 @@ export default class Activities extends React.Component {
         ]
         this.setState({ togglePreloader: true })
         // let url = 'https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + id + '&app_key=KJbX3nZkSCDVrQCJ'
-        axios.get('https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&date=Future&t=This+Week&category=' + ids[0].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+        axios.get('https://cors.io/?https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&date=Future&t=This+Week&category=' + ids[0].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
             let activities = this.state.activities;
             activities[ids[0].category] = data.data.events.event;
             this.setState({ activities: activities }, () => {
-                axios.get('https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[1].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                axios.get('https://cors.io/?https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[1].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
                     let activities = this.state.activities;
                     activities[ids[1].category] = data.data.events.event;
                     this.setState({ activities: activities }, () => {
-                        axios.get('https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[2].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                        axios.get('https://cors.io/?https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[2].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
                             let activities = this.state.activities;
                             activities[ids[2].category] = data.data.events.event;
                             this.setState({ activities: activities }, () => {
-                                axios.get('https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[3].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                                axios.get('https://cors.io/?https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[3].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
                                     let activities = this.state.activities;
                                     activities[ids[3].category] = data.data.events.event;
                                     this.setState({ activities: activities }, () => {
-                                        axios.get('https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[4].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                                        axios.get('https://cors.io/?https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[4].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
                                             let activities = this.state.activities;
                                             activities[ids[4].category] = data.data.events.event;
                                             this.setState({ activities: activities }, () => {  
