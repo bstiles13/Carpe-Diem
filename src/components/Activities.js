@@ -44,7 +44,7 @@ export default class Activities extends React.Component {
     }
 
     setActivities(category, id) {
-        let url = 'http://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + id + '&app_key=KJbX3nZkSCDVrQCJ'
+        let url = 'https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + id + '&app_key=KJbX3nZkSCDVrQCJ'
         axios.get(url).then(data => {
             let activities = this.state.activities;
             activities[category] = data.data.events.event;
