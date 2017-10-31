@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Preloader from './Preloader';
 
 export default class Activities extends React.Component {
 
@@ -14,41 +15,74 @@ export default class Activities extends React.Component {
                 'Outdoors': []
             },
             toggledCategory: 'Family Activities',
-            toggledTab: 0
+            toggledTab: 0,
+            togglePreloader: false
         }
         this.setActivities = this.setActivities.bind(this);
-        this.getActivities = this.getActivities.bind(this);
+        // this.getActivities = this.getActivities.bind(this);
         this.toggleCategory = this.toggleCategory.bind(this);
         this.renderImage = this.renderImage.bind(this);
     }
 
     componentDidMount() {
         console.log('mounting');
-        this.getActivities();
+        this.setActivities();
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps != this.props) {
             console.log('props changed');
-            this.getActivities();
+            this.setActivities();
         }
-        console.log(this.state.activities);
+        console.log('no prop change');
+        // console.log(this.state.activities);
     }
 
-    getActivities() {
-        this.setActivities('Family Activities', 'family_fun_kids');
-        this.setActivities('Music', 'music');
-        this.setActivities('Sports', 'sports');
-        this.setActivities('Comedy', 'comedy');
-        this.setActivities('Outdoors', 'outdoors_recreation');
-    }
-
-    setActivities(category, id) {
-        let url = 'https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + id + '&app_key=KJbX3nZkSCDVrQCJ'
-        axios.get(url).then(data => {
+    setActivities() {
+        let ids = [
+            { category: 'Family Activities', id: 'family_fun_kids' },
+            { category: 'Music', id: 'music' },
+            { category: 'Sports', id: 'sports' },
+            { category: 'Comedy', id: 'comedy' },
+            { category: 'Outdoors', id: 'outdoors_recreation' }
+        ]
+        this.setState({ togglePreloader: true })
+        // let url = 'https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + id + '&app_key=KJbX3nZkSCDVrQCJ'
+        axios.get('https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&date=Future&t=This+Week&category=' + ids[0].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
             let activities = this.state.activities;
-            activities[category] = data.data.events.event;
-            this.setState({ activities: activities })
+            activities[ids[0].category] = data.data.events.event;
+            this.setState({ activities: activities }, () => {
+                axios.get('https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[1].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                    let activities = this.state.activities;
+                    activities[ids[1].category] = data.data.events.event;
+                    this.setState({ activities: activities }, () => {
+                        axios.get('https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[2].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                            let activities = this.state.activities;
+                            activities[ids[2].category] = data.data.events.event;
+                            this.setState({ activities: activities }, () => {
+                                axios.get('https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[3].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                                    let activities = this.state.activities;
+                                    activities[ids[3].category] = data.data.events.event;
+                                    this.setState({ activities: activities }, () => {
+                                        axios.get('https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[4].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                                            let activities = this.state.activities;
+                                            activities[ids[4].category] = data.data.events.event;
+                                            this.setState({ activities: activities }, () => {  
+                                                this.setState({ togglePreloader: false })                                                
+                                                console.log('got events')
+                                            })
+                                        })
+                                        console.log('got events')
+                                    })
+                                })
+                                console.log('got events')
+                            })
+                        })
+                        console.log('got events')
+                    })
+                })
+                console.log('got events')
+            })
         })
     }
 
@@ -105,7 +139,7 @@ export default class Activities extends React.Component {
         })
         return (
             <div className="card activity-card">
-                <div className="card-image" style={ {'backgroundImage': 'url(' + this.renderImage(this.state.toggledCategory) + ')', 'backgroundPosition': 'left center', 'backgroundSize': 'cover'} }>
+                <div className="card-image" style={{ 'backgroundImage': 'url(' + this.renderImage(this.state.toggledCategory) + ')', 'backgroundPosition': 'left center', 'backgroundSize': 'cover' }}>
                     <span className="card-title">{this.state.toggledCategory}</span>
                 </div>
                 <div className="card-content">
@@ -135,7 +169,11 @@ export default class Activities extends React.Component {
                         </div>
                     </div>
                     <div id='activity-list'>
-                        {this.renderActivities()}
+                        {
+                            this.state.togglePreloader
+                            ? <Preloader />
+                            : this.renderActivities()
+                        }
                     </div>
                 </div>
             </div>

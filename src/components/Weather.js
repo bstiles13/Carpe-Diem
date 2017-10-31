@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Preloader from './Preloader';
 
 export default class Weather extends React.Component {
 
@@ -54,17 +55,7 @@ export default class Weather extends React.Component {
             )
         } else {
             return (
-                <div className="preloader-wrapper big active">
-                    <div className="spinner-layer spinner-blue-only">
-                        <div className="circle-clipper left">
-                            <div className="circle"></div>
-                        </div><div className="gap-patch">
-                            <div className="circle"></div>
-                        </div><div className="circle-clipper right">
-                            <div className="circle"></div>
-                        </div>
-                    </div>
-                </div>
+                <Preloader />
             )
         }
     }
