@@ -82,36 +82,36 @@ export default class Activities extends React.Component {
     }
 
     renderActivities() {
-        if (this.state.activities != null) {
-            let activities = this.state.activities[this.state.toggledCategory];
-            let list = activities.map((event, index) => {
-                return (
-                    <li className="collection-item avatar" key={index}>
-                        <i className="material-icons circle">location_on</i>
-                        <span className="title">{event.title}</span>
-                        <p>{event.venue_address} <br />
-                            {event.start_time}
-                        </p>
-                        <a href={event.url} target="_blank" className="secondary-content"><i className="material-icons">info_outline</i></a>
-                    </li>
-                )
-            })
-            return (
-                <div className="card activity-card">
-                    <div className="card-image" style={{ 'backgroundImage': 'url(' + this.renderImage(this.state.toggledCategory) + ')', 'backgroundPosition': 'left center', 'backgroundSize': 'cover' }}>
-                        <span className="card-title">{this.state.toggledCategory}</span>
-                    </div>
-                    <div className="card-content">
-                        <ul className="collection">
-                            {list}
-                        </ul>
-                    </div>
-                    {/* <div className="card-action">
-                        <a href="#">This is a link</a>
-                    </div> */}
-                </div>
+        let list = this.state.togglePreloader
+            ? <Preloader />
+            : (
+                this.state.activities != null
+                    ? this.state.activities[this.state.toggledCategory].map((event, index) => {
+                        return (
+                            <li className="collection-item avatar" key={index}>
+                                <i className="material-icons circle">location_on</i>
+                                <span className="title">{event.title}</span>
+                                <p>{event.venue_address} <br />
+                                    {event.start_time}
+                                </p>
+                                <a href={event.url} target="_blank" className="secondary-content"><i className="material-icons">info_outline</i></a>
+                            </li>
+                        )
+                    })
+                    : false
             )
-        }
+        return (
+            <div className="card activity-card">
+                <div className="card-image" style={{ 'backgroundImage': 'url(' + this.renderImage(this.state.toggledCategory) + ')', 'backgroundPosition': 'left center', 'backgroundSize': 'cover' }}>
+                    <span className="card-title">{this.state.toggledCategory}</span>
+                </div>
+                <div className="card-content">
+                    <ul className="collection">
+                        {list}
+                    </ul>
+                </div>
+            </div>
+        )
     }
 
     render() {
@@ -129,11 +129,7 @@ export default class Activities extends React.Component {
                         </div>
                     </div>
                     <div id='activity-list'>
-                        {
-                            this.state.togglePreloader
-                                ? <Preloader />
-                                : this.renderActivities()
-                        }
+                        {this.renderActivities()}
                     </div>
                 </div>
             </div>
@@ -147,5 +143,5 @@ let activityDefaults = [
     { category: 'Sports', id: 'sports' },
     { category: 'Comedy', id: 'comedy' },
     { category: 'Outdoors', id: 'outdoors_recreation' },
-    { category: 'Museum & Attractions', id: 'attractions'}
+    { category: 'Museum & Attractions', id: 'attractions' }
 ]
