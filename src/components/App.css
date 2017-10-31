@@ -170,6 +170,7 @@
   background-color: white;
   border: 5px solid #1353B7;
   padding-left: 10px;
+  border-radius: 8%;
 }
 
 #google-search::placeholder {
