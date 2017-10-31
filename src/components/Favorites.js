@@ -151,7 +151,7 @@ export default class Favorites extends React.Component {
         arr = arr.length < 2 ? arr[0].split('/') : arr[1].split('/');
         domain = arr[0];
         this.setState({ toggledCategory: null })
-        favorites[index].pages.push({ name: domain, url: url });
+        favorites[index].pages.push({ name: domain, url: "http://" + domain });
         axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
             if (result == true) {
