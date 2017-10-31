@@ -137,6 +137,32 @@ module.exports = {
                     res.send(true);
                 }
             });
+    },
+
+    activities: function (req, res) {
+        console.log('received');
+        let zip = req.body.zip;
+        let activities = req.body.activities;
+        let response = {};
+        axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[0].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+            response[activities[0].category] = data.data.events.event;
+            axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[1].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                response[activities[1].category] = data.data.events.event;
+                axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[2].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                    response[activities[2].category] = data.data.events.event;
+                    axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[3].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                        response[activities[3].category] = data.data.events.event;
+                        axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[4].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                            response[activities[4].category] = data.data.events.event;
+                            axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[5].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                                response[activities[5].category] = data.data.events.event;
+                                res.send(response);
+                            })
+                        })
+                    })
+                })
+            })
+        })
     }
 
 }

@@ -7,13 +7,7 @@ export default class Activities extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activities: {
-                'Family Activities': [],
-                'Music': [],
-                'Sports': [],
-                'Comedy': [],
-                'Outdoors': []
-            },
+            activities: null,
             toggledCategory: 'Family Activities',
             toggledTab: 0,
             togglePreloader: false
@@ -39,50 +33,13 @@ export default class Activities extends React.Component {
     }
 
     setActivities() {
-        let ids = [
-            { category: 'Family Activities', id: 'family_fun_kids' },
-            { category: 'Music', id: 'music' },
-            { category: 'Sports', id: 'sports' },
-            { category: 'Comedy', id: 'comedy' },
-            { category: 'Outdoors', id: 'outdoors_recreation' }
-        ]
         this.setState({ togglePreloader: true })
-        // let url = 'https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + id + '&app_key=KJbX3nZkSCDVrQCJ'
-        axios.get('https://cors.io/?https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&date=Future&t=This+Week&category=' + ids[0].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-            let activities = this.state.activities;
-            activities[ids[0].category] = data.data.events.event;
-            this.setState({ activities: activities }, () => {
-                axios.get('https://cors.io/?https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[1].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-                    let activities = this.state.activities;
-                    activities[ids[1].category] = data.data.events.event;
-                    this.setState({ activities: activities }, () => {
-                        axios.get('https://cors.io/?https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[2].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-                            let activities = this.state.activities;
-                            activities[ids[2].category] = data.data.events.event;
-                            this.setState({ activities: activities }, () => {
-                                axios.get('https://cors.io/?https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[3].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-                                    let activities = this.state.activities;
-                                    activities[ids[3].category] = data.data.events.event;
-                                    this.setState({ activities: activities }, () => {
-                                        axios.get('https://cors.io/?https://api.eventful.com/json/events/search?...&location=' + this.props.locations[this.props.locationIndex] + '&within=100&&date=Future&t=This+Week&category=' + ids[4].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-                                            let activities = this.state.activities;
-                                            activities[ids[4].category] = data.data.events.event;
-                                            this.setState({ activities: activities }, () => {  
-                                                this.setState({ togglePreloader: false })                                                
-                                                console.log('got events')
-                                            })
-                                        })
-                                        console.log('got events')
-                                    })
-                                })
-                                console.log('got events')
-                            })
-                        })
-                        console.log('got events')
-                    })
-                })
-                console.log('got events')
-            })
+        let zip = this.props.locations[this.props.locationIndex];
+        axios.post('/activities', { zip: zip, activities: activityDefaults }).then(data => {
+            console.log('RECEIVED ACTIVITY DATA');
+            this.setState({ activities: data.data })
+            this.setState({ togglePreloader: false })
+
         })
     }
 
@@ -112,46 +69,49 @@ export default class Activities extends React.Component {
             case 'Outdoors':
                 return 'https://blog.homeexchange.com/wp-content/uploads/2016/11/comm609_nightsky_header.jpg'
                 break;
+            case 'Museum & Attractions':
+                return 'http://www.vam.ac.uk/__data/assets/image/0014/240008/closed_header_2.jpg'
+                break;
         }
     }
 
     renderTabs() {
-        let activities = this.state.activities;
-        return Object.keys(activities).map((key, index) => {
-            return <li key={index} className="tab col s3" onClick={() => this.toggleCategory(key, index)}><a className={this.state.toggledTab == index ? "active" : ""} href="#">{key}</a></li>
+        return activityDefaults.map((activity, index) => {
+            return <li key={index} className="tab col s3" onClick={() => this.toggleCategory(activity.category, index)}><a className={this.state.toggledTab == index ? "active" : ""} href="#">{activity.category}</a></li>
         })
     }
 
     renderActivities() {
-        console.log('RENDERING ACTIVITIES');
-        let activities = this.state.activities[this.state.toggledCategory];
-        let list = activities.map(index => {
+        if (this.state.activities != null) {
+            let activities = this.state.activities[this.state.toggledCategory];
+            let list = activities.map((event, index) => {
+                return (
+                    <li className="collection-item avatar" key={index}>
+                        <i className="material-icons circle">location_on</i>
+                        <span className="title">{event.title}</span>
+                        <p>{event.venue_address} <br />
+                            {event.start_time}
+                        </p>
+                        <a href={event.url} target="_blank" className="secondary-content"><i className="material-icons">info_outline</i></a>
+                    </li>
+                )
+            })
             return (
-                <li className="collection-item avatar">
-                    <i className="material-icons circle">location_on</i>
-                    <span className="title">{index.title}</span>
-                    <p>{index.venue_address} <br />
-                        {index.start_time}
-                    </p>
-                    <a href={index.url} target="_blank" className="secondary-content"><i className="material-icons">info_outline</i></a>
-                </li>
+                <div className="card activity-card">
+                    <div className="card-image" style={{ 'backgroundImage': 'url(' + this.renderImage(this.state.toggledCategory) + ')', 'backgroundPosition': 'left center', 'backgroundSize': 'cover' }}>
+                        <span className="card-title">{this.state.toggledCategory}</span>
+                    </div>
+                    <div className="card-content">
+                        <ul className="collection">
+                            {list}
+                        </ul>
+                    </div>
+                    {/* <div className="card-action">
+                        <a href="#">This is a link</a>
+                    </div> */}
+                </div>
             )
-        })
-        return (
-            <div className="card activity-card">
-                <div className="card-image" style={{ 'backgroundImage': 'url(' + this.renderImage(this.state.toggledCategory) + ')', 'backgroundPosition': 'left center', 'backgroundSize': 'cover' }}>
-                    <span className="card-title">{this.state.toggledCategory}</span>
-                </div>
-                <div className="card-content">
-                    <ul className="collection">
-                        {list}
-                    </ul>
-                </div>
-                <div className="card-action">
-                    <a href="#">This is a link</a>
-                </div>
-            </div>
-        )
+        }
     }
 
     render() {
@@ -171,8 +131,8 @@ export default class Activities extends React.Component {
                     <div id='activity-list'>
                         {
                             this.state.togglePreloader
-                            ? <Preloader />
-                            : this.renderActivities()
+                                ? <Preloader />
+                                : this.renderActivities()
                         }
                     </div>
                 </div>
@@ -180,3 +140,12 @@ export default class Activities extends React.Component {
         )
     }
 }
+
+let activityDefaults = [
+    { category: 'Family Activities', id: 'family_fun_kids' },
+    { category: 'Music', id: 'music' },
+    { category: 'Sports', id: 'sports' },
+    { category: 'Comedy', id: 'comedy' },
+    { category: 'Outdoors', id: 'outdoors_recreation' },
+    { category: 'Museum & Attractions', id: 'attractions'}
+]

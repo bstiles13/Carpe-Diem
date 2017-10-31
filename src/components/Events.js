@@ -95,7 +95,7 @@ export default class Events extends React.Component {
         let locations = this.state.locations;
         return locations.map((zip, index) => {
             return (
-                <span className="zip">
+                <span className="zip" key={index}>
                     <span onClick={() => this.changeZip(index)}>{zip}</span>
                     <i className="material-icons" onClick={() => this.removeLocation(index)}>close</i>
                 </span>
