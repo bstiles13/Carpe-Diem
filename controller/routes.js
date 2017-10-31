@@ -21,5 +21,9 @@ router.post('/findlocations', tasks.findLocations);
 
 router.post('/updatelocations', tasks.updateLocations);
 
+// Default route that sends HTML file to browser
+router.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + './build/index.html'));
+})
 
 module.exports = router;

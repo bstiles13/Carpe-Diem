@@ -35,7 +35,7 @@ export default class Events extends React.Component {
     getLocations() {
         if (this.props.user != null) {
             console.log('user:', this.props.user);
-            axios.post('http://localhost:3001/findlocations', { user: this.props.user }).then(data => {
+            axios.post('/findlocations', { user: this.props.user }).then(data => {
                 console.log('got locations', data);
                 this.setState({
                     locations: data.data[0].zip
@@ -60,7 +60,7 @@ export default class Events extends React.Component {
             this.setState({ warningToggle: true })
         } else {
             locations.unshift(this.state.locationInput);
-            axios.post('http://localhost:3001/updatelocations', { locations: locations, user: this.props.user }).then(data => {
+            axios.post('/updatelocations', { locations: locations, user: this.props.user }).then(data => {
                 let result = data.data;
                 if (result == true) {
                     console.log('save successful');
@@ -75,7 +75,7 @@ export default class Events extends React.Component {
     removeLocation(index) {
         let locations = this.state.locations;
         locations.splice(index, 1);
-        axios.post('http://localhost:3001/updatelocations', { locations: locations, user: this.props.user }).then(data => {
+        axios.post('/updatelocations', { locations: locations, user: this.props.user }).then(data => {
             let result = data.data;
             if (result == true) {
                 console.log('save successful');

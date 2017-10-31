@@ -23,11 +23,13 @@ export default class Activities extends React.Component {
     }
 
     componentDidMount() {
+        console.log('mounting');
         this.getActivities();
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps != this.props) {
+            console.log('props changed');
             this.getActivities();
         }
         console.log(this.state.activities);
@@ -46,9 +48,7 @@ export default class Activities extends React.Component {
         axios.get(url).then(data => {
             let activities = this.state.activities;
             activities[category] = data.data.events.event;
-            this.setState({
-                activities: activities
-            })
+            this.setState({ activities: activities })
         })
     }
 
@@ -84,11 +84,12 @@ export default class Activities extends React.Component {
     renderTabs() {
         let activities = this.state.activities;
         return Object.keys(activities).map((key, index) => {
-            return <li className="tab col s3" onClick={() => this.toggleCategory(key, index)}><a className={this.state.toggledTab == index ? "active" : ""} href="#">{key}</a></li>
+            return <li key={index} className="tab col s3" onClick={() => this.toggleCategory(key, index)}><a className={this.state.toggledTab == index ? "active" : ""} href="#">{key}</a></li>
         })
     }
 
     renderActivities() {
+        console.log('RENDERING ACTIVITIES');
         let activities = this.state.activities[this.state.toggledCategory];
         let list = activities.map(index => {
             return (

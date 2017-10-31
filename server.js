@@ -9,7 +9,7 @@ const routes = require('./controller/routes.js');
 const app = express();
 const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/build"));
 app.use("/", routes);
 
 // MongoDB Settings

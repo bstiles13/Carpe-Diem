@@ -64,7 +64,7 @@ class Login extends React.Component {
             this.triggerWarning('invalidZip');
         } else {
             // Make the HTTP request:
-            axios.post('http://localhost:3001/newuser', user).then(data => {
+            axios.post('/newuser', user).then(data => {
                 // Read the result field from the JSON response.
                 let result = data.data;
                 if (result == true) {
@@ -84,7 +84,7 @@ class Login extends React.Component {
             this.triggerWarning('invalidText');
         } else {
             // Make the HTTP request:
-            axios.post('http://localhost:3001/existinguser', user).then(data => {
+            axios.post('/existinguser', user).then(data => {
                 // Read the result field from the JSON response.
                 let result = data.data;
                 if (result == true) {
@@ -110,12 +110,6 @@ class Login extends React.Component {
         if (this.state.warnings[type]) {
             return (<div className='login-warning'>{this.state.warnings.warning[type]}</div>)
         }
-    }
-
-    sendTest() {
-        axios.get('http://localhost:3001/test').then(data => {
-            console.log(data);
-        })
     }
 
     clearWarnings() {

@@ -52,7 +52,7 @@ export default class Favorites extends React.Component {
     getFavorites() {
         if (this.props.user != null) {
             console.log('user:', this.props.user);
-            axios.post('http://localhost:3001/findfavorites', { user: this.props.user }).then(data => {
+            axios.post('/findfavorites', { user: this.props.user }).then(data => {
                 console.log('got favorites', data);
                 this.setState({
                     favorites: data.data[0].favorites
@@ -88,7 +88,7 @@ export default class Favorites extends React.Component {
         let edit = this.state.editFavorite
         console.log('cat', categoryIndex, 'url', urlIndex, 'newname', edit);
         favorites[categoryIndex].pages[urlIndex].name = edit;
-        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
+        axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
             if (result == true) {
                 console.log('save successful');
@@ -125,7 +125,7 @@ export default class Favorites extends React.Component {
             favorites[categoryIndex].pages[urlIndex + 1] = favorites[categoryIndex].pages[urlIndex];
             favorites[categoryIndex].pages[urlIndex] = purgatory;
         }
-        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
+        axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
             if (result == true) {
                 console.log('save successful');
@@ -152,7 +152,7 @@ export default class Favorites extends React.Component {
         domain = arr[0];
         this.setState({ toggledCategory: null })
         favorites[index].pages.push({ name: domain, url: url });
-        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
+        axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
             if (result == true) {
                 console.log('save successful');
@@ -167,7 +167,7 @@ export default class Favorites extends React.Component {
         console.log(urlIndex);
         this.setState({ toggledCategory: null })
         favorites[categoryIndex].pages.splice(urlIndex, 1);
-        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
+        axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
             if (result == true) {
                 console.log('save successful');
@@ -181,7 +181,7 @@ export default class Favorites extends React.Component {
         let favorites = this.state.favorites;
         favorites.push({ category: category, pages: [] })
         let index = favorites.length - 1;
-        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
+        axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
             if (result == true) {
                 console.log('save successful');
@@ -195,7 +195,7 @@ export default class Favorites extends React.Component {
         let favorites = this.state.favorites;
         this.setState({ toggledCategory: null })
         favorites.splice(index, 1);
-        axios.post('http://localhost:3001/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
+        axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
             if (result == true) {
                 console.log('save successful');
@@ -227,7 +227,7 @@ export default class Favorites extends React.Component {
         return favorites.map((favorite, categoryIndex) => {
             let pages = favorite['pages'].map((page, urlIndex) => {
                 return (
-                    <li className='custom-item'>
+                    <li className='custom-item' key={urlIndex}>
                         <div className='custom-item-link favorite-text' onClick={() => this.openFavorite(page.url)}>
                             <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} onError={(event) => event.target.setAttribute("src", placeholder)} />
                             {
@@ -257,7 +257,7 @@ export default class Favorites extends React.Component {
                 )
             })
             return (
-                <div className='custom-card'>
+                <div className='custom-card' key={categoryIndex}>
                     <div className='custom-header'>
                         <div className='custom-header-child custom-delete'>
                             { this.state.toggledCategory == categoryIndex ? <i className="material-icons delete-icon" onClick={() => this.removeCategory(categoryIndex)}>delete</i> : false }

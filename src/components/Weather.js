@@ -72,9 +72,9 @@ export default class Weather extends React.Component {
     renderForecast() {
         if (this.state.weather != null) {
             let forecast = this.state.weather.query.results.channel.item.forecast;
-            let renderForecast = forecast.map(day => {
+            let renderForecast = forecast.map((day, index) => {
                 return (
-                    <div className='daily'>
+                    <div className='daily' key={index}>
                         <h5>{day.day}</h5>
                         <div>{day.date}</div>
                         <div className='daily-details'>
