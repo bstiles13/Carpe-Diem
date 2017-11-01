@@ -1,6 +1,6 @@
-# Carpe-Diem
+# Carpe Diem
 
-Carpe Diem reinvents the homepage and bookmark experience. Save and categorize your favorite websites, see the weather forecast in your city, and explore nearby events. React frontend and single-page architecture. Backend features Node, Express, and MongoDB. Uses Yahoo Weather and Eventful APIs.
+Reinvent your homepage and bookmark experience. Save and categorize your favorite websites, see the weather forecast in your city, and explore nearby events. SPA frontend is piloted by React. Backend features Node, Express, and MongoDB. APIs include Yahoo Weather and Eventful.
 
 ## Homepage
 
