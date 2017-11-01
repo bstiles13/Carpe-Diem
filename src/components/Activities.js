@@ -13,7 +13,6 @@ export default class Activities extends React.Component {
             togglePreloader: false
         }
         this.setActivities = this.setActivities.bind(this);
-        // this.getActivities = this.getActivities.bind(this);
         this.toggleCategory = this.toggleCategory.bind(this);
         this.renderImage = this.renderImage.bind(this);
     }

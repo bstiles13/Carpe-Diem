@@ -11,6 +11,7 @@ import RouteMenu from './RouteMenu';
 import Home from './Home';
 import Events from './Events';
 import Login from './Login';
+import Modal from './Modal';
 
 class App extends Component {
 
@@ -58,6 +59,7 @@ class App extends Component {
             <Route path="/today" render={props => <Events user={this.state.user} />} />
             <Route path="/login" render={props => <Login checkUser={this.checkUser} />} />
           </div>
+          {this.state.user == null ? <Modal /> : false}
         </div>
       </BrowserRouter>
     );
