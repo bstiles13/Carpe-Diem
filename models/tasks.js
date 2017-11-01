@@ -57,46 +57,7 @@ module.exports = {
         });
     },
 
-    // POST request to add or remove a favorite shipwreck
-    favorite: function (req, res) {
-        let user = req.body.user;
-        let id = req.body.wreck._id;
-        // Search for user and shipwreck in user's favorites
-        Favorite.find({
-            user: user,
-            favorites: { $elemMatch: { _id: id } }
-        }).then(data => {
-            if (data.length == 0) {
-                // If shipwreck is not already favorited, add/push the wreck to the user's favorites collection
-                Favorite.update({ user: user }, { $push: { favorites: req.body.wreck } }, function (err, data) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        // After adding, return updated favorites to browser
-                        Favorite.find({ user: user }).then(data => {
-                            res.json(data);
-                        })
-                    }
-                })
-            } else {
-                // If shipwreck is already favorited, remove/pull the wreck from the user's favorites collection
-                Favorite.update({ user: user }, { $pull: { favorites: { _id: id } } }, function (err, data) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        // After removing, return updated favorites to browser
-                        Favorite.find({ user: user }).then(data => {
-                            res.json(data);
-                        })
-                    }
-                })
-            }
-        }).catch(err => {
-            console.log(err);
-        })
-    },
-
-    // POST request to retrieve user favorites after login
+    // POST request to retrieve user favorites after login or change
     findFavorites: function (req, res) {
         let user = req.body.user;
         Favorite.find({ user: user }).then(data => {
@@ -104,6 +65,7 @@ module.exports = {
         })
     },
 
+    // POST request to update user favorites after addition, removal, or re-order
     updateFavorites: function (req, res) {
         Favorite.update(
             { user: req.body.user },
@@ -111,12 +73,13 @@ module.exports = {
                 if (err) {
                     console.log(err);
                 } else {
-                    // After adding, return updated favorites to browser
+                    // After update, return true (success) to browser
                     res.send(true);
                 }
             });
     },
 
+    // POST request to retrieve user zip codes after login or change
     findLocations: function (req, res) {
         let user = req.body.user;
         User.find({ username: user }).then(data => {
@@ -124,6 +87,7 @@ module.exports = {
         })
     },
 
+    // POST request to update user zip codes after addition, removal, or re-order
     updateLocations: function (req, res) {
         console.log(req.body.locations);
         console.log('received update');
@@ -133,12 +97,13 @@ module.exports = {
                 if (err) {
                     console.log(err);
                 } else {
-                    // After adding, return updated favorites to browser
+                    // After update, return true (success) to browser
                     res.send(true);
                 }
             });
     },
 
+    // POST request to retrieve local events from Eventful API based on location and category; a separate API call is made for each category
     activities: function (req, res) {
         console.log('received');
         let zip = req.body.zip;

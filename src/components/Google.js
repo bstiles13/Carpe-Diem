@@ -9,10 +9,6 @@ export default class Google extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        console.log(this.state);
-    }
-
     onChange(e) {
         this.setState({
             query: e.target.value
@@ -21,9 +17,7 @@ export default class Google extends React.Component {
 
     onSubmit(e) {
         if (e.key === 'Enter') {
-            console.log('Submit');
             let q = this.state.query;
-            console.log('q:', q);
             window.open('http://google.com/search?q=' + q);
         }
     }

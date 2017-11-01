@@ -18,24 +18,19 @@ export default class Activities extends React.Component {
     }
 
     componentDidMount() {
-        console.log('mounting');
         this.setActivities();
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps != this.props) {
-            console.log('props changed');
             this.setActivities();
         }
-        console.log('no prop change');
-        // console.log(this.state.activities);
     }
 
     setActivities() {
         this.setState({ togglePreloader: true })
         let zip = this.props.locations[this.props.locationIndex];
         axios.post('/activities', { zip: zip, activities: activityDefaults }).then(data => {
-            console.log('RECEIVED ACTIVITY DATA');
             this.setState({ activities: data.data })
             this.setState({ togglePreloader: false })
 
@@ -48,6 +43,12 @@ export default class Activities extends React.Component {
         })
         this.setState({
             toggledTab: index
+        })
+    }
+
+    renderTabs() {
+        return activityDefaults.map((activity, index) => {
+            return <li key={index} className="tab col s3" onClick={() => this.toggleCategory(activity.category, index)}><a className={this.state.toggledTab == index ? "active" : ""} href="#">{activity.category}</a></li>
         })
     }
 
@@ -72,12 +73,6 @@ export default class Activities extends React.Component {
                 return 'http://www.vam.ac.uk/__data/assets/image/0014/240008/closed_header_2.jpg'
                 break;
         }
-    }
-
-    renderTabs() {
-        return activityDefaults.map((activity, index) => {
-            return <li key={index} className="tab col s3" onClick={() => this.toggleCategory(activity.category, index)}><a className={this.state.toggledTab == index ? "active" : ""} href="#">{activity.category}</a></li>
-        })
     }
 
     renderActivities() {

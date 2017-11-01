@@ -11,10 +11,6 @@ export default class CategoryMaker extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidUpdate() {
-        console.log(this.state.categoryName);
-    }
-
     handleChange(e) {
         this.setState({
             categoryName: e.target.value

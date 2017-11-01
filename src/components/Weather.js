@@ -13,14 +13,12 @@ export default class Weather extends React.Component {
 
     componentDidMount() {
         this.getWeather();
-        console.log('weather', this.state.weather);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps != this.props) {
             this.getWeather();
         }
-        console.log('weather', this.state.weather);
     }
 
     getWeather() {

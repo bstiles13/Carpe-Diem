@@ -29,14 +29,11 @@ export default class Events extends React.Component {
         if (prevProps != this.props) {
             this.getLocations();
         }
-        console.log('favorites updated', this.state.locations);
     }
 
     getLocations() {
         if (this.props.user != null) {
-            console.log('user:', this.props.user);
             axios.post('/findlocations', { user: this.props.user }).then(data => {
-                console.log('got locations', data);
                 this.setState({
                     locations: data.data[0].zip
                 })
@@ -63,7 +60,6 @@ export default class Events extends React.Component {
             axios.post('/updatelocations', { locations: locations, user: this.props.user }).then(data => {
                 let result = data.data;
                 if (result == true) {
-                    console.log('save successful');
                     this.setState({ editing: false })
                     this.setState({ warningTogggle: false })
                     this.getLocations();
@@ -78,7 +74,6 @@ export default class Events extends React.Component {
         axios.post('/updatelocations', { locations: locations, user: this.props.user }).then(data => {
             let result = data.data;
             if (result == true) {
-                console.log('save successful');
                 this.setState({ locationIndex: 0 })
                 this.getLocations();
             }

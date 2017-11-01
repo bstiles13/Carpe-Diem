@@ -32,7 +32,6 @@ class App extends Component {
   checkUser() {
     let userHistory = localStorage.getItem('carpeToken');
     if (userHistory != null && userHistory != 'null' && userHistory != undefined) {
-      console.log('setting user');
       this.setUser(userHistory);
     } else {
       this.setUser(null);

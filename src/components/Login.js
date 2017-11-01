@@ -32,10 +32,6 @@ class Login extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        console.log(this.state.userForm);
-    }
-
     handleChange(event) {
         let user = this.state.userForm;
         user[event.target.name] = event.target.value;
