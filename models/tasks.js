@@ -121,7 +121,10 @@ module.exports = {
                             response[activities[4].category] = data.data.events.event;
                             axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[5].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
                                 response[activities[5].category] = data.data.events.event;
-                                res.send(response);
+                                axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[6].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+                                    response[activities[6].category] = data.data.events.event;
+                                    res.send(response);
+                                })
                             })
                         })
                     })

@@ -40,7 +40,12 @@
 }
 
 #header-right {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#user-container {
+  text-align: left;
 }
 
 #app-content {
@@ -318,6 +323,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;  
+}
+
+.activity-item:hover {
+  background-color: lemonchiffon;
 }
 
 .card-content {

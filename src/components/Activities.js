@@ -69,8 +69,11 @@ export default class Activities extends React.Component {
             case 'Outdoors':
                 return 'https://blog.homeexchange.com/wp-content/uploads/2016/11/comm609_nightsky_header.jpg'
                 break;
-            case 'Museum & Attractions':
+            case 'Museums & Attractions':
                 return 'http://www.vam.ac.uk/__data/assets/image/0014/240008/closed_header_2.jpg'
+                break;
+            case 'Animals':
+                return 'https://www.freewebheaders.com/wordpress/wp-content/gallery/dogs/cocker-spaniel-puppy-kissing-little-red-kitten-web-header.jpg'
                 break;
         }
     }
@@ -82,9 +85,9 @@ export default class Activities extends React.Component {
                 this.state.activities != null
                     ? this.state.activities[this.state.toggledCategory].map((event, index) => {
                         return (
-                            <li className="collection-item avatar" key={index}>
+                            <li className="collection-item avatar activity-item" key={index}>
                                 <i className="material-icons circle">location_on</i>
-                                <span className="title">{event.title}</span>
+                                <span className="title"><b>{event.title}</b></span>
                                 <p>{event.venue_address} <br />
                                     {event.start_time}
                                 </p>
@@ -134,8 +137,9 @@ export default class Activities extends React.Component {
 let activityDefaults = [
     { category: 'Family Activities', id: 'family_fun_kids' },
     { category: 'Music', id: 'music' },
-    { category: 'Sports', id: 'sports' },
     { category: 'Comedy', id: 'comedy' },
+    { category: 'Sports', id: 'sports' },    
     { category: 'Outdoors', id: 'outdoors_recreation' },
-    { category: 'Museum & Attractions', id: 'attractions' }
+    { category: 'Museums & Attractions', id: 'attractions' },
+    { category: 'Animals', id: 'animals' }
 ]
