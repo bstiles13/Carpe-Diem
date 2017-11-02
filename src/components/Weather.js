@@ -22,17 +22,17 @@ export default class Weather extends React.Component {
     }
 
     getWeather() {
-        let url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22w=" + this.props.locations[this.props.locationIndex] + "%22)&format=json"
+        let url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22w=" + this.props.location + "%22)&format=json"
         axios.get(url).then(data => {
             this.setState({
-                weather: data.data
+                weather: data.data.query.results.channel
             })
         })
     }
 
     renderToday() {
         if (this.state.weather != null) {
-            let weather = this.state.weather.query.results.channel;
+            let weather = this.state.weather;
             let img = weather.item.description;
             img = img.split('"')[1];
             return (
@@ -43,10 +43,10 @@ export default class Weather extends React.Component {
                             <img src={img} />
                         </div>
                         <div className='today-child'>
-                            <h4>{this.state.weather.query.results.channel.item.condition.temp} °</h4>
+                            <h4>{this.state.weather.item.condition.temp} °</h4>
                         </div>
                         <div className='today-child'>
-                            <div>L {this.state.weather.query.results.channel.item.forecast[0].low}° H {this.state.weather.query.results.channel.item.forecast[0].high}°</div>
+                            <div>L {this.state.weather.item.forecast[0].low}° H {this.state.weather.item.forecast[0].high}°</div>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ export default class Weather extends React.Component {
 
     renderForecast() {
         if (this.state.weather != null) {
-            let forecast = this.state.weather.query.results.channel.item.forecast;
+            let forecast = this.state.weather.item.forecast;
             let renderForecast = forecast.map((day, index) => {
                 return (
                     <div className='daily' key={index}>
@@ -88,7 +88,7 @@ export default class Weather extends React.Component {
             <div id='weather-container' className="event-card">
                 <div className='event-card-title grey darken-4'>
                     <h5 className='event-header'>WEATHER</h5>
-                    {this.state.weather != null ? <div>{this.state.weather.query.results.channel.location.city + ', ' + this.state.weather.query.results.channel.location.region}</div> : false}
+                    {this.state.weather != null ? <div>{this.state.weather.location.city + ', ' + this.state.weather.location.region}</div> : false}
                 </div>
                 <div className='event-card-content'>
                     {this.renderToday()}

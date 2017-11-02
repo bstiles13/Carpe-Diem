@@ -30,7 +30,7 @@ export default class Activities extends React.Component {
 
     setActivities() {
         this.setState({ togglePreloader: true })
-        let zip = this.props.locations[this.props.locationIndex];
+        let zip = this.props.location;
         axios.post('/activities', { zip: zip, id: this.state.toggledId }).then(data => {
             this.setState({ activities: data.data })
             this.setState({ togglePreloader: false })
