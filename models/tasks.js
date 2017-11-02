@@ -89,8 +89,6 @@ module.exports = {
 
     // POST request to update user zip codes after addition, removal, or re-order
     updateLocations: function (req, res) {
-        console.log(req.body.locations);
-        console.log('received update');
         User.update(
             { username: req.body.user },
             { zip: req.body.locations }, function (err, data) {
@@ -105,31 +103,10 @@ module.exports = {
 
     // POST request to retrieve local events from Eventful API based on location and category; a separate API call is made for each category
     activities: function (req, res) {
-        console.log('received');
         let zip = req.body.zip;
-        let activities = req.body.activities;
-        let response = {};
-        axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[0].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-            response[activities[0].category] = data.data.events.event;
-            axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[1].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-                response[activities[1].category] = data.data.events.event;
-                axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[2].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-                    response[activities[2].category] = data.data.events.event;
-                    axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[3].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-                        response[activities[3].category] = data.data.events.event;
-                        axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[4].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-                            response[activities[4].category] = data.data.events.event;
-                            axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[5].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-                                response[activities[5].category] = data.data.events.event;
-                                axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + activities[6].id + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
-                                    response[activities[6].category] = data.data.events.event;
-                                    res.send(response);
-                                })
-                            })
-                        })
-                    })
-                })
-            })
+        let categoryId = req.body.id;
+        axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + categoryId + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+            res.send(data.data.events.event);
         })
     }
 

@@ -9,6 +9,7 @@ export default class Activities extends React.Component {
         this.state = {
             activities: null,
             toggledCategory: 'Family Activities',
+            toggledId: 'family_fun_kids',
             toggledTab: 0,
             togglePreloader: false
         }
@@ -30,25 +31,26 @@ export default class Activities extends React.Component {
     setActivities() {
         this.setState({ togglePreloader: true })
         let zip = this.props.locations[this.props.locationIndex];
-        axios.post('/activities', { zip: zip, activities: activityDefaults }).then(data => {
+        axios.post('/activities', { zip: zip, id: this.state.toggledId }).then(data => {
             this.setState({ activities: data.data })
             this.setState({ togglePreloader: false })
 
         })
     }
 
-    toggleCategory(category, index) {
+    toggleCategory(category, id, index) {
         this.setState({
-            toggledCategory: category
-        })
-        this.setState({
+            toggledCategory: category,
+            toggledId: id,
             toggledTab: index
+        }, () => {
+            this.setActivities();
         })
     }
 
     renderTabs() {
         return activityDefaults.map((activity, index) => {
-            return <li key={index} className="tab col s3" onClick={() => this.toggleCategory(activity.category, index)}><a className={this.state.toggledTab == index ? "active" : ""} href="#">{activity.category}</a></li>
+            return <li key={index} className="tab col s3" onClick={() => this.toggleCategory(activity.category, activity.id, index)}><a className={this.state.toggledTab == index ? "active" : ""} href="#">{activity.category}</a></li>
         })
     }
 
@@ -83,7 +85,7 @@ export default class Activities extends React.Component {
             ? <Preloader />
             : (
                 this.state.activities != null
-                    ? this.state.activities[this.state.toggledCategory].map((event, index) => {
+                    ? this.state.activities.map((event, index) => {
                         return (
                             <li className="collection-item avatar activity-item" key={index}>
                                 <i className="material-icons circle">location_on</i>
@@ -138,7 +140,7 @@ let activityDefaults = [
     { category: 'Family Activities', id: 'family_fun_kids' },
     { category: 'Music', id: 'music' },
     { category: 'Comedy', id: 'comedy' },
-    { category: 'Sports', id: 'sports' },    
+    { category: 'Sports', id: 'sports' },
     { category: 'Outdoors', id: 'outdoors_recreation' },
     { category: 'Museums & Attractions', id: 'attractions' },
     { category: 'Animals', id: 'animals' }
