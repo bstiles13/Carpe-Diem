@@ -13,9 +13,7 @@ export default class ModalWelcome extends React.Component {
                         to customize your homepage experience, or continue as a guest and explore some of the web's most popular destinations.
                     </p>
                 </div>
-                <div className="modal-footer">
-                    <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                </div>
+                <a href="#!" id="modal1-close" className="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
             </div>
         )
     }
