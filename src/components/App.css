@@ -372,3 +372,16 @@
 .apply-pointer {
   cursor: pointer;
 }
+
+#modal2 {
+  width: 500px;
+}
+
+#modal-edit-content {
+  width: 400px;
+  margin: 30px auto;
+}
+
+#preview-content {
+  margin: 0 50px;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-export default class Modal extends React.Component {
+export default class ModalWelcome extends React.Component {
 
     render() {
         return (

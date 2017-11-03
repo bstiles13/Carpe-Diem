@@ -1,7 +1,10 @@
 import React from 'react';
 import placeholder from '../placeholder.png';
 import CategoryMaker from './CategoryMaker';
+import ModalEdit from './ModalEdit';
 import axios from 'axios';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 
 export default class Favorites extends React.Component {
 
@@ -9,21 +12,19 @@ export default class Favorites extends React.Component {
         super(props);
         this.state = {
             favorites: defaultFavorites,
-            newFavorite: '',
             editFavorite: '',
             toggledCategory: null,
-            toggledFavorite: {
-                index: null,
-                editing: false
-            }
+            toggledFavorite: null
         }
         this.handleNewFavorite = this.handleNewFavorite.bind(this);
         this.saveFavorite = this.saveFavorite.bind(this);
         this.removeFavorite = this.removeFavorite.bind(this);
-        this.handleNameEdit = this.handleNameEdit.bind(this);
         this.saveNameEdit = this.saveNameEdit.bind(this);
         this.addCategory = this.addCategory.bind(this);
         this.removeCategory = this.removeCategory.bind(this);
+        this.onDragEnd = this.onDragEnd.bind(this);
+        this.toggleCategory = this.toggleCategory.bind(this);
+        this.toggleFavorite = this.toggleFavorite.bind(this);
     }
 
     componentDidMount() {
@@ -33,18 +34,6 @@ export default class Favorites extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (prevProps != this.props) {
             this.getFavorites();
-        }
-    }
-
-    toggleCategory(index) {
-        if (index != this.state.toggledCategory) {
-            this.setState({
-                toggledCategory: index
-            })
-        } else {
-            this.setState({
-                toggledCategory: null
-            })
         }
     }
 
@@ -70,56 +59,18 @@ export default class Favorites extends React.Component {
         e.stopPropagation();
     }
 
-    handleNameEdit(e) {
-        this.setState({
-            editFavorite: e.target.value
-        })
-    }
-
-    saveNameEdit() {
+    saveNameEdit(newName) {
         let favorites = this.state.favorites;
         let categoryIndex = this.state.toggledCategory;
-        let urlIndex = this.state.toggledFavorite.index;
-        let edit = this.state.editFavorite
+        let urlIndex = this.state.toggledFavorite;
+        let edit = newName;
         favorites[categoryIndex].pages[urlIndex].name = edit;
         axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
             if (result == true) {
                 this.setState({
-                    toggledFavorite: {
-                        index: null,
-                        editing: false
-                    }
+                    toggledFavorite: null
                 })
-                this.getFavorites();
-            }
-        })
-    }
-
-    moveFavorite(categoryIndex, urlIndex, direction) {
-        let favorites = this.state.favorites;
-        let lastIndex = favorites[categoryIndex].pages.length - 1;
-        let purgatory = {}
-        if (urlIndex == 0 && direction == 1) {
-            purgatory = favorites[categoryIndex].pages[lastIndex];
-            favorites[categoryIndex].pages[lastIndex] = favorites[categoryIndex].pages[urlIndex];
-            favorites[categoryIndex].pages[urlIndex] = purgatory;
-        } else if (urlIndex == lastIndex && direction == -1) {
-            purgatory = favorites[categoryIndex].pages[0];
-            favorites[categoryIndex].pages[0] = favorites[categoryIndex].pages[urlIndex];
-            favorites[categoryIndex].pages[urlIndex] = purgatory;
-        } else if (direction == 1) {
-            purgatory = favorites[categoryIndex].pages[urlIndex - 1];
-            favorites[categoryIndex].pages[urlIndex - 1] = favorites[categoryIndex].pages[urlIndex];
-            favorites[categoryIndex].pages[urlIndex] = purgatory;
-        } else {
-            purgatory = favorites[categoryIndex].pages[urlIndex + 1];
-            favorites[categoryIndex].pages[urlIndex + 1] = favorites[categoryIndex].pages[urlIndex];
-            favorites[categoryIndex].pages[urlIndex] = purgatory;
-        }
-        axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
-            let result = data.data;
-            if (result == true) {
                 this.getFavorites();
             }
         })
@@ -188,101 +139,150 @@ export default class Favorites extends React.Component {
         })
     }
 
-    toggleFavorite(index, editing) {
-        if (index != this.state.toggledFavorite.index || editing == true) {
+    toggleCategory(index) {
+        if (index != this.state.toggledCategory) {
             this.setState({
-                toggledFavorite: {
-                    index: index,
-                    editing: editing
-                }
+                toggledCategory: index,
+                toggledFavorite: null
             })
         } else {
             this.setState({
-                toggledFavorite: {
-                    index: null,
-                    editing: false
-                }
+                toggledCategory: null,
+                toggledFavorite: null
             })
         }
     }
 
-    renderFavorites() {
-        var favorites = this.state.favorites;
-        return favorites.map((favorite, categoryIndex) => {
-            let pages = favorite['pages'].map((page, urlIndex) => {
-                return (
-                    <li className='custom-item' key={urlIndex}>
-                        <div className='custom-item-link favorite-text' onClick={() => this.openFavorite(page.url)}>
-                            <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} onError={(event) => event.target.setAttribute("src", placeholder)} />
-                            {
-                                this.state.toggledCategory == categoryIndex && this.state.toggledFavorite.index == urlIndex
-                                    ? <div className="input-field edit-input" onClick={this.stopPropagation}>
-                                        <input defaultValue={page.name} id="favorite-name" type="text" className="validate favorite-text" onChange={this.handleNameEdit} />
-                                        <label htmlFor="favorite-name" className="active">EDIT NAME</label>
-                                    </div>
-                                    : <span>{page.name}</span>
-                            }
-                        </div>
-                        {
-                            this.state.toggledCategory == categoryIndex
-                                ? <div>
-                                <i className="material-icons edit-icon" onClick={() => this.moveFavorite(categoryIndex, urlIndex, 1)}>arrow_upward</i>
-                                <i className="material-icons edit-icon" onClick={() => this.moveFavorite(categoryIndex, urlIndex, -1)}>arrow_downward</i>
-                                    {
-                                        this.state.toggledFavorite.index == urlIndex && this.state.toggledFavorite.editing == true
-                                            ? <i className="material-icons success-icon" onClick={this.saveNameEdit}>check</i>
-                                            : <i className="material-icons edit-icon" onClick={() => this.toggleFavorite(urlIndex, true)}>edit</i>
-                                    }
-                                    <i className="material-icons edit-icon" onClick={() => this.removeFavorite(categoryIndex, urlIndex)}>delete</i>
-                                </div>
-                                : false
-                        }
-                    </li>
-                )
+    toggleFavorite(urlIndex) {
+        this.setState({ toggledFavorite: urlIndex })
+    }
+
+    onDragEnd(result, index) {
+        // dropped outside the list
+        if (!result.destination) {
+            return;
+        }
+        let items = this.state.favorites;
+        items[index].pages = reorder(items[index].pages, result.source.index, result.destination.index);
+        if (this.props.user != null) {
+            axios.post('/updatefavorites', { favorites: items, user: this.props.user }).then(data => {
+                let result = data.data;
+                if (result == true) {
+                    this.getFavorites();
+                }
             })
+        } else {
+            this.setState({ items });
+        }
+    }
+
+    renderFavorites() {
+        let favorites = this.state.favorites;
+        return favorites.map((favorite, categoryIndex) => {
+            let list = favorite.pages.map((page, urlIndex) => (
+                <Draggable key={urlIndex} draggableId={urlIndex}>
+                    {(provided, snapshot) => (
+                        <div className='custom-item' key={urlIndex} ref={provided.innerRef} style={getItemStyle(provided.draggableStyle, snapshot.isDragging)} {...provided.dragHandleProps}>
+                            <div className='custom-item-link favorite-text' onClick={() => this.openFavorite(page.url)}>
+                                <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} onError={(event) => event.target.setAttribute("src", placeholder)} />
+                                <span>{page.name}</span>
+
+                            </div>
+                            {
+                                this.state.toggledCategory == categoryIndex
+                                    ? <div onClick={() => this.toggleFavorite(urlIndex)}>
+                                        <a className="modal-trigger" href="#modal2"><i className="material-icons edit-icon">edit</i></a>
+                                        <i className="material-icons edit-icon" onClick={() => this.removeFavorite(categoryIndex, urlIndex)}>delete</i>
+                                    </div>
+                                    : <i className="material-icons">drag_handle</i>
+                            }
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Draggable>
+            ))
             return (
                 <div className='custom-card' key={categoryIndex}>
                     <div className='custom-header'>
                         <div className='custom-header-child custom-delete'>
-                            { this.state.toggledCategory == categoryIndex ? <i className="material-icons delete-icon" onClick={() => this.removeCategory(categoryIndex)}>delete</i> : false }
+                            {this.state.toggledCategory == categoryIndex ? <i className="material-icons delete-icon" onClick={() => this.removeCategory(categoryIndex)}>delete</i> : false}
                         </div>
                         <div className='custom-header-child'>{favorite.category}</div>
                         <div className='custom-header-child' id='custom-toggle'>
                             {this.props.user !== null ? <i className="material-icons custom-toggle-icon" onClick={() => this.toggleCategory(categoryIndex)}>create</i> : false}
                         </div>
                     </div>
-                    <ul className='custom-list'>
-                        {pages}
-                        {
-                            this.state.toggledCategory == categoryIndex
-                                ? <li className="new-item">
-                                    <div className="input-field new-item-input">
-                                        <input placeholder="http://www.placeholder.com/" id="url-input" type="text" className="validate url-input" onChange={this.handleNewFavorite} />
-                                        <label htmlFor="url-input" className="active">ADD FAVORITE</label>
-                                    </div>
-                                    <i className="material-icons new-item-icon" onClick={() => this.saveFavorite(categoryIndex)}>add_circle</i>
-                                </li>
-                                : false
-                        }
-                    </ul>
+                    <DragDropContext onDragEnd={(result) => { this.onDragEnd(result, categoryIndex) }}>
+                        <Droppable droppableId="droppable">
+                            {(provided, snapshot) => (
+                                <div className="test" ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+                                    {list}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
+                    {
+                        this.state.toggledCategory == categoryIndex
+                            ? <li className="new-item">
+                                <div className="input-field new-item-input">
+                                    <input placeholder="http://www.placeholder.com/" id="url-input" type="text" className="validate url-input" onChange={this.handleNewFavorite} />
+                                    <label htmlFor="url-input" className="active">ADD FAVORITE</label>
+                                </div>
+                                <i className="material-icons new-item-icon" onClick={() => this.saveFavorite(categoryIndex)}>add_circle</i>
+                            </li>
+                            : false
+                    }
                 </div>
-            )
+            );
         })
     }
 
     render() {
         return (
-            <div id='card-container'>
-                {this.renderFavorites()}
-                {
-                    this.props.user != null
-                        ? <CategoryMaker addCategory={this.addCategory} />
-                        : false
-                }
+            <div>
+                <div id='card-container'>
+                    {this.renderFavorites()}
+                    {
+                        this.props.user != null
+                            ? <CategoryMaker addCategory={this.addCategory} />
+                            : false
+                    }
+                </div>
+                <ModalEdit
+                    favorites={this.state.favorites}
+                    toggledCategory={this.state.toggledCategory}
+                    toggledFavorite={this.state.toggledFavorite}
+                    saveNameEdit={this.saveNameEdit}
+                />
             </div>
         )
     }
 }
+
+// a little function to help us with reordering the result
+const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+};
+
+// using some little inline style helpers to make the app look okay
+const getItemStyle = (draggableStyle, isDragging) => ({
+    // some basic styles to make the items look a bit nicer
+    // userSelect: 'none',
+
+    // change background colour if dragging
+    background: isDragging ? 'dodgerblue' : false,
+
+    // styles we need to apply on draggables
+    ...draggableStyle,
+});
+const getListStyle = isDraggingOver => ({
+    background: isDraggingOver ? 'lightblue' : false,
+    // width: 250,
+});
 
 let defaultFavorites = [
     {
