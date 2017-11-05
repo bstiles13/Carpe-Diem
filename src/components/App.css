@@ -253,7 +253,7 @@
 
 .today-child {
   margin: 0 10px;
-  text-align: left;
+  flex: 1;
 }
 
 #forecast {
