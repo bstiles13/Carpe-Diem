@@ -401,3 +401,19 @@
 #preview-content {
   margin: 0 50px;
 }
+
+.input-field .prefix.active {
+  color: #37BDFF;
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly]) + label,
+input[type=password]:not(.browser-default):focus:not([readonly]) + label {
+  color: #37BDFF;
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]) {
+  border-bottom: 1px solid #37BDFF;
+  -webkit-box-shadow: 0 1px 0 0 #37BDFF;
+  box-shadow: 0 1px 0 0 #37BDFF;
+}
