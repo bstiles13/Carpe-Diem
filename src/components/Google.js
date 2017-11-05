@@ -26,7 +26,7 @@ export default class Google extends React.Component {
         return (
             <div className="row">
                 <div className="input-field col s12">
-                    <i className="material-icons prefix" style={ { 'color': 'dodgerblue' } }>search</i>
+                    {/* <i className="material-icons prefix" style={ { 'color': 'dodgerblue' } }>search</i> */}
                     <input placeholder="Google Search..." id="google-search" type="text" onChange={this.onChange.bind(this)} onKeyPress={this.onSubmit.bind(this)} />
                     {/* <label id="google-label" htmlFor="google-search">Google Search...</label> */}
                 </div>

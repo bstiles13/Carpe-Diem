@@ -12,7 +12,9 @@ export default class Home extends React.Component {
         return (
             <div id="home">
                 <br />
+                <div className="home-header">Search</div>
                 <Google />
+                <div className="home-header">Bookmarks</div>
                 <Favorites user={this.props.user}/>
             </div>
         )

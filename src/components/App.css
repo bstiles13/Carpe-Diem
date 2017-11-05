@@ -52,6 +52,15 @@
   margin: 0 50px;
 }
 
+.home-header {
+  color: rgb(43, 87, 148);
+  border-bottom: 1px solid rgb(42, 75, 124);
+  text-align: left;
+  width: 100%;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
 #card-container {
   display: flex;
   justify-content: space-evenly;
@@ -176,6 +185,7 @@
   border: 5px solid #1353B7;
   padding-left: 10px;
   border-radius: 8%;
+  width: 90%;
 }
 
 #google-search::placeholder {
