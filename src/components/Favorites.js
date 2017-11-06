@@ -192,7 +192,7 @@ export default class Favorites extends React.Component {
                                 {
                                     this.state.toggledCategory == categoryIndex
                                         ? <div onClick={() => this.toggleFavorite(urlIndex)}>
-                                            <a className="modal-trigger" href="#modal2"><i className="material-icons edit-icon">edit</i></a>
+                                            <i className="material-icons edit-icon" data-toggle="modal" data-target="#modal2">edit</i>
                                             <i className="material-icons edit-icon" onClick={() => this.removeFavorite(categoryIndex, urlIndex)}>delete</i>
                                         </div>
                                         : <i className="material-icons">swap_vert</i>
