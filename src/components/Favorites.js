@@ -195,7 +195,7 @@ export default class Favorites extends React.Component {
                                             <a className="modal-trigger" href="#modal2"><i className="material-icons edit-icon">edit</i></a>
                                             <i className="material-icons edit-icon" onClick={() => this.removeFavorite(categoryIndex, urlIndex)}>delete</i>
                                         </div>
-                                        : <i className="material-icons">drag_handle</i>
+                                        : <i className="material-icons">swap_vert</i>
                                 }
                             </div>
                             {provided.placeholder}
