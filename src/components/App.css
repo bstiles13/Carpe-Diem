@@ -329,6 +329,10 @@
   display: flex;
 }
 
+#activity-tabs {
+  margin: 0 4px;
+}
+
 #activity-list {
   display: flex;
   flex-wrap: wrap;

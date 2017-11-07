@@ -43,7 +43,7 @@ export default class Weather extends React.Component {
                             <img src={img} />
                         </div>
                         <div className='today-child'>
-                            <h4>{this.state.weather.item.condition.temp} °</h4>
+                            <span style={{'fontSize': '25px'}}>{this.state.weather.item.condition.temp} °</span>
                         </div>
                         <div className='today-child'>
                             <div>L {this.state.weather.item.forecast[0].low}° H {this.state.weather.item.forecast[0].high}°</div>

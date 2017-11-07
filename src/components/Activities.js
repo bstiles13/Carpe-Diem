@@ -121,7 +121,7 @@ export default class Activities extends React.Component {
                 </div>
                 <div className='event-card-content'>
                     <div className="row">
-                        <div className="col s12">
+                        <div id="activity-tabs" className="col s12">
                             <ul className="tabs grey darken-4">
                                 {this.renderTabs()}
                             </ul>
