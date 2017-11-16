@@ -1,5 +1,5 @@
 import React from 'react';
-import placeholder from '../placeholder.png';
+import placeholder from '../images/placeholder.png';
 import CategoryMaker from './CategoryMaker';
 import ModalEdit from './ModalEdit';
 import axios from 'axios';

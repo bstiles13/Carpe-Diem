@@ -1,5 +1,5 @@
 import React from 'react';
-import placeholder from '../placeholder.png';
+import placeholder from '../images/placeholder.png';
 
 export default class ModalEdit extends React.Component {
 

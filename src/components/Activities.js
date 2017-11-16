@@ -1,6 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import Preloader from './Preloader';
+import familyHeader from '../images/family.jpg';
+import musicHeader from '../images/music.jpg';
+import sportsHeader from '../images/sports.png';
+import comedyHeader from '../images/comedy.jpg';
+import outdoorsHeader from '../images/outdoors.jpg';
+import attractionsHeader from '../images/attractions.jpg';
+import animalsHeader from '../images/animals.jpg';
+
 
 export default class Activities extends React.Component {
 
@@ -57,25 +65,25 @@ export default class Activities extends React.Component {
     renderImage(category) {
         switch (category) {
             case 'Family Activities':
-                return 'http://youthvoices.net/sites/default/files/image/124947/sep/header-family.jpg'
+                return familyHeader
                 break;
             case 'Music':
-                return 'https://motechdevelopment.com/wp-content/uploads/2014/12/modern-colour-music-header-1c.jpg'
+                return musicHeader
                 break;
             case 'Sports':
-                return 'http://pumpandtap.com/wp-content/uploads/2016/03/pumpandtap-sportsheader-e1457827819293.png'
+                return sportsHeader
                 break;
             case 'Comedy':
-                return 'https://www.singingsuccess.com/wp-content/uploads/2016/12/mic-header.jpg'
+                return comedyHeader
                 break;
             case 'Outdoors':
-                return 'https://blog.homeexchange.com/wp-content/uploads/2016/11/comm609_nightsky_header.jpg'
+                return outdoorsHeader
                 break;
             case 'Museums & Attractions':
-                return 'http://www.vam.ac.uk/__data/assets/image/0014/240008/closed_header_2.jpg'
+                return attractionsHeader
                 break;
             case 'Animals':
-                return 'https://www.freewebheaders.com/wordpress/wp-content/gallery/dogs/cocker-spaniel-puppy-kissing-little-red-kitten-web-header.jpg'
+                return animalsHeader
                 break;
         }
     }
