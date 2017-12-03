@@ -2,8 +2,8 @@ let bodyParser = require('body-parser');
 let axios = require('axios');
 let bcrypt = require('bcrypt');
 
-let User = require('./user.js');
-let Favorite = require('./favorite.js');
+let User = require('../models/user.js');
+let Favorite = require('../models/favorite.js');
 
 module.exports = {
 
