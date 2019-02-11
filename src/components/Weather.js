@@ -23,7 +23,7 @@ export default class Weather extends React.Component {
     }
 
     getWeather() {
-        let url = 'http://api.openweathermap.org/data/2.5/forecast/daily?zip=' + this.props.location + '&appid=1c57aba5a8389d9dcf250be4f7cce17b&cnt=11&units=imperial';
+        let url = 'https://api.openweathermap.org/data/2.5/forecast/daily?zip=' + this.props.location + '&appid=1c57aba5a8389d9dcf250be4f7cce17b&cnt=11&units=imperial';
         axios.get(url).then(data => {
             this.setState({
                 weather: data.data
