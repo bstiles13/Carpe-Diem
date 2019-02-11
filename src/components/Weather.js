@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Preloader from './Preloader';
+import moment from 'moment';
 
 export default class Weather extends React.Component {
 
@@ -22,19 +23,19 @@ export default class Weather extends React.Component {
     }
 
     getWeather() {
-        let url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22w=" + this.props.location + "%22)&format=json"
+        let url = 'http://api.openweathermap.org/data/2.5/forecast/daily?zip=' + this.props.location + '&appid=1c57aba5a8389d9dcf250be4f7cce17b&cnt=11&units=imperial';
         axios.get(url).then(data => {
             this.setState({
-                weather: data.data.query.results.channel
+                weather: data.data
             })
         })
     }
 
     renderToday() {
         if (this.state.weather != null) {
-            let weather = this.state.weather;
-            let img = weather.item.description;
-            img = img.split('"')[1];
+            let today = this.state.weather.list[0];
+            let icon = today.weather[0].icon;
+            let img = 'http://openweathermap.org/img/w/' + icon + '.png';
             return (
                 <div>
                     <div className='event-content-header'>TODAY</div>
@@ -43,10 +44,10 @@ export default class Weather extends React.Component {
                             <img src={img} />
                         </div>
                         <div className='today-child'>
-                            <span style={{'fontSize': '25px'}}>{this.state.weather.item.condition.temp} °</span>
+                            <span style={{'fontSize': '25px'}}>{today.temp.max.toFixed(0)} °</span>
                         </div>
                         <div className='today-child'>
-                            <div>L {this.state.weather.item.forecast[0].low}° H {this.state.weather.item.forecast[0].high}°</div>
+                            <div>L {today.temp.min.toFixed(0)}° H {today.temp.max.toFixed(0)}°</div>
                         </div>
                     </div>
                 </div>
@@ -60,16 +61,17 @@ export default class Weather extends React.Component {
 
     renderForecast() {
         if (this.state.weather != null) {
-            let forecast = this.state.weather.item.forecast;
+            let forecast = this.state.weather.list;
+            forecast.shift();
             let renderForecast = forecast.map((day, index) => {
                 return (
                     <div className='daily' key={index}>
-                        <h5>{day.day}</h5>
-                        <div>{day.date}</div>
+                        <h5>{moment.unix(day.dt).format('ddd')}</h5>
+                        <div>{moment.unix(day.dt).format("DD MMM YYYY")}</div>
                         <div className='daily-details'>
-                            <div className='daily-child'>{day.text.toUpperCase()}</div>
-                            <div className='daily-child'>HIGH: {day.high.toUpperCase()}</div>
-                            <div className='daily-child'>LOW: {day.low.toUpperCase()}</div>
+                            <div className='daily-child'>{day.weather[0].main.toUpperCase()}</div>
+                            <div className='daily-child'>HIGH: {day.temp.max.toFixed(0)}</div>
+                            <div className='daily-child'>LOW: {day.temp.min.toFixed(0)}</div>
                         </div>
                     </div>
                 )
@@ -84,11 +86,13 @@ export default class Weather extends React.Component {
     }
 
     render() {
+        let city = this.state.weather ? this.state.weather.city : '';
+
         return (
             <div id='weather-container' className="event-card">
                 <div className='event-card-title grey darken-4'>
                     <h5 className='event-header'>WEATHER</h5>
-                    {this.state.weather != null ? <div>{this.state.weather.location.city + ', ' + this.state.weather.location.region}</div> : false}
+                    {this.state.weather != null ? <div>{city.name + ', ' + city.country}</div> : false}
                 </div>
                 <div className='event-card-content'>
                     {this.renderToday()}
