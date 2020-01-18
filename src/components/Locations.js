@@ -71,7 +71,7 @@ export default class Locations extends React.Component {
                 {this.renderLocations()}
                 {
                     this.state.editing || this.props.locations.length == 0
-                        ? <div>
+                        ? <div className='edit-location-container'>
                             <div className="input-field inline">
                                 <input placeholder="Enter zip code..." type="text" className="validate" onChange={this.handleChange} />
                             </div>

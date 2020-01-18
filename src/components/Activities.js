@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { get } from 'lodash';
+import moment from 'moment';
 import Preloader from './Preloader';
 import familyHeader from '../images/family.jpg';
 import musicHeader from '../images/music.jpg';
@@ -94,14 +96,22 @@ export default class Activities extends React.Component {
             : (
                 this.state.activities != null
                     ? this.state.activities.map((event, index) => {
+                        const imageUrl = get(event, 'image.medium.url', get(event, 'image.url'));
+                        const venue = event.venue_name || 'Click to learn more'
+                        const date = moment(new Date(event.start_time)).format('MMMM Do YYYY, h:mm a')
                         return (
-                            <li className="collection-item avatar activity-item" key={index}>
-                                <i className="material-icons circle">location_on</i>
-                                <span className="title"><b>{event.title}</b></span>
-                                <p>{event.venue_address} <br />
-                                    {event.start_time}
-                                </p>
-                                <a href={event.url} target="_blank" className="secondary-content"><i className="material-icons">info_outline</i></a>
+                            <li className="collection-item avatar activity-item" key={index} onClick={() => window.open(event.url, "_blank")}>
+                                <div className='event-content'>
+                                    <div className='left-content'>
+                                        <div className='event-details'><div className='event-label'>What:</div> {event.title}</div>
+                                        <div className='event-details'><div className='event-label'>Where:</div> {venue}</div>
+                                        <div className='event-details'><div className='event-label'>Address:</div> {event.venue_address}</div>
+                                        <div className='event-details'><div className='event-label'>Time:</div> {date}</div>
+                                    </div>
+                                    <div className='right-content'>
+                                        <img src={imageUrl} />
+                                    </div>
+                                </div>
                             </li>
                         )
                     })
@@ -128,7 +138,7 @@ export default class Activities extends React.Component {
                     <h5 className='event-header'>HAPPENING NEARBY</h5>
                 </div>
                 <div className='event-card-content'>
-                    <div className="row">
+                    <div>
                         <div id="activity-tabs" className="col s12">
                             <ul className="tabs grey darken-4">
                                 {this.renderTabs()}
