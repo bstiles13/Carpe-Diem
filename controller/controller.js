@@ -105,9 +105,11 @@ module.exports = {
     activities: function (req, res) {
         let zip = req.body.zip;
         let categoryId = req.body.id;
-        axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + categoryId + '&app_key=KJbX3nZkSCDVrQCJ').then(data => {
+        axios.get('http://api.eventful.com/json/events/search?...&location=' + zip + '&within=100&date=Future&t=This+Week&sort_order=popularity&category=' + categoryId + '&app_key=KJbX3nZkSCDVrQCJ')
+        .then(data => {
             res.send(data.data.events.event);
         })
+        .catch(error => res.status(400).send('No events found'));
     }
 
 }

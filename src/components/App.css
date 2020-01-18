@@ -189,6 +189,10 @@
   color: slategray;
 }
 
+#google-search:focus {
+  border: 5px solid #1353B7 !important;
+}
+
 #google-label {
   padding-left: 10px;
 }
