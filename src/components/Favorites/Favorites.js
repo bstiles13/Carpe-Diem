@@ -32,13 +32,13 @@ export default class Favorites extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps != this.props) {
+        if (prevProps !== this.props) {
             this.getFavorites();
         }
     }
 
     getFavorites() {
-        if (this.props.user != null) {
+        if (this.props.user) {
             axios.post('/findfavorites', { user: this.props.user }).then(data => {
                 this.setState({
                     favorites: data.data[0].favorites
@@ -67,7 +67,7 @@ export default class Favorites extends React.Component {
         favorites[categoryIndex].pages[urlIndex].name = edit;
         axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
-            if (result == true) {
+            if (result) {
                 this.setState({
                     toggledFavorite: null
                 })
@@ -96,7 +96,7 @@ export default class Favorites extends React.Component {
         favorites[index].pages.push({ name: domain, url: "http://" + domain });
         axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
-            if (result == true) {
+            if (result) {
                 this.getFavorites();
             }
         })
@@ -108,7 +108,7 @@ export default class Favorites extends React.Component {
         favorites[categoryIndex].pages.splice(urlIndex, 1);
         axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
-            if (result == true) {
+            if (result) {
                 this.getFavorites();
             }
         })
@@ -120,7 +120,7 @@ export default class Favorites extends React.Component {
         let index = favorites.length - 1;
         axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
-            if (result == true) {
+            if (result) {
                 this.getFavorites();
                 this.toggleCategory(index);
             }
@@ -133,14 +133,14 @@ export default class Favorites extends React.Component {
         favorites.splice(index, 1);
         axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
-            if (result == true) {
+            if (result) {
                 this.getFavorites();
             }
         })
     }
 
     toggleCategory(index) {
-        if (index != this.state.toggledCategory) {
+        if (index !== this.state.toggledCategory) {
             this.setState({
                 toggledCategory: index,
                 toggledFavorite: null
@@ -164,10 +164,10 @@ export default class Favorites extends React.Component {
         }
         let items = this.state.favorites;
         items[index].pages = reorder(items[index].pages, result.source.index, result.destination.index);
-        if (this.props.user != null) {
+        if (this.props.user) {
             axios.post('/updatefavorites', { favorites: items, user: this.props.user }).then(data => {
                 let result = data.data;
-                if (result == true) {
+                if (result) {
                     this.getFavorites();
                 }
             })
@@ -185,12 +185,12 @@ export default class Favorites extends React.Component {
                         <div>
                             <div className='custom-item' key={urlIndex} ref={provided.innerRef} style={getItemStyle(provided.draggableStyle, snapshot.isDragging)} {...provided.dragHandleProps}>
                                 <div className='custom-item-link favorite-text' onClick={() => this.openFavorite(page.url)}>
-                                    <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} onError={(event) => event.target.setAttribute("src", placeholder)} />
+                                    <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} onError={(event) => event.target.setAttribute("src", placeholder)} alt='' />
                                     <span>{page.name}</span>
 
                                 </div>
                                 {
-                                    this.state.toggledCategory == categoryIndex
+                                    this.state.toggledCategory === categoryIndex
                                         ? <div onClick={() => this.toggleFavorite(urlIndex)}>
                                             <i className="material-icons edit-icon" data-toggle="modal" data-target="#modal2">edit</i>
                                             <i className="material-icons edit-icon" onClick={() => this.removeFavorite(categoryIndex, urlIndex)}>delete</i>
@@ -207,11 +207,11 @@ export default class Favorites extends React.Component {
                 <div className='custom-card' key={categoryIndex}>
                     <div className='custom-header'>
                         <div className='custom-header-child custom-delete'>
-                            {this.state.toggledCategory == categoryIndex ? <i className="material-icons delete-icon" onClick={() => this.removeCategory(categoryIndex)}>delete</i> : false}
+                            {this.state.toggledCategory === categoryIndex ? <i className="material-icons delete-icon" onClick={() => this.removeCategory(categoryIndex)}>delete</i> : false}
                         </div>
                         <div className='custom-header-child'>{favorite.category}</div>
                         <div className='custom-header-child' id='custom-toggle'>
-                            {this.props.user !== null ? <i className="material-icons custom-toggle-icon" onClick={() => this.toggleCategory(categoryIndex)}>create</i> : false}
+                            {this.props.user ? <i className="material-icons custom-toggle-icon" onClick={() => this.toggleCategory(categoryIndex)}>create</i> : false}
                         </div>
                     </div>
                     <DragDropContext onDragEnd={(result) => { this.onDragEnd(result, categoryIndex) }}>
@@ -225,7 +225,7 @@ export default class Favorites extends React.Component {
                         </Droppable>
                     </DragDropContext>
                     {
-                        this.state.toggledCategory == categoryIndex
+                        this.state.toggledCategory === categoryIndex
                             ? <li className="new-item">
                                 <div className="input-field new-item-input">
                                     <input placeholder="http://www.placeholder.com/" id="url-input" type="text" className="validate url-input" onChange={this.handleNewFavorite} />
@@ -246,7 +246,7 @@ export default class Favorites extends React.Component {
                 <div id='card-container'>
                     {this.renderFavorites()}
                     {
-                        this.props.user != null
+                        this.props.user
                             ? <CategoryMaker addCategory={this.addCategory} />
                             : false
                     }

@@ -31,7 +31,7 @@ export default class Locations extends React.Component {
             locations.unshift(this.state.locationInput);
             axios.post('/updatelocations', { locations: locations, user: this.props.user }).then(data => {
                 let result = data.data;
-                if (result == true) {
+                if (result) {
                     this.setState({ editing: false })
                     this.setState({ warningTogggle: false })
                     this.props.changeZip(0);                    
@@ -46,7 +46,7 @@ export default class Locations extends React.Component {
         locations.splice(index, 1);
         axios.post('/updatelocations', { locations: locations, user: this.props.user }).then(data => {
             let result = data.data;
-            if (result == true) {
+            if (result) {
                 this.props.changeZip(0);
                 this.props.getLocations();
             }
@@ -71,7 +71,7 @@ export default class Locations extends React.Component {
                 <span>Choose Location</span>
                 {this.renderLocations()}
                 {
-                    this.state.editing || this.props.locations.length == 0
+                    this.state.editing || this.props.locations.length === 0
                         ? <div className='edit-location-container'>
                             <div className="input-field inline">
                                 <input placeholder="Enter zip code..." type="text" className="validate" onChange={this.handleChange} />

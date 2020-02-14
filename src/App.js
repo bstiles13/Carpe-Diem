@@ -29,7 +29,7 @@ class App extends Component {
 
   checkUser() {
     let userHistory = localStorage.getItem('carpeToken');
-    userHistory != null && userHistory != 'null' && userHistory != undefined
+    userHistory
       ? this.setUser(userHistory)
       : this.setUser(null);
   }
@@ -54,7 +54,7 @@ class App extends Component {
             <Route path='/today' render={props => <Events user={this.state.user} />} />
             <Route path='/login' render={props => <Login checkUser={this.checkUser} />} />
           </div>
-          {this.state.user == null ? <ModalWelcome /> : false}
+          {!this.state.user ? <ModalWelcome /> : false}
         </div>
       </BrowserRouter>
     );

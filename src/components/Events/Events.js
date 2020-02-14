@@ -22,13 +22,13 @@ export default class Events extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps != this.props) {
+        if (prevProps !== this.props) {
             this.getLocations();
         }
     }
 
     getLocations() {
-        if (this.props.user != null) {
+        if (this.props.user) {
             axios.post('/findlocations', { user: this.props.user }).then(data => {
                 this.setState({
                     locations: data.data[0].zip

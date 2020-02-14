@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
@@ -53,7 +53,7 @@ class Login extends React.Component {
 
     loginNew() {
         let user = this.state.userForm;
-        if (user.newPassword1 != user.newPassword2) {
+        if (user.newPassword1 !== user.newPassword2) {
             this.triggerWarning('invalidPassword');
         } else if (user.newUsername === '' || user.newPassword1 === '' || user.newPassword2 === '' || user.newZip === '') {
             this.triggerWarning('invalidText');
@@ -64,7 +64,7 @@ class Login extends React.Component {
             axios.post('/newuser', user).then(data => {
                 // Read the result field from the JSON response.
                 let result = data.data;
-                if (result == true) {
+                if (result) {
                     localStorage.setItem('carpeToken', user.newUsername);
                     this.props.checkUser();
                     this.props.history.push('/');
@@ -84,7 +84,7 @@ class Login extends React.Component {
             axios.post('/existinguser', user).then(data => {
                 // Read the result field from the JSON response.
                 let result = data.data;
-                if (result == true) {
+                if (result) {
                     localStorage.setItem('carpeToken', user.existingUsername);
                     this.props.checkUser();                    
                     this.props.history.push('/');

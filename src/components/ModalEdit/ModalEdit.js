@@ -13,7 +13,7 @@ export default class ModalEdit extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.toggledCategory != null && nextProps.toggledFavorite != null) {
+        if (nextProps.toggledCategory && nextProps.toggledFavorite) {
             this.setState({
                 nameInput: nextProps.favorites[nextProps.toggledCategory].pages[nextProps.toggledFavorite].name
             })
@@ -42,7 +42,7 @@ export default class ModalEdit extends React.Component {
                             </button>
                         </div>
                         {
-                            category != null && favorite != null
+                            category && favorite
                                 ? <div>
                                     <div className="modal-body">
                                         <div id="modal-edit-content">
@@ -54,7 +54,7 @@ export default class ModalEdit extends React.Component {
                                                 <h6>Preview:</h6>
                                                 <div className='custom-item'>
                                                     <div className='custom-item-link favorite-text'>
-                                                        <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + favorites[category].pages[favorite].url} onError={(event) => event.target.setAttribute("src", placeholder)} />
+                                                        <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + favorites[category].pages[favorite].url} onError={(event) => event.target.setAttribute("src", placeholder)} alt='' />
                                                         <span>{this.state.nameInput}</span>
                                                     </div>
                                                     <i className="material-icons">drag_handle</i>

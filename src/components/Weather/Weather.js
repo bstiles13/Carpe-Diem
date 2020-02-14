@@ -18,7 +18,7 @@ export default class Weather extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps != this.props) {
+        if (prevProps !== this.props) {
             this.getWeather();
         }
     }
@@ -33,7 +33,7 @@ export default class Weather extends React.Component {
     }
 
     renderToday() {
-        if (this.state.weather != null) {
+        if (this.state.weather) {
             let today = this.state.weather.list[0];
             let icon = today.weather[0].icon;
             let img = 'http://openweathermap.org/img/w/' + icon + '.png';
@@ -42,7 +42,7 @@ export default class Weather extends React.Component {
                     <div className='event-content-header'>TODAY</div>
                     <div id='today'>
                         <div className='today-child'>
-                            <img src={img} />
+                            <img src={img} alt='' />
                         </div>
                         <div className='today-child'>
                             <span style={{'fontSize': '25px'}}>{today.temp.max.toFixed(0)} °</span>
@@ -61,7 +61,7 @@ export default class Weather extends React.Component {
     }
 
     renderForecast() {
-        if (this.state.weather != null) {
+        if (this.state.weather) {
             let forecast = this.state.weather.list;
             forecast.shift();
             let renderForecast = forecast.map((day, index) => {
@@ -93,7 +93,7 @@ export default class Weather extends React.Component {
             <div id='weather-container' className="event-card">
                 <div className='event-card-title grey darken-4'>
                     <h5 className='event-header'>WEATHER</h5>
-                    {this.state.weather != null ? <div>{city.name + ', ' + city.country}</div> : false}
+                    {this.state.weather ? <div>{city.name + ', ' + city.country}</div> : false}
                 </div>
                 <div className='event-card-content'>
                     {this.renderToday()}

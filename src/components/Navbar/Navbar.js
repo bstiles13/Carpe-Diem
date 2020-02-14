@@ -14,7 +14,7 @@ export default class Navbar extends React.Component {
                     <span>Homepage. Planner. <b>You.</b></span>
                 </div>
                 <div id="header-right" className="header-child">
-                    {this.props.user != null
+                    {this.props.user
                     ? <div id='user-container'><span>Hi {this.props.user}</span><br/><button className="custom-button" onClick={this.props.logout}>Sign Out</button></div>
                     : <Link to="/login"><button className="custom-button">Sign In</button></Link>
                     }

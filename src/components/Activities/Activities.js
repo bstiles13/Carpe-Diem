@@ -33,7 +33,7 @@ export default class Activities extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps != this.props) {
+        if (prevProps !== this.props) {
             this.setActivities();
         }
     }
@@ -60,7 +60,7 @@ export default class Activities extends React.Component {
 
     renderTabs() {
         return activityDefaults.map((activity, index) => {
-            return <li key={index} className="tab col s3" onClick={() => this.toggleCategory(activity.category, activity.id, index)}><a className={this.state.toggledTab == index ? "active" : ""} href="#">{activity.category}</a></li>
+            return <li key={index} className="tab col s3" onClick={() => this.toggleCategory(activity.category, activity.id, index)}><a className={this.state.toggledTab === index ? "active" : ""} href="#">{activity.category}</a></li>
         })
     }
 
@@ -68,25 +68,20 @@ export default class Activities extends React.Component {
         switch (category) {
             case 'Family Activities':
                 return familyHeader
-                break;
             case 'Music':
                 return musicHeader
-                break;
             case 'Sports':
                 return sportsHeader
-                break;
             case 'Comedy':
                 return comedyHeader
-                break;
             case 'Outdoors':
                 return outdoorsHeader
-                break;
             case 'Museums & Attractions':
                 return attractionsHeader
-                break;
             case 'Animals':
                 return animalsHeader
-                break;
+            default:
+                return;
         }
     }
 
@@ -94,7 +89,7 @@ export default class Activities extends React.Component {
         let list = this.state.togglePreloader
             ? <Preloader />
             : (
-                this.state.activities != null
+                this.state.activities
                     ? this.state.activities.map((event, index) => {
                         const imageUrl = get(event, 'image.medium.url', get(event, 'image.url'));
                         const venue = event.venue_name || 'Click to learn more'
@@ -109,7 +104,7 @@ export default class Activities extends React.Component {
                                         <div className='event-details'><div className='event-label'>Time:</div> {date}</div>
                                     </div>
                                     <div className='right-content'>
-                                        <img src={imageUrl} />
+                                        <img src={imageUrl} alt='' />
                                     </div>
                                 </div>
                             </li>
