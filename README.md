@@ -1,35 +1,68 @@
-# Carpe Diem
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Reinvent your homepage and bookmark experience. Save and categorize your favorite websites, see the weather forecast in your city, and explore nearby events. SPA frontend is piloted by React. Backend features Node, Express, and MongoDB. APIs include Yahoo Weather and Eventful.
+## Available Scripts
 
-## Homepage
+In the project directory, you can run:
 
-View popular web destinations as a guest or sign in to personalize your homepage.
+### `npm start`
 
-![search](https://github.com/bstiles13/Carpe-Diem/blob/master/build/assets/screenshots/screenshot_home1.png)
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-![radius](https://github.com/bstiles13/Carpe-Diem/blob/master/build/assets/screenshots/screenshot_home2.png)
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
 
-## City Snapshot
+### `npm test`
 
-Plan around the weather and explore nearby events in your city.
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-![articles](https://github.com/bstiles13/Carpe-Diem/blob/master/build/assets/screenshots/screenshot_events.png)
+### `npm run build`
 
-## Login and Edit
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Sign In Page
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
 
-![login1](https://github.com/bstiles13/Carpe-Diem/blob/master/build/assets/screenshots/screenshot_login.png)
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Edit Favorites
+### `npm run eject`
 
-![login2](https://github.com/bstiles13/Carpe-Diem/blob/master/build/assets/screenshots/screenshot_edit1.png)
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-Add Categories
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-![login2](https://github.com/bstiles13/Carpe-Diem/blob/master/build/assets/screenshots/screenshot_edit2.png)
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-Add and remove locations (zip codes)
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-![login2](https://github.com/bstiles13/Carpe-Diem/blob/master/build/assets/screenshots/screenshot_edit3.png)
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
