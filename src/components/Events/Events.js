@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Weather from '../Weather/Weather';
-import Activites from './Activities';
+import Activites from '../Activities/Activities';
 import Locations from '../Locations/Locations';
 
 import './Events.scss';

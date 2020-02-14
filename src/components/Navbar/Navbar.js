@@ -6,7 +6,7 @@ import './Navbar.scss';
 export default class Navbar extends React.Component {
     render() {
         return (
-            <header className="App-header">
+            <header className="navbar">
                 <div id="header-left" className="header-child"></div>
                 <div id="header-center" className="header-child">
                     {/* <img src={logo} className="App-logo" alt="logo" /> */}

@@ -29,11 +29,9 @@ class App extends Component {
 
   checkUser() {
     let userHistory = localStorage.getItem('carpeToken');
-    if (userHistory != null && userHistory != 'null' && userHistory != undefined) {
-      this.setUser(userHistory);
-    } else {
-      this.setUser(null);
-    }
+    userHistory != null && userHistory != 'null' && userHistory != undefined
+      ? this.setUser(userHistory)
+      : this.setUser(null);
   }
 
   setUser(user) {
@@ -48,13 +46,13 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="App">
+        <div className='app'>
           <Navbar user={this.state.user} setUser={this.setUser} logout={this.logout} />
           <RouteMenu />
-          <div id="app-content">
-            <Route exact path="/" render={props => <Home user={this.state.user} />} />
-            <Route path="/today" render={props => <Events user={this.state.user} />} />
-            <Route path="/login" render={props => <Login checkUser={this.checkUser} />} />
+          <div id='app-content'>
+            <Route exact path='/' render={props => <Home user={this.state.user} />} />
+            <Route path='/today' render={props => <Events user={this.state.user} />} />
+            <Route path='/login' render={props => <Login checkUser={this.checkUser} />} />
           </div>
           {this.state.user == null ? <ModalWelcome /> : false}
         </div>

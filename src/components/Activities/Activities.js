@@ -2,16 +2,16 @@ import React from 'react';
 import axios from 'axios';
 import { get } from 'lodash';
 import moment from 'moment';
-import Preloader from './Preloader';
-import familyHeader from '../images/family.jpg';
-import musicHeader from '../images/music.jpg';
-import sportsHeader from '../images/sports.png';
-import comedyHeader from '../images/comedy.jpg';
-import outdoorsHeader from '../images/outdoors.jpg';
-import attractionsHeader from '../images/attractions.jpg';
-import animalsHeader from '../images/animals.jpg';
+import Preloader from '../Preloader/Preloader';
+import familyHeader from '../../images/family.jpg';
+import musicHeader from '../../images/music.jpg';
+import sportsHeader from '../../images/sports.png';
+import comedyHeader from '../../images/comedy.jpg';
+import outdoorsHeader from '../../images/outdoors.jpg';
+import attractionsHeader from '../../images/attractions.jpg';
+import animalsHeader from '../../images/animals.jpg';
 
-import './Activies.scss';
+import './Activities.scss';
 
 export default class Activities extends React.Component {
     constructor(props) {
