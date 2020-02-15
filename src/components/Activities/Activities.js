@@ -60,7 +60,7 @@ export default class Activities extends React.Component {
 
     renderTabs() {
         return activityDefaults.map((activity, index) => {
-            return <li key={index} className="tab col s3" onClick={() => this.toggleCategory(activity.category, activity.id, index)}><a className={this.state.toggledTab === index ? "active" : ""} href="#">{activity.category}</a></li>
+            return <li key={index} className='tab col s3' onClick={() => this.toggleCategory(activity.category, activity.id, index)}><a className={this.state.toggledTab === index ? 'active' : ''} href='#'>{activity.category}</a></li>
         })
     }
 
@@ -95,7 +95,7 @@ export default class Activities extends React.Component {
                         const venue = event.venue_name || 'Click to learn more'
                         const date = moment(new Date(event.start_time)).format('MMMM Do YYYY, h:mm a')
                         return (
-                            <li className="collection-item avatar activity-item" key={index} onClick={() => window.open(event.url, "_blank")}>
+                            <li className='collection-item avatar activity-item' key={index} onClick={() => window.open(event.url, '_blank')}>
                                 <div className='event-content'>
                                     <div className='left-content'>
                                         <div className='event-details'><div className='event-label'>What:</div> {event.title}</div>
@@ -113,12 +113,12 @@ export default class Activities extends React.Component {
                     : false
             )
         return (
-            <div className="card activity-card">
-                <div className="card-image" style={{ 'backgroundImage': 'url(' + this.renderImage(this.state.toggledCategory) + ')', 'backgroundPosition': 'left center', 'backgroundSize': 'cover' }}>
-                    <span className="card-title">{this.state.toggledCategory}</span>
+            <div className='card activity-card'>
+                <div className='card-image' style={{ 'backgroundImage': 'url(' + this.renderImage(this.state.toggledCategory) + ')', 'backgroundPosition': 'left center', 'backgroundSize': 'cover' }}>
+                    <span className='card-title'>{this.state.toggledCategory}</span>
                 </div>
-                <div className="card-content">
-                    <ul className="collection">
+                <div className='card-content'>
+                    <ul className='collection'>
                         {list}
                     </ul>
                 </div>
@@ -128,14 +128,14 @@ export default class Activities extends React.Component {
 
     render() {
         return (
-            <div id='activity-container' className="event-card">
+            <div id='activity-container' className='event-card'>
                 <div className='event-card-title grey darken-4'>
                     <h5 className='event-header'>HAPPENING NEARBY</h5>
                 </div>
                 <div className='event-card-content'>
                     <div>
-                        <div id="activity-tabs" className="col s12">
-                            <ul className="tabs grey darken-4">
+                        <div id='activity-tabs' className='col s12'>
+                            <ul className='tabs grey darken-4'>
                                 {this.renderTabs()}
                             </ul>
                         </div>

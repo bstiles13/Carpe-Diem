@@ -93,7 +93,7 @@ export default class Favorites extends React.Component {
         arr = arr.length < 2 ? arr[0].split('/') : arr[1].split('/');
         domain = arr[0];
         this.setState({ toggledCategory: null })
-        favorites[index].pages.push({ name: domain, url: "http://" + domain });
+        favorites[index].pages.push({ name: domain, url: 'http://' + domain });
         axios.post('/updatefavorites', { favorites: favorites, user: this.props.user }).then(data => {
             let result = data.data;
             if (result) {
@@ -185,17 +185,17 @@ export default class Favorites extends React.Component {
                         <div>
                             <div className='custom-item' key={urlIndex} ref={provided.innerRef} style={getItemStyle(provided.draggableStyle, snapshot.isDragging)} {...provided.dragHandleProps}>
                                 <div className='custom-item-link favorite-text' onClick={() => this.openFavorite(page.url)}>
-                                    <img className="url-logo circle" src={'//logo.clearbit.com/spotify.com' + page.url} onError={(event) => event.target.setAttribute("src", placeholder)} alt='' />
+                                    <img className='url-logo circle' src={'//logo.clearbit.com/spotify.com' + page.url} onError={(event) => event.target.setAttribute('src', placeholder)} alt='' />
                                     <span>{page.name}</span>
 
                                 </div>
                                 {
                                     this.state.toggledCategory === categoryIndex
                                         ? <div onClick={() => this.toggleFavorite(urlIndex)}>
-                                            <i className="material-icons edit-icon" data-toggle="modal" data-target="#modal2">edit</i>
-                                            <i className="material-icons edit-icon" onClick={() => this.removeFavorite(categoryIndex, urlIndex)}>delete</i>
+                                            <i className='material-icons edit-icon' data-toggle='modal' data-target='#modal2'>edit</i>
+                                            <i className='material-icons edit-icon' onClick={() => this.removeFavorite(categoryIndex, urlIndex)}>delete</i>
                                         </div>
-                                        : <i className="material-icons">swap_vert</i>
+                                        : <i className='material-icons'>swap_vert</i>
                                 }
                             </div>
                             {provided.placeholder}
@@ -207,15 +207,15 @@ export default class Favorites extends React.Component {
                 <div className='custom-card' key={categoryIndex}>
                     <div className='custom-header'>
                         <div className='custom-header-child custom-delete'>
-                            {this.state.toggledCategory === categoryIndex ? <i className="material-icons delete-icon" onClick={() => this.removeCategory(categoryIndex)}>delete</i> : false}
+                            {this.state.toggledCategory === categoryIndex ? <i className='material-icons delete-icon' onClick={() => this.removeCategory(categoryIndex)}>delete</i> : false}
                         </div>
                         <div className='custom-header-child'>{favorite.category}</div>
                         <div className='custom-header-child' id='custom-toggle'>
-                            {this.props.user ? <i className="material-icons custom-toggle-icon" onClick={() => this.toggleCategory(categoryIndex)}>create</i> : false}
+                            {this.props.user ? <i className='material-icons custom-toggle-icon' onClick={() => this.toggleCategory(categoryIndex)}>create</i> : false}
                         </div>
                     </div>
                     <DragDropContext onDragEnd={(result) => { this.onDragEnd(result, categoryIndex) }}>
-                        <Droppable droppableId="droppable">
+                        <Droppable droppableId='droppable'>
                             {(provided, snapshot) => (
                                 <div ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
                                     {list}
@@ -226,12 +226,12 @@ export default class Favorites extends React.Component {
                     </DragDropContext>
                     {
                         this.state.toggledCategory === categoryIndex
-                            ? <li className="new-item">
-                                <div className="input-field new-item-input">
-                                    <input placeholder="http://www.placeholder.com/" id="url-input" type="text" className="validate url-input" onChange={this.handleNewFavorite} />
-                                    <label htmlFor="url-input" className="active">ADD FAVORITE</label>
+                            ? <li className='new-item'>
+                                <div className='input-field new-item-input'>
+                                    <input placeholder='http://www.placeholder.com/' id='url-input' type='text' className='validate url-input' onChange={this.handleNewFavorite} />
+                                    <label htmlFor='url-input' className='active'>ADD FAVORITE</label>
                                 </div>
-                                <i className="material-icons new-item-icon" onClick={() => this.saveFavorite(categoryIndex)}>add_circle</i>
+                                <i className='material-icons new-item-icon' onClick={() => this.saveFavorite(categoryIndex)}>add_circle</i>
                             </li>
                             : false
                     }

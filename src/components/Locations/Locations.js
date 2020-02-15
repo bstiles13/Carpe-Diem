@@ -57,9 +57,9 @@ export default class Locations extends React.Component {
         let locations = this.props.locations;
         return locations.map((zip, index) => {
             return (
-                <span className="zip" key={index}>
+                <span className='zip' key={index}>
                     <span onClick={() => this.props.changeZip(index)}>{zip}</span>
-                    <i className="material-icons" onClick={() => this.removeLocation(index)}>close</i>
+                    <i className='material-icons' onClick={() => this.removeLocation(index)}>close</i>
                 </span>
             )
         })
@@ -73,17 +73,17 @@ export default class Locations extends React.Component {
                 {
                     this.state.editing || this.props.locations.length === 0
                         ? <div className='edit-location-container'>
-                            <div className="input-field inline">
-                                <input placeholder="Enter zip code..." type="text" className="validate" onChange={this.handleChange} />
+                            <div className='input-field inline'>
+                                <input placeholder='Enter zip code...' type='text' className='validate' onChange={this.handleChange} />
                             </div>
-                            <i className="material-icons success-icon apply-pointer" onClick={this.saveLocation}>send</i>
+                            <i className='material-icons success-icon apply-pointer' onClick={this.saveLocation}>send</i>
                             {
                                 this.state.warningToggle
                                     ? <div className='login-warning'>{this.state.warningText}</div>
                                     : false
                             }
                         </div>
-                        : <i className="material-icons apply-pointer" onClick={() => this.setState({ editing: true })}>add</i>
+                        : <i className='material-icons apply-pointer' onClick={() => this.setState({ editing: true })}>add</i>
                 }
             </div>
         )
