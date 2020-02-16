@@ -1,0 +1,21 @@
+.zip-container {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+
+  .zip-container-title {
+    margin-right: 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  .edit-location-container {
+    display: flex;
+    align-items: center;
+
+    .login-warning {
+      margin-left: 1rem;
+      color: rgb(224, 24, 24);
+    }
+  }
+}

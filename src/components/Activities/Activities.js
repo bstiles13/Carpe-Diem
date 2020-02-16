@@ -1,160 +1,162 @@
 import React from 'react';
 import axios from 'axios';
-import { get } from 'lodash';
+import { get, isNumber, replace } from 'lodash';
 import moment from 'moment';
-import Preloader from '../Preloader/Preloader';
-import familyHeader from '../../images/family.jpg';
-import musicHeader from '../../images/music.jpg';
-import sportsHeader from '../../images/sports.png';
-import comedyHeader from '../../images/comedy.jpg';
-import outdoorsHeader from '../../images/outdoors.jpg';
-import attractionsHeader from '../../images/attractions.jpg';
-import animalsHeader from '../../images/animals.jpg';
+import { Menu, Image, Card, Item, Loader } from 'semantic-ui-react'
+import { map } from 'lodash';
+// import Preloader from '../Preloader/Preloader';
+import familyHeader from '../../assets/images/family.jpg';
+import musicHeader from '../../assets/images/music.jpg';
+import sportsHeader from '../../assets/images/sports.png';
+import comedyHeader from '../../assets/images/comedy.jpg';
+import outdoorsHeader from '../../assets/images/outdoors.jpg';
+import attractionsHeader from '../../assets/images/attractions.jpg';
+import animalsHeader from '../../assets/images/animals.jpg';
 
 import './Activities.scss';
 
 export default class Activities extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activities: null,
-            toggledCategory: 'Family Activities',
-            toggledId: 'family_fun_kids',
-            toggledTab: 0,
-            togglePreloader: false
-        }
-        this.setActivities = this.setActivities.bind(this);
-        this.toggleCategory = this.toggleCategory.bind(this);
-        this.renderImage = this.renderImage.bind(this);
+  state = {
+    activities: [],
+    toggledCategory: 'Family Activities',
+    toggledId: 'family_fun_kids',
+    toggledTab: 0,
+    togglePreloader: false
+  }
+
+  componentDidMount() {
+    this.setActivities();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.location !== this.props.location ||
+      prevState.toggledCategory !== this.state.toggledCategory
+    ) {
+      this.setActivities();
     }
+  }
 
-    componentDidMount() {
-        this.setActivities();
+  // handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+  setActivities = () => {
+    const { location } = this.props;
+
+    if (!location) return;
+
+    this.setState({ isFetching: true })
+
+    axios.post('/activities', { zip: location, id: this.state.toggledId })
+      .then(data => {
+        this.setState({ activities: data.data, isFetching: false })
+      })
+  }
+
+  toggleCategory = (category, id, index) => {
+    this.setState({
+      toggledCategory: category,
+      toggledId: id,
+      toggledTab: index
+    })
+  }
+
+  renderTabs = () => {
+    const { toggledTab } = this.state
+
+    if (!toggledTab && !isNumber(toggledTab)) return;
+
+    return activityDefaults.map((activity, index) => {
+      return (
+        <Menu.Item
+          key={index}
+          name={activity.category}
+          active={toggledTab === index}
+          onClick={() => this.toggleCategory(activity.category, activity.id, index)}
+        />
+      )
+    })
+  }
+
+  renderImage = (category) => {
+    switch (category) {
+      case 'Family Activities':
+        return familyHeader
+      case 'Music':
+        return musicHeader
+      case 'Sports':
+        return sportsHeader
+      case 'Comedy':
+        return comedyHeader
+      case 'Outdoors':
+        return outdoorsHeader
+      case 'Museums & Attractions':
+        return attractionsHeader
+      case 'Animals':
+        return animalsHeader
+      default:
+        return;
     }
+  }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps !== this.props) {
-            this.setActivities();
-        }
-    }
+  renderActivities = () => {
+    return map(this.state.activities, (event, index) => {
+      const imageUrl = replace(get(event, 'image.medium.url', get(event, 'image.url')), 'medium', 'large');
+      const venue = event.venue_name || 'Click to learn more'
+      const date = moment(new Date(event.start_time)).format('MMMM Do YYYY, h:mm a')
+      return (
+        <Card key={index} onClick={() => window.open(event.url, '_blank')}>
+          <Image className='event-image' src={imageUrl} verticalAlign='top' />
+          <Card.Content>
+            <Card.Header>{event.title}</Card.Header>
+            <Card.Meta>{date}</Card.Meta>
+            <Card.Description>{venue}</Card.Description>
+            <Card.Description>{event.venue_address}</Card.Description>
+          </Card.Content>
+        </Card>
+      )
+    })
+  }
 
-    setActivities() {
-        this.setState({ togglePreloader: true })
-        let zip = this.props.location;
-        axios.post('/activities', { zip: zip, id: this.state.toggledId }).then(data => {
-            this.setState({ activities: data.data })
-            this.setState({ togglePreloader: false })
+  render() {
+    const { location } = this.props;
 
-        })
-    }
+    if (!location) return false;
 
-    toggleCategory(category, id, index) {
-        this.setState({
-            toggledCategory: category,
-            toggledId: id,
-            toggledTab: index
-        }, () => {
-            this.setActivities();
-        })
-    }
-
-    renderTabs() {
-        return activityDefaults.map((activity, index) => {
-            return <li key={index} className='tab col s3' onClick={() => this.toggleCategory(activity.category, activity.id, index)}><a className={this.state.toggledTab === index ? 'active' : ''} href='#'>{activity.category}</a></li>
-        })
-    }
-
-    renderImage(category) {
-        switch (category) {
-            case 'Family Activities':
-                return familyHeader
-            case 'Music':
-                return musicHeader
-            case 'Sports':
-                return sportsHeader
-            case 'Comedy':
-                return comedyHeader
-            case 'Outdoors':
-                return outdoorsHeader
-            case 'Museums & Attractions':
-                return attractionsHeader
-            case 'Animals':
-                return animalsHeader
-            default:
-                return;
-        }
-    }
-
-    renderActivities() {
-        let list = this.state.togglePreloader
-            ? <Preloader />
-            : (
-                this.state.activities
-                    ? this.state.activities.map((event, index) => {
-                        const imageUrl = get(event, 'image.medium.url', get(event, 'image.url'));
-                        const venue = event.venue_name || 'Click to learn more'
-                        const date = moment(new Date(event.start_time)).format('MMMM Do YYYY, h:mm a')
-                        return (
-                            <li className='collection-item avatar activity-item' key={index} onClick={() => window.open(event.url, '_blank')}>
-                                <div className='event-content'>
-                                    <div className='left-content'>
-                                        <div className='event-details'><div className='event-label'>What:</div> {event.title}</div>
-                                        <div className='event-details'><div className='event-label'>Where:</div> {venue}</div>
-                                        <div className='event-details'><div className='event-label'>Address:</div> {event.venue_address}</div>
-                                        <div className='event-details'><div className='event-label'>Time:</div> {date}</div>
-                                    </div>
-                                    <div className='right-content'>
-                                        <img src={imageUrl} alt='' />
-                                    </div>
-                                </div>
-                            </li>
-                        )
-                    })
-                    : false
-            )
-        return (
-            <div className='card activity-card'>
-                <div className='card-image' style={{ 'backgroundImage': 'url(' + this.renderImage(this.state.toggledCategory) + ')', 'backgroundPosition': 'left center', 'backgroundSize': 'cover' }}>
-                    <span className='card-title'>{this.state.toggledCategory}</span>
+    return (
+      <div className='activities-container'>
+        <div className='activities-header' style={{ backgroundImage: `url(${this.renderImage(this.state.toggledCategory)})`}}>
+          <div>HAPPENING NEARBY</div>
+        </div>
+        <Menu className='category-list' pointing secondary inverted>
+          {this.renderTabs()}
+        </Menu>
+        <div className='activities-content'>
+          {
+            this.state.isFetching
+              ? (
+                <div className='loader-container'>
+                  <Loader active inverted inline='centered' size='large' />
+                  <div className='loader-text'>Fetching Event Data</div>
                 </div>
-                <div className='card-content'>
-                    <ul className='collection'>
-                        {list}
-                    </ul>
-                </div>
-            </div>
-        )
-    }
-
-    render() {
-        return (
-            <div id='activity-container' className='event-card'>
-                <div className='event-card-title grey darken-4'>
-                    <h5 className='event-header'>HAPPENING NEARBY</h5>
-                </div>
-                <div className='event-card-content'>
-                    <div>
-                        <div id='activity-tabs' className='col s12'>
-                            <ul className='tabs grey darken-4'>
-                                {this.renderTabs()}
-                            </ul>
-                        </div>
-                    </div>
-                    <div id='activity-list'>
-                        {this.renderActivities()}
-                    </div>
-                </div>
-            </div>
-        )
-    }
+              )
+              : (
+                <Card.Group className='activity-list' itemsPerRow={5}>
+                  {this.renderActivities()}
+                </Card.Group>
+              )
+          }
+        </div>
+      </div>
+    )
+  }
 }
 
-let activityDefaults = [
-    { category: 'Family Activities', id: 'family_fun_kids' },
-    { category: 'Music', id: 'music' },
-    { category: 'Comedy', id: 'comedy' },
-    { category: 'Sports', id: 'sports' },
-    { category: 'Outdoors', id: 'outdoors_recreation' },
-    { category: 'Museums & Attractions', id: 'attractions' },
-    { category: 'Animals', id: 'animals' }
+const activityDefaults = [
+  { category: 'Family Activities', id: 'family_fun_kids' },
+  { category: 'Music', id: 'music' },
+  { category: 'Comedy', id: 'comedy' },
+  { category: 'Sports', id: 'sports' },
+  { category: 'Outdoors', id: 'outdoors_recreation' },
+  { category: 'Museums & Attractions', id: 'attractions' },
+  { category: 'Animals', id: 'animals' }
 ]

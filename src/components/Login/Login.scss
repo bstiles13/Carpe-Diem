@@ -1,0 +1,17 @@
+.login {
+  .error-text {
+    color: rgb(192, 10, 10);
+    font-weight: bold;
+  }
+
+  .login-container {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem 0;
+  }
+}

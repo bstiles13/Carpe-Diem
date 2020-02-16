@@ -1,0 +1,15 @@
+.welcome-modal {
+    position: absolute!important;
+    bottom: 0!important;
+    width: 100%!important;
+    text-align: center;
+
+    .welcome-modal-header, .welcome-modal-content {
+      text-align: center;
+    }
+
+    .welcome-modal-content {
+      font-size: 1.4rem!important;
+      padding-bottom: 2rem!important;
+    }
+}

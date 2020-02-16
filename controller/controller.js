@@ -109,7 +109,10 @@ module.exports = {
         .then(data => {
             res.send(data.data.events.event);
         })
-        .catch(error => res.status(400).send('No events found'));
+        .catch(error => {
+          console.log(error.message);
+          res.status(400).send('No events found')
+        });
     }
 
 }

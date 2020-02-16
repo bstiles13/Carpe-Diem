@@ -1,0 +1,18 @@
+.home-header {
+  border-bottom: 2px solid white;
+  border-right: 2px solid white;
+  // border-left: 2px solid white;
+  // border-top: 2px solid white;
+  display: flex;
+  // justify-content: flex-end;
+
+  .header-label {
+    // width: 18rem;
+    width: 100%;
+    text-align: left;
+    background-color: #282c34;
+    color: white;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}

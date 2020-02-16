@@ -12,7 +12,6 @@ import Login from './components/Login/Login';
 import ModalWelcome from './components/ModalWelcome/ModalWelcome';
 
 class App extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -35,11 +34,11 @@ class App extends Component {
   }
 
   setUser(user) {
-    this.setState({ user: user });
+    this.setState({ user });
   }
 
   logout() {
-    localStorage.setItem('carpeToken', null);
+    localStorage.removeItem('carpeToken');
     this.setState({ user: null })
   }
 
@@ -48,10 +47,11 @@ class App extends Component {
       <BrowserRouter>
         <div className='app'>
           <Navbar user={this.state.user} setUser={this.setUser} logout={this.logout} />
-          <RouteMenu />
-          <div id='app-content'>
-            <Route exact path='/' render={props => <Home user={this.state.user} />} />
-            <Route path='/today' render={props => <Events user={this.state.user} />} />
+          <RouteMenu user={this.state.user} logout={this.logout} />
+          <div className='app-content'>
+            <Route exact path='/' render={props => <Events user={this.state.user} toggle='weather' />} />
+            <Route path='/mystuff' render={props => <Home user={this.state.user} />} />
+            <Route path='/activities' render={props => <Events user={this.state.user} toggle='activities' />} />
             <Route path='/login' render={props => <Login checkUser={this.checkUser} />} />
           </div>
           {!this.state.user ? <ModalWelcome /> : false}

@@ -1,0 +1,101 @@
+.location-details {
+  background-color: #282c34!important;
+  color: white!important;
+
+  .title, .description {
+    background-color: #282c34!important;
+    color: white!important;
+  }
+}
+
+.today-details {
+  background-color: rgba(255, 255, 255, 0.9);
+  // display: flex;
+  width: 50rem;
+  // margin: 1rem;
+
+  .row-one {
+    display: flex;
+    // background-color: rgba(255, 255, 255, 0.9);
+
+    .details-left, .details-right {
+      padding: 1.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .details-left {
+      color: #282c34;
+      // background-color: rgba(255, 255, 255, 0.9);
+      flex: 1;
+    }
+
+    .details-right {
+      background-color: #282c34;
+      color: white;
+      flex: 2;
+  }
+  }
+
+  .row-two {
+    padding: 2rem;
+    // background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+
+    .custom-divider {
+      border-bottom: 1px solid rgb(202, 202, 202);
+      margin: 0.5rem auto;
+      width: 98%;
+    }
+
+    .details-left {
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      padding-right: 1rem;
+    }
+
+    .details-right {
+      flex: 3;
+    }
+  }
+
+  .sub-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .details-primary {
+    // display: inline-block;
+    overflow: hidden;
+    font-size: 4rem;
+    line-height: 4rem;
+  }
+
+  .details-secondary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.recharts-wrapper {
+  // background-color: #212121 !important;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.weather-footer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.chart-header {
+  background-color: #282c34;
+  color: white;
+  // text-align: left;
+  padding: 1.5rem;
+  font-size: 2rem;
+}

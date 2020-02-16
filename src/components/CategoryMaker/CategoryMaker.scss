@@ -1,0 +1,18 @@
+.category-maker {
+  cursor: pointer;
+  min-height: 50px;
+  min-width: 50px;
+  background-color: #1b1b1c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 40px;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+
+  button {
+    margin-top: 0.5rem !important;
+  }
+}
