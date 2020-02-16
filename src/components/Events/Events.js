@@ -52,7 +52,12 @@ export default class Events extends React.Component {
     const currentLocation = get(this.state, ['locations', this.state.locationIndex]);
     return (
       <div id='events'>
-        <Locations user={this.props.user} locations={this.state.locations} getLocations={this.getLocations} changeZip={this.changeZip} />
+        <Locations
+          user={this.props.user}
+          locations={this.state.locations}
+          activeLocation={currentLocation}
+          getLocations={this.getLocations}
+          changeZip={this.changeZip} />
         <br />
         <div id='divider'>
           {this.props.toggle === 'weather' && <Weather location={currentLocation} /> }

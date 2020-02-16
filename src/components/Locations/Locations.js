@@ -57,13 +57,13 @@ export default class Locations extends React.Component {
   }
 
   renderLocations() {
-    let locations = this.props.locations;
+    const { locations, activeLocation } = this.props;
 
     if (!locations) return;
 
     return locations.map((zip, index) => {
       return (
-        <Label as='a' size='big' key={index}>
+        <Label as='a' size='big' key={index} active={zip === activeLocation}>
           <span onClick={() => this.props.changeZip(index)}>{zip}</span>
           <Icon name='delete' onClick={() => this.removeLocation(index)} />
         </Label>
