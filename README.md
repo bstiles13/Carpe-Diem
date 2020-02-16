@@ -6,26 +6,26 @@ Reinvent your homepage and bookmark experience. Save and categorize your favorit
 
 Check the latest weather forecast before planning your day or week.
 
-![search](https://github.com/bstiles13/Carpe-Diem/blob/master/build/screenshots/home.png)
+![home](https://github.com/bstiles13/Carpe-Diem/blob/master/public/screenshots/home.png)
 
 ## Bookmarks
 
 View popular web destinations as a guest or sign in to personalize your homepage.
 
-![search](https://github.com/bstiles13/Carpe-Diem/blob/master/build/screenshots/favorites.png)
+![favorites](https://github.com/bstiles13/Carpe-Diem/blob/master/public/screenshots/favorites.png)
 
-![radius](https://github.com/bstiles13/Carpe-Diem/blob/master/build/screenshots/favorites2.png)
+![favorites 2](https://github.com/bstiles13/Carpe-Diem/blob/master/public/screenshots/favorites2.png)
 
-![radius](https://github.com/bstiles13/Carpe-Diem/blob/master/build/screenshots/favorites3.png)
+![favorites 3](https://github.com/bstiles13/Carpe-Diem/blob/master/public/screenshots/favorites3.png)
 
 ## Events
 
 Explore nearby events in your city.
 
-![articles](https://github.com/bstiles13/Carpe-Diem/blob/master/build/screenshots/events.png)
+![events](https://github.com/bstiles13/Carpe-Diem/blob/master/public/screenshots/events.png)
 
 ## Login
 
 Sign In Page
 
-![login1](https://github.com/bstiles13/Carpe-Diem/blob/master/build/screenshots/login.png)
+![login](https://github.com/bstiles13/Carpe-Diem/blob/master/public/screenshots/login.png)
