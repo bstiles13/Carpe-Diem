@@ -85,7 +85,11 @@ export default class Locations extends React.Component {
             ? <div className='edit-location-container'>
               <Input type='text' placeholder='Enter zip code...' action>
                 <input onChange={this.handleChange} />
-                <Button onClick={this.saveLocation}>Add</Button>
+                <Button.Group>
+                  <Button onClick={this.saveLocation}>Add</Button>
+                  <Button.Or />
+                  <Button onClick={() => this.setState({ editing: false })}>Cancel</Button>
+                </Button.Group>
               </Input>
               {
                 this.state.warningToggle
@@ -95,8 +99,7 @@ export default class Locations extends React.Component {
             </div>
             : (
               <Label as='a' size='big' onClick={() => this.setState({ editing: true })}>
-                New
-                <Icon name='delete' />
+                New Zip
               </Label>
             )
         }

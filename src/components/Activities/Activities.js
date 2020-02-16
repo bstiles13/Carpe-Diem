@@ -4,7 +4,7 @@ import { get, isNumber, replace } from 'lodash';
 import moment from 'moment';
 import { Menu, Image, Card, Item, Loader } from 'semantic-ui-react'
 import { map } from 'lodash';
-// import Preloader from '../Preloader/Preloader';
+import placeholderImage from '../../assets/images/placeholder.png';
 import familyHeader from '../../assets/images/family.jpg';
 import musicHeader from '../../assets/images/music.jpg';
 import sportsHeader from '../../assets/images/sports.png';
@@ -105,7 +105,7 @@ export default class Activities extends React.Component {
       const date = moment(new Date(event.start_time)).format('MMMM Do YYYY, h:mm a')
       return (
         <Card key={index} onClick={() => window.open(event.url, '_blank')}>
-          <Image className='event-image' src={imageUrl} verticalAlign='top' />
+          <Image className='event-image' src={imageUrl || placeholderImage} verticalAlign='top' />
           <Card.Content>
             <Card.Header>{event.title}</Card.Header>
             <Card.Meta>{date}</Card.Meta>

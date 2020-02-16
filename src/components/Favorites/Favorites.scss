@@ -37,12 +37,17 @@
       .add-favorite-label {
         text-align: left;
         margin-bottom: 0.5rem;
+        font-weight: bold;
       }
   
       .input-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        input {
+          width: 18rem !important;
+        }
       }
     }
   }
@@ -52,6 +57,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem;
+    cursor: pointer;
 
     .card-item-link {
       display: flex;

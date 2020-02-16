@@ -130,7 +130,9 @@ class Login extends React.Component {
   render() {
     return (
       <div className='login'>
-        <h3>SIGN IN</h3>
+        <div className='home-header'>
+          <div className='header-label'>SIGN IN</div>
+        </div>
         <div className='error-text'>
           {this.error('invalidText')}
           {this.error('invalidName')}
@@ -138,7 +140,6 @@ class Login extends React.Component {
           {this.error('invalidUser')}
           {this.error('invalidZip')}
         </div>
-        <hr />
         <div className='login-container'>
           <div id='new-user' className='login-child'>
             <h3 className='login-header'>Existing Users</h3><br />
@@ -188,8 +189,8 @@ class Login extends React.Component {
           </div>
         </div>
         <div className='button-container'>
-          <Button onClick={this.startExistingLogin.bind(this)}>Sign In</Button>
-          <Button onClick={this.startNewLogin.bind(this)}>Register</Button>
+          <Button secondary onClick={this.startExistingLogin.bind(this)}>Sign In</Button>
+          <Button secondary onClick={this.startNewLogin.bind(this)}>Register</Button>
         </div>
       </div>
     )

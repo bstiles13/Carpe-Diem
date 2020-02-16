@@ -27,7 +27,6 @@ export default class Favorites extends React.Component {
     this.removeCategory = this.removeCategory.bind(this);
     this.onDragEnd = this.onDragEnd.bind(this);
     this.toggleCategory = this.toggleCategory.bind(this);
-    this.toggleFavorite = this.toggleFavorite.bind(this);
   }
 
   componentDidMount() {
@@ -190,7 +189,8 @@ export default class Favorites extends React.Component {
     }
   }
 
-  toggleFavorite(urlIndex) {
+  toggleFavorite(e, urlIndex) {
+    e.stopPropagation();
     this.setState({ toggledFavorite: urlIndex })
   }
 
@@ -223,14 +223,19 @@ export default class Favorites extends React.Component {
         <Draggable key={urlIndex} draggableId={urlIndex}>
           {(provided, snapshot) => (
             <div>
-              <div className='card-item' key={urlIndex} ref={provided.innerRef} style={getItemStyle(provided.draggableStyle, snapshot.isDragging)} {...provided.dragHandleProps}>
-                <div className='card-item-link favorite-text' onClick={() => this.openFavorite(page.url)}>
+              <div
+                className='card-item'
+                key={urlIndex}
+                ref={provided.innerRef}
+                style={getItemStyle(provided.draggableStyle, snapshot.isDragging)} {...provided.dragHandleProps}
+                onClick={() => this.openFavorite(page.url)}>
+                <div className='card-item-link favorite-text'>
                   <img className='url-logo circle' src={'//logo.clearbit.com/spotify.com' + page.url} onError={(event) => event.target.setAttribute('src', placeholder)} alt='' />
                   <span>{page.name}</span>
                 </div>
                 {
                   this.state.toggledCategory == categoryIndex
-                    ? <div onClick={() => this.toggleFavorite(urlIndex)}>
+                    ? <div onClick={(e) => this.toggleFavorite(e, urlIndex)}>
                       <Icon name='pencil' onClick={this.handleOpen} />
                       <Icon name='trash' onClick={() => this.removeFavorite(categoryIndex, urlIndex)} />
                     </div>
