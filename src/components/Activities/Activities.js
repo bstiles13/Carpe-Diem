@@ -140,7 +140,7 @@ export default class Activities extends React.Component {
                 </div>
               )
               : (
-                <Card.Group className='activity-list' itemsPerRow={5}>
+                <Card.Group className='activity-list' itemsPerRow={5} stackable>
                   {this.renderActivities()}
                 </Card.Group>
               )
