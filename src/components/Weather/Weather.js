@@ -128,7 +128,7 @@ export default class Weather extends React.Component {
 
     return (
       <div id='weather-container' className="event-card">
-]        <Step.Group stackable='tablet'>
+        <Step.Group stackable='tablet'>
           <Step className='location-details'>
             <Step.Content>
               <Step.Title>{get(this.state, 'weather.location.name', '')}</Step.Title>
