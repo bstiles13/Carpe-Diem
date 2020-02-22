@@ -110,7 +110,11 @@ export default class Activities extends React.Component {
             <Card.Header>{event.title}</Card.Header>
             <Card.Meta>{date}</Card.Meta>
             <Card.Description>{venue}</Card.Description>
-            <Card.Description>{event.venue_address}</Card.Description>
+            <Card.Description>
+              {event.venue_address || ''},&nbsp;
+              {event.city_name || ''}&nbsp;
+              {event.region_abbr || ''}
+            </Card.Description>
           </Card.Content>
         </Card>
       )
