@@ -1,12 +1,15 @@
-let bodyParser = require('body-parser');
-let axios = require('axios');
-let bcrypt = require('bcrypt');
+const bodyParser = require('body-parser');
+const axios = require('axios');
+const bcrypt = require('bcrypt');
+const axiosRetry = require('axios-retry');
+
+// Performs three total requests before throwing error
+axiosRetry(axios, { retries: 2, retryDelay: axiosRetry.exponentialDelay });
 
 let User = require('../models/user.js');
 let Favorite = require('../models/favorite.js');
 
 module.exports = {
-
     // Receives and authenticates login information from existing users    
     existingUser: function (req, res) {
         User.findOne({ 'username': req.body.existingUsername }, function (err, user) {
