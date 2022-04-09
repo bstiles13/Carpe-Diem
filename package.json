@@ -10,7 +10,7 @@
     "axios-retry": "3.1.2",
     "bcrypt": "3.0.7",
     "lodash": "4.17.15",
-    "moment": "2.24.0",
+    "moment": "2.29.2",
     "mongoose": "4.12.4",
     "node-sass": "4.13.1",
     "react": "16.12.0",
